@@ -10,11 +10,15 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
+import healthDetailRouter from './routes/healthDetail.js';
+
 const app = express();
 
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+
+app.use('/HD', healthDetailRouter);
 
 const CONNECTION_URL = 'mongodb+srv://Liam:18091999@cluster0.edpoc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 4000;
