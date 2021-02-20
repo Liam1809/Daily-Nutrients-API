@@ -50,7 +50,7 @@ export const updateHealthDetail = async (req, res) => {
 
     // check if _id invalid of mongoDB _id
 
-    if (mongoose.Types.ObjectId.isValid(id)) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
         console.log('No Health Data found with that id');
     }
     const updatedHD = { name, age, sex, weight, height, _id: id };
@@ -69,4 +69,20 @@ export const updateHealthDetail = async (req, res) => {
         res.status(409).json({ message: error.message });
     }
 
+};
+
+export const deleteHealthDetail = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        console.log('No Health Data found with that id');
+    }
+
+    try {
+        await healthDetail.findByIdAndRemove(id);
+
+        res.json({ message: 'Health Details by that id is successfully deleted' });
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
 };

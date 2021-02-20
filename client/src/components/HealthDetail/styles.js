@@ -1,22 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { Opacity } from '@material-ui/icons';
 
 export default makeStyles((theme) => ({
-    root: {
-        '& .MuiTextField-root': {
-            margin: theme.spacing(2),
-        },
-    },
-    paper: {
-        padding: theme.spacing(3),
-    },
-    form: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-    },
-    buttonSubmit: {
-        marginBottom: 10,
+    container: {
+        height: '75vh',
+        paddingTop: 100,
+        position: 'relative'
     },
     Round: {
         zIndex: 2,
@@ -32,45 +20,29 @@ export default makeStyles((theme) => ({
     Round2: {
         background: '#f50057',
     },
-    container: {
-        height: '75vh',
-        paddingTop: 100,
-        position: 'relative'
-    },
-    text: {
-        position: 'relative',
-        top: 110,
-        left: 65,
-        zIndex: 1,
-        color: 'white'
-    },
-    text1: {
-        position: 'relative',
-        top: 110,
-        left: 60,
-        zIndex: 1,
-        color: 'white'
-    },
-    text2: {
-        position: 'relative',
-        top: 110,
-        left: 50,
-        zIndex: 1,
-        color: 'white'
-    },
     mainText: {
-        paddingBottom: 20
+        position: 'relative',
+        top: 110,
+        zIndex: 1,
+        color: 'white'
+    },
+    text: { left: 65 },
+    text1: { left: 60, },
+    text2: { left: 50, },
+    mainOverlay: {
+        position: 'absolute',
+        color: 'black',
     },
     overlay1: {
-        position: 'absolute',
-        top: '70px',
-        left: '40px',
-        color: 'black',
+        top: 70,
+        left: 40
     },
     overlay2: {
-        position: 'absolute',
-        top: '70px',
-        right: '-120px',
-        color: 'black',
+        top: 70,
+        right: -150
+    },
+    overlay3: {
+        bottom: 20,
+        right: -150
     }
 }));

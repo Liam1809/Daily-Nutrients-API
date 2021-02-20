@@ -8,8 +8,6 @@ export default (HealthData = [], action) => {
             return [...HealthData, action.payload];
         case 'UPDATE':
             return HealthData.map((HD) => HD._id === action.payload._id ? action.payload : 'No health data that id to update');
-        case 'DELETE':
-            return HealthData;
         default:
             return HealthData;
     }
