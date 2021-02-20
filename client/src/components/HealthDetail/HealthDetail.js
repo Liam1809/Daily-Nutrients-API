@@ -6,15 +6,22 @@ import HD from './HD.js';
 
 
 const HealthDetail = ({ setCurrentId }) => {
+    // retrieve an array of healthDetail 
     const healthDetails = useSelector((state) => state.healthDetail);
+    // mark UserId to compare
+    const UserId = '6030f88962f7ea3138b3c0f9';
 
-    const UserId = '6030565e9fd171256f07a6aa';
     let H = {};
+    // Looping
     for (let i = 0; i < healthDetails.length; i++) {
         if (healthDetails[i]['_id'] === UserId) {
             H = healthDetails[i];
         }
     }
+    console.log(H);
+
+    // console.log(healthDetails);
+    // H = healthDetails.map((h) => h._id === UserId && h);
     // console.log(H);
 
     return (
@@ -24,20 +31,12 @@ const HealthDetail = ({ setCurrentId }) => {
                     <Container key={H._id}>
                         <HD H={H} setCurrentId={setCurrentId} />
                     </Container>
-                ) : (
+                )
+                    : (
                         <Container>
                             <HD />
                         </Container>
                     )
-                // healthDetails.map((H) => (
-                //     H._id === UserId ? (
-                //         <Container key={H._id}>
-                //             <HD H={H} setCurrentId={setCurrentId} />
-                //         </Container>
-                //     ) : (
-
-                //         )
-                // ))
             }
         </Container>
 
