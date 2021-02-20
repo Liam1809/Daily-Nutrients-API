@@ -70,7 +70,7 @@ export default makeStyles((theme) => ({
     overlay2: {
         position: 'absolute',
         top: '70px',
-        right: '-70px',
+        right: '-120px',
         color: 'black',
     }
 }));

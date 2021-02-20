@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container, Grid, Grow, Typography, Button } from '@material-ui/core';
+import { Box, Container, Grid, Grow, Typography, Button, Tooltip } from '@material-ui/core';
 import UpdateIcon from '@material-ui/icons/Update';
 
 import useStyles from './styles.js';
@@ -13,7 +13,7 @@ const HD = ({ H, setCurrentId }) => {
                 <Typography variant='h4'>Welcome {H ? H.name : 'John Doe'} ✌️</Typography>
             </div>
             <div className={classes.overlay2}>
-                <Button size="small" onClick={() => { }}><UpdateIcon fontSize="large" /></Button>
+                <Button size="small" onClick={() => { }}><Tooltip title='Update'><UpdateIcon fontSize="large" /></Tooltip></Button>
             </div>
             <Grid container justify='space-between' alignItems="stretch" spacing={3}>
                 <Grid item xs={12} sm={2}>
