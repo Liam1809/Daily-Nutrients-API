@@ -50,10 +50,10 @@ export const updateHealthDetail = async (req, res) => {
 
     // check if _id invalid of mongoDB _id
 
-    if (mongoose.Types.ObjectId.isValid(_id)) {
-        res.status(404).send('No Health Data found with that id');
+    if (mongoose.Types.ObjectId.isValid(id)) {
+        console.log('No Health Data found with that id');
     }
-    const updatedHD = { name, age, sex, weight, height, bmi, bmr, _id: id };
+    const updatedHD = { name, age, sex, weight, height, _id: id };
     console.log(updatedHD);
 
     // Calculate BMI & BMR
@@ -61,8 +61,12 @@ export const updateHealthDetail = async (req, res) => {
     updatedHD.bmr = Cal_bmr(updatedHD.age, updatedHD.weight, updatedHD.height, updatedHD.sex);
 
     console.log(updatedHD);
+    try {
+        await healthDetail.findByIdAndUpdate(id, updatedHD);
 
-    await healthDetail.findByIdAndUpdate(id, updatedHD, { new: true });
+        res.json(updatedHD);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
 
-    res.json(updatedHD);
 };

@@ -24,7 +24,18 @@ export const getHD_ID = (id) => async (dispatch) => {
 export const createHD = (HD) => async (dispatch) => {
     try {
         const { data } = await api.createHD(HD);
+
         dispatch({ type: 'CREATE', payload: data });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+export const updateHD = (id, HD) => async (dispatch) => {
+    try {
+        const { data } = await api.updateHD(id, HD);
+
+        dispatch({ type: 'UPDATE', payload: data });
     } catch (error) {
         console.log(error.message);
     }

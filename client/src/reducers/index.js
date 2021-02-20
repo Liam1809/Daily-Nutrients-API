@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
 
-import healthDetail from './healthDetail.js';
+import healthDetails from './healthDetails.js';
 
-export default combineReducers({ healthDetail });
+export default combineReducers({ healthDetails });

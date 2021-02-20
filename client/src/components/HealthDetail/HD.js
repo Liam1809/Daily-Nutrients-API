@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, Container, Grid, Grow, Typography, Button, Tooltip } from '@material-ui/core';
 import UpdateIcon from '@material-ui/icons/Update';
-
+import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles.js';
 
-const HD = ({ H, setCurrentId }) => {
+const Hd = ({ H, setCurrentId }) => {
     const classes = useStyles();
 
     const checkData = (given) => H.hasOwnProperty(given) ? H[given] : 'null';
@@ -47,8 +47,9 @@ const HD = ({ H, setCurrentId }) => {
                     <Box borderRadius="50%" className={`${classes.Round} ${classes.Round2}`} />
                 </Grid>
             </Grid>
+            {/* <Button size="small" onClick={() => { }}><Tooltip title='Delete'><UpdateIcon fontSize="large" /></Tooltip></Button> */}
         </Container>
     )
 }
 
-export default HD;
+export default Hd;

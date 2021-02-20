@@ -20,7 +20,7 @@ const App = () => {
 
     useEffect(() => {
         dispatch(getHD());
-    }, [dispatch]);
+    }, [currentId, dispatch]);
 
     // const handleToggle = () => {
     //     setIsHealthData((prevMode) => !prevMode);
@@ -37,7 +37,7 @@ const App = () => {
                 <Container className={classes.mainContainer}>
                     <Grid container justify="space-between" alignItems="stretch" spacing={3}>
                         <Grid item xs={12} sm={6}>
-                            <HealthDetail setCurrentId={setCurrentId} />
+                            <HealthDetail currentId={currentId} setCurrentId={setCurrentId} />
                         </Grid>
                         <Grid item xs={12} sm={5}>
                             <Form currentId={currentId} setCurrentId={setCurrentId} />
