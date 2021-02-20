@@ -1,4 +1,6 @@
 import healthDetail from '../models/healthDetail.js';
+import mongoose from 'mongoose';
+import { Cal_bmi, Cal_bmr } from '../Functions/fuctions.js';
 
 export const getHealthDetails = async (req, res) => {
     try {
@@ -22,20 +24,12 @@ export const getHealthDetailById = async (req, res) => {
 };
 
 export const createHealthDetail = async (req, res) => {
-    const HD = req.body;
+    const { name, age, sex, weight, height } = req.body;
 
-    const newHD = new healthDetail(HD);
+    const newHD = new healthDetail({ name, age, sex, weight, height });
 
-    // nho doi String  -> Number formula
-    const Cal_bmi = (weight, height) => Math.round(weight / (height / 100));
-    const Cal_bmr = (age, weight, height, sex) => {
-        if (sex == 'male') {
-            return Math.round(66.47 + (13.75 * weight) + (5.003 * height) - (6.755 * age));
-            // return 66.47 + (13.75 * weight [kg]) + (5.003 * size [cm]) − (6.755 * age [years])
-        } else {
-            return Math.round(655.1 + (9.563 * weight) + (1.85 * height) - (4.676 * age));
-        }
-    };
+    // console.log(newHD);
+    // Calculate BMI & BMR
     newHD.bmi = Cal_bmi(newHD.weight, newHD.height);
     newHD.bmr = Cal_bmr(newHD.age, newHD.weight, newHD.height, newHD.sex);
 
@@ -43,8 +37,32 @@ export const createHealthDetail = async (req, res) => {
         await newHD.save();
 
         res.status(201).json(newHD);
-        console.log(newHD);
+        // console.log(newHD);
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
+};
+
+export const updateHealthDetail = async (req, res) => {
+    // extract id and health Details
+    const { id } = req.params;
+    const { name, age, sex, weight, height } = req.body;
+
+    // check if _id invalid of mongoDB _id
+
+    if (mongoose.Types.ObjectId.isValid(_id)) {
+        res.status(404).send('No Health Data found with that id');
+    }
+    const updatedHD = { name, age, sex, weight, height, bmi, bmr, _id: id };
+    console.log(updatedHD);
+
+    // Calculate BMI & BMR
+    updatedHD.bmi = Cal_bmi(updatedHD.weight, updatedHD.height);
+    updatedHD.bmr = Cal_bmr(updatedHD.age, updatedHD.weight, updatedHD.height, updatedHD.sex);
+
+    console.log(updatedHD);
+
+    await healthDetail.findByIdAndUpdate(id, updatedHD, { new: true });
+
+    res.json(updatedHD);
 };
