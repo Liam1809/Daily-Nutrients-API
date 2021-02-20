@@ -1,10 +1,11 @@
 import express from 'express';
 
-import { getHealthDetail, createHealthDetail } from '../controllers/healthDetail.js';
+import { getHealthDetails, getHealthDetailById, createHealthDetail } from '../controllers/healthDetail.js';
 
 const router = express.Router();
 
-router.get('/', getHealthDetail);
+router.get('/', getHealthDetails);
+router.get('/:id', getHealthDetailById);
 router.post('/', createHealthDetail);
 
 export default router;
