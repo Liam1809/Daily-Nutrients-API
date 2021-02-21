@@ -16,11 +16,7 @@ export default makeStyles((theme) => ({
     image: {
         marginRight: '15px',
     },
-    toolbar: {
-        display: 'flex',
-        justifyContent: 'flex-end',
-        width: '400px',
-    },
+    /////
     profile: {
         display: 'flex',
         justifyContent: 'space-between',

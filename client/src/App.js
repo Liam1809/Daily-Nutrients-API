@@ -1,47 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Grow, Grid, } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { Container } from '@material-ui/core';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 // import components
 import Navbar from './components/Navbar/Navbar';
-import HealthDetail from './components/HealthDetail/HealthDetail.js';
-import Form from './components/Form/Form.js';
-
-// import actions
-import { getHD } from './actions/healthDetail.js';
-
-// import styles
-import useStyles from './styles.js';
-
+import Home from './components/Home/Home.js';
+import Dashboard from './components/Dashboard/Dashboard.js';
+import Mealplan from './components/Mealplan/Mealplan.js';
+import Recipes from './components/Recipes/Recipes.js';
+import Auth from './components/Auth/Auth.js';
 
 const App = () => {
-    const classes = useStyles();
-    const dispatch = useDispatch();
-    const [currentId, setCurrentId] = useState(0);
-
-    useEffect(() => {
-        dispatch(getHD());
-    }, [currentId, dispatch]);
-
 
     return (
-        // Home Dashboard Meal recipe sign in(logout)
-        <Container maxWidth='lg'>
-            <Navbar />
-            <Grow in>
-                <Container className={classes.mainContainer}>
-                    <Grid container justify="space-between" alignItems="stretch" spacing={3}>
-                        <Grid item xs={12} sm={6}>
-                            <HealthDetail setCurrentId={setCurrentId} />
-                        </Grid>
-                        <Grid item xs={12} sm={5}>
-                            <Form currentId={currentId} setCurrentId={setCurrentId} />
-                        </Grid>
-                    </Grid>
-                </Container>
-
-            </Grow>
-        </Container >
+        // Home: /
+        // Dashboard: /dashboard
+        // Meal: /mealplan
+        // Recipes: recipes 
+        // sign in / sign out: /auth
+        <BrowserRouter>
+            <Container maxWidth='lg'>
+                <Navbar />
+                <Switch>
+                    <Route path='/' exact component={Home} />
+                    <Route path='/dashboard' exact component={Dashboard} />
+                    <Route path='/mealplan' exact component={Mealplan} />
+                    <Route path='/recipes' exact component={Recipes} />
+                    <Route path='/auth' exact component={Auth} />
+                </Switch>
+            </Container >
+        </BrowserRouter>
     )
 }
 

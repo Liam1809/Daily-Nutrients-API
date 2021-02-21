@@ -15,7 +15,7 @@ const Hd = ({ H, setCurrentId }) => {
     return (
         <Container className={classes.container}>
             <div className={`${classes.mainOverlay} ${classes.overlay1}`}>
-                <Typography variant='h4'>Welcome {checkData('name')} ✌️</Typography>
+                <Typography variant='h4'>Welcome {checkData('name')}</Typography>
             </div>
             <div className={`${classes.mainOverlay} ${classes.overlay2}`}>
                 <Button size="small" onClick={() => { setCurrentId(H._id) }}><Tooltip title='Update'><UpdateIcon fontSize="large" /></Tooltip></Button>
