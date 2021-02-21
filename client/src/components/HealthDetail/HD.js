@@ -1,12 +1,15 @@
 import React from 'react';
 import { Box, Container, Grid, Grow, Typography, Button, Tooltip } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 import UpdateIcon from '@material-ui/icons/Update';
 import DeleteIcon from '@material-ui/icons/Delete';
+
+import { deleteHD } from '../../actions/healthDetail.js';
 import useStyles from './styles.js';
 
 const Hd = ({ H, setCurrentId }) => {
     const classes = useStyles();
-
+    const dispatch = useDispatch();
     const checkData = (given) => H.hasOwnProperty(given) ? H[given] : 'null';
 
     return (
@@ -48,7 +51,7 @@ const Hd = ({ H, setCurrentId }) => {
                 </Grid>
             </Grid>
             <div className={`${classes.mainOverlay} ${classes.overlay3}`}>
-                <Button size="small" onClick={() => { }}><Tooltip title='Delete'><DeleteIcon fontSize="large" /></Tooltip></Button>
+                <Button size="small" onClick={() => { dispatch(deleteHD(H._id)) }}><Tooltip title='Delete'><DeleteIcon fontSize="large" /></Tooltip></Button>
             </div>
         </Container >
     )

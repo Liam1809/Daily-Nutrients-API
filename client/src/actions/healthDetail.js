@@ -1,3 +1,4 @@
+import { AddAPhotoOutlined } from '@material-ui/icons';
 import * as api from '../api/index.js';
 
 // CREATE ACTION CREATORS
@@ -36,6 +37,16 @@ export const updateHD = (id, HD) => async (dispatch) => {
         const { data } = await api.updateHD(id, HD);
 
         dispatch({ type: 'UPDATE', payload: data });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+export const deleteHD = (id) => async (dispatch) => {
+    try {
+        await api.deleteHD(id);
+
+        dispatch({ type: 'DELETE', payload: id });
     } catch (error) {
         console.log(error.message);
     }

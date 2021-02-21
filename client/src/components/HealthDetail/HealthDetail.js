@@ -9,7 +9,7 @@ const HealthDetail = ({ currentId, setCurrentId }) => {
     // retrieve an array of healthDetail 
     const HDs = useSelector((state) => state.healthDetails);
     // mark UserId to compare
-    const UserId = '6030f88962f7ea3138b3c0f9';
+    const UserId = '6031a5c9f6d2bb13d7cfe309';
 
     let H = {};
     // Looping
@@ -18,11 +18,6 @@ const HealthDetail = ({ currentId, setCurrentId }) => {
             H = HDs[i];
         }
     }
-    console.log(H);
-
-    // console.log(healthDetails);
-    // H = healthDetails.map((h) => h._id === UserId && h);
-    // console.log(H);
 
     return (
         <Container>
