@@ -3,8 +3,8 @@ import { Container, Grow, Grid, } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
 // import componentss
-import HealthDetail from '../HealthDetail/HealthDetail.js';
-import Form from '../Form/Form.js';
+import HealthDetail from './HealthDetail/HealthDetail.js';
+import Form from './Form/Form.js';
 
 // import actions
 import { getHD } from '../../actions/healthDetail.js';

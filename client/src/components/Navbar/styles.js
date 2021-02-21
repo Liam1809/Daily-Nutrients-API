@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { deepPurple } from '@material-ui/core/colors';
+import { NoEncryption } from '@material-ui/icons';
 
 export default makeStyles((theme) => ({
     appBar: {
@@ -12,6 +12,7 @@ export default makeStyles((theme) => ({
     },
     heading: {
         color: '#20565c',
+        textDecoration: 'none'
     },
     image: {
         marginRight: '15px',
@@ -30,8 +31,5 @@ export default makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
     },
-    purple: {
-        color: theme.palette.getContrastText(deepPurple[500]),
-        backgroundColor: deepPurple[500],
-    }
+
 }));

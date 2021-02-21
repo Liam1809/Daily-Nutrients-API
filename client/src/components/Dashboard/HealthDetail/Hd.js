@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import UpdateIcon from '@material-ui/icons/Update';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { deleteHD } from '../../actions/healthDetail.js';
+import { deleteHD } from '../../../actions/healthDetail.js';
 import useStyles from './styles.js';
 
 const Hd = ({ H, setCurrentId }) => {

@@ -8,8 +8,8 @@ import Hd from './Hd.js';
 const HealthDetail = ({ currentId, setCurrentId }) => {
     // retrieve an array of healthDetail 
     const HDs = useSelector((state) => state.healthDetails);
-    // mark UserId to compare
-    const UserId = '6031a5c9f6d2bb13d7cfe309';
+    // mark UserId to compare, will change when user sign up
+    const UserId = '60328a05625bae31dcda2843';
 
     let H = {};
     // Looping

@@ -87,7 +87,7 @@ const DrawerNav = () => {
                         <List>
                             <ListItem button component={Link} to={navigation(Dashboard)} onClick={toggleDrawer(anchor, false)}>
                                 <ListItemIcon>
-                                    <Avatar className={classes.purple} className={classes.img} alt='doctor' src={doctor}>L</Avatar>
+                                    <Avatar className={`${classes.purple} ${classes.img}`} alt='doctor' src={doctor}>L</Avatar>
                                     {/* <Avatar className={classes.purple} alt={user?.result.name} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar> */}
                                 </ListItemIcon>
                                 <ListItemText primary={'Liam Ha'} className={classes.text} />
@@ -106,7 +106,7 @@ const DrawerNav = () => {
                 ) : (
                         <List>
                             {[Home].map((text) => (
-                                <ListItem button key={text} component={Link} to={navigation(text)}>
+                                <ListItem button key={text} component={Link} to={navigation(text)} onClick={toggleDrawer(anchor, false)}>
                                     <ListItemIcon>{checkIcon(text)}</ListItemIcon>
                                     <ListItemText primary={text} />
                                 </ListItem>
@@ -141,7 +141,7 @@ const DrawerNav = () => {
             <Fragment key={'right'}>
                 <Button onClick={toggleDrawer('right', true)}>
                     <Tooltip title="Navigation">
-                        <DehazeIcon fontSize='large' />
+                        <DehazeIcon fontSize='large' className={classes.icon} />
                     </Tooltip>
                 </Button>
                 <Drawer anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}>
