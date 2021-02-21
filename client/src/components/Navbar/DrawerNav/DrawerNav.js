@@ -137,7 +137,7 @@ const DrawerNav = () => {
     );
 
     return (
-        <div className={classes.flexBox}>
+        <div>
             <Fragment key={'right'}>
                 <Button onClick={toggleDrawer('right', true)}>
                     <Tooltip title="Navigation">

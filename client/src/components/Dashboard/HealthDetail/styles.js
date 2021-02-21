@@ -11,11 +11,11 @@ export default makeStyles((theme) => ({
         width: '10em',
         height: '10em',
         border: 'rgba(0,0,0, 0.9)',
-        boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%) , 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
+        boxShadow: '4px 8px 4px -1px rgb(0 0 0 / 20%) , 4px 8px 5px 0px rgb(0 0 0 / 14%), 4px 8px 10px 0px rgb(0 0 0 / 12%)',
         opacity: 0.9
     },
     Round1: {
-        background: '#3F51B5',
+        background: '#3f51b5',
     },
     Round2: {
         background: '#f50057',
