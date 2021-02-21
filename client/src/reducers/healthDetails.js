@@ -1,14 +1,16 @@
+import { FETCH, FETCH_BY_ID, CREATE, UPDATE, DELETE } from '../constants/constantTypes.js';
+
 export default (HealthData = [], action) => {
     switch (action.type) {
-        case 'FETCH':
+        case FETCH:
             return action.payload;
-        case 'FETCH_BY_ID':
+        case FETCH_BY_ID:
             return HealthData.map((HD) => HD._id === action.payload._id ? action.payload : 'No health data with that id to get');
-        case 'CREATE':
+        case CREATE:
             return [...HealthData, action.payload];
-        case 'UPDATE':
+        case UPDATE:
             return HealthData.map((HD) => HD._id === action.payload._id ? action.payload : 'No health data with that id to update');
-        case 'DELETE':
+        case DELETE:
             return HealthData.filter((HD) => HD._id !== action.payload);
         default:
             return HealthData;

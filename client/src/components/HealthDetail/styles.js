@@ -44,5 +44,17 @@ export default makeStyles((theme) => ({
     overlay3: {
         bottom: 20,
         right: -150
+    },
+    [theme.breakpoints.down('md')]: {
+        Round: {
+            width: '8em',
+            height: '8em'
+        },
+        mainText: {
+            top: 100
+        },
+        text: { left: 45 },
+        text1: { left: 45, },
+        text2: { left: 35, },
     }
 }));
