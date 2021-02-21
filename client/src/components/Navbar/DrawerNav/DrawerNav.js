@@ -137,7 +137,7 @@ const DrawerNav = () => {
     );
 
     return (
-        <div>
+        <div className={classes.flexBox}>
             <Fragment key={'right'}>
                 <Button onClick={toggleDrawer('right', true)}>
                     <Tooltip title="Navigation">
@@ -146,6 +146,7 @@ const DrawerNav = () => {
                 </Button>
                 <Drawer anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}>
                     {list('right')}
+                    <footer className={classes.footer}>Copyright &copy; 2021 by Lam Ha.</footer>
                 </Drawer>
             </Fragment>
         </div>

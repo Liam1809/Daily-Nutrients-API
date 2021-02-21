@@ -28,6 +28,19 @@ export default makeStyles((theme) => ({
         width: 50,
         height: 50,
         paddingLeft: 20
+    },
+    footer: {
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        background: '#333',
+        color: 'white',
+        textAlign: 'center',
+        alignContent: 'center',
+        width: '100%',
+        height: 50,
+        fontSize: '1.125rem',
+        paddingTop: 15
     }
 }));
 

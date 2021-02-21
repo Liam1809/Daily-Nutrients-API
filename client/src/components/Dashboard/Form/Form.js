@@ -47,7 +47,7 @@ const Form = ({ currentId, setCurrentId }) => {
                 <Typography variant="h6">{currentId ? 'Update' : 'Fill in'} Your Health Details</Typography>
                 <TextField name="name" variant="outlined" label="Name" fullWidth value={hdData.name} onChange={onChange} />
                 <TextField name="age" variant="outlined" label="Age" fullWidth value={hdData.age} onChange={onChange} />
-                <TextField name="sex" variant="outlined" label="Sex" fullWidth value={hdData.sex} onChange={onChange} />
+                <TextField name="sex" variant="outlined" label="Gender" fullWidth value={hdData.sex} onChange={onChange} />
                 <TextField name="weight" variant="outlined" label="Weight" fullWidth value={hdData.weight} onChange={onChange} />
                 <TextField name="height" variant="outlined" label="Height" fullWidth value={hdData.height} onChange={onChange} />
                 <Button
