@@ -4,8 +4,10 @@ export const FETCH_BY_ID = 'FETCH_BY_ID';
 export const CREATE = 'CREATE';
 export const UPDATE = 'UPDATE';
 export const DELETE = 'DELETE';
-export const Signin = 'Sign In';
-export const Signout = 'Sign Out';
+
+// Authentication Types
+export const AUTH = 'Sign In';
+export const LOGOUT = 'Sign Out';
 
 // Navigation Types
 export const Home = 'Home';
