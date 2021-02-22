@@ -12,15 +12,19 @@ import cors from 'cors';
 
 import healthDetailRouter from './routes/healthDetail.js';
 import userRouter from './routes/user.js';
+
 const app = express();
 
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
+// HD Router
 app.use('/HD', healthDetailRouter);
-app.use('user', userRouter);
+// user Router
+app.use('/user', userRouter);
 
+// connect to mongoDB
 const CONNECTION_URL = 'mongodb+srv://Liam:18091999@cluster0.edpoc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 4000;
 

@@ -11,12 +11,13 @@ const authentication = async (req, res, next) => {
         let decodedData;
         //verify and assign decoded id to userId
         if (token && isCustomUser) {
+            // verify token with secret text and assign data to decodedData
             decodedData = jwt.verify(token, '@user');
-
+            // add decoded's id to userId of req object 
             req.userId = decodedData?.id;
         } else {
             decodedData = jwt.decode(token);
-
+            // sub: google specific id 
             req.userId = decodedData?.sub;
         }
 
