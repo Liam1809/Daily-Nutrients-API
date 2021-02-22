@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Avatar, Button, Paper, Grid, Typography, Container, TextField } from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
+import { GoogleLogin } from 'react-google-login';
 
-
+// 
 import Input from './Input/Input.js';
+import Icon from './Icon/Icon.js';
+
 import useStyles from './styles.js';
 
 const Authentication = () => {
@@ -20,8 +23,18 @@ const Authentication = () => {
     };
     const switchMode = () => {
         setisSignUp((prevIsSignUp) => !prevIsSignUp);
+        setShowPassword(false);
     };
+
     const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
+
+    const googleSuccess = (res) => {
+        console.log(res);
+    };
+
+    const googleFailure = () => {
+        console.log("Google Sign in is not gooodd");
+    };
     return (
 
         <Container component="main" maxWidth="xs">
@@ -49,6 +62,25 @@ const Authentication = () => {
                         }
                     </Grid>
                     <Button className={classes.submit} type="submit" fullWidth variant='contained' color={isSignUp ? 'primary' : 'secondary'}>{isSignUp ? 'Sign Up' : 'Sign In'}</Button>
+                    <GoogleLogin
+                        clientId=""
+                        render={(renderProps) => (
+                            <Button
+                                className={classes.googleButton}
+                                color={isSignUp ? 'secondary' : 'primary'}
+                                fullWidth
+                                variant="contained"
+                                onClick={renderProps.onClick}
+                                disabled={renderProps.disabled}
+                                startIcon={<Icon />}
+                            >
+                                {isSignUp ? "GOOGLE SIGN IN" : "GOOGLE SIGN UP"}
+                            </Button>
+                        )}
+                        onSuccess={googleSuccess}
+                        onFailure={googleFailure}
+                        cookiePolicy="single_host_origin"
+                    />
                     <Grid container justify='flex-end'>
                         <Grid item>
                             <Button onClick={switchMode}>
