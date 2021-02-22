@@ -50,14 +50,7 @@ const Form = ({ currentId, setCurrentId }) => {
                 <TextField name="sex" variant="outlined" label="Gender" fullWidth value={hdData.sex} onChange={onChange} />
                 <TextField name="weight" variant="outlined" label="Weight" fullWidth value={hdData.weight} onChange={onChange} />
                 <TextField name="height" variant="outlined" label="Height" fullWidth value={hdData.height} onChange={onChange} />
-                <Button
-                    className={classes.buttonSubmit}
-                    variant='contained'
-                    color="primary"
-                    size='large'
-                    fullWidth
-                    type="submit"
-                >Submit</Button>
+                <Button className={classes.buttonSubmit} variant='contained' color="primary" size='large' fullWidth type="submit" >Submit</Button>
                 <Button variant='contained' color="secondary" size='large' onClick={clear} fullWidth>Clear</Button>
             </form>
         </Paper>

@@ -39,7 +39,7 @@ const DrawerNav = () => {
             case Recipes:
                 return '/recipes';
             case Signin:
-                return '/auth';
+                return '/authentication';
             case Signout:
                 return '/';
             default:
