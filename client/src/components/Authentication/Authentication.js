@@ -6,7 +6,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import { GoogleLogin } from 'react-google-login';
 
 // 
-import { signUp, signIn } from '../../actions/authentication.js';
+import { signup, signin } from '../../actions/authentication.js';
 import Input from './Input/Input.js';
 import Icon from './Icon/Icon.js';
 import { AUTH } from '../../constants/constantTypes.js';
@@ -23,9 +23,9 @@ const Authentication = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (isSignUp) {
-            dispatch(signUp(formData, history));
+            dispatch(signup(formData, history));
         } else {
-            dispatch(signIn(formData, history));
+            dispatch(signin(formData, history));
         }
     };
 

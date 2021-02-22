@@ -1,8 +1,11 @@
 import * as api from '../api/index.js';
-import { AUTH, LOGOUT } from '../constants/constantTypes.js';
+import { AUTH } from '../constants/constantTypes.js';
 
-export const signIn = (formData, history) => async (dispatch) => {
+export const signin = (formData, history) => async (dispatch) => {
     try {
+        const { data } = await api.signIn(formData);
+
+        dispatch({ type: AUTH, payload: data });
 
         history.push('/');
     } catch (error) {
@@ -10,8 +13,12 @@ export const signIn = (formData, history) => async (dispatch) => {
     }
 };
 
-export const signUp = (formData, history) => async (dispatch) => {
+export const signup = (formData, history) => async (dispatch) => {
     try {
+        const { data } = await api.signUp(formData);
+
+        dispatch({ type: AUTH, payload: data });
+
         history.push('/');
     } catch (error) {
         console.log(error.message);
