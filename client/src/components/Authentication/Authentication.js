@@ -5,8 +5,10 @@ import { Avatar, Button, Paper, Grid, Typography, Container, TextField } from '@
 import LockIcon from '@material-ui/icons/Lock';
 import { GoogleLogin } from 'react-google-login';
 
-// 
+// import actions
 import { signup, signin } from '../../actions/authentication.js';
+
+// import components & constants & Styles
 import Input from './Input/Input.js';
 import Icon from './Icon/Icon.js';
 import { AUTH } from '../../constants/constantTypes.js';
@@ -24,6 +26,7 @@ const Authentication = () => {
         e.preventDefault();
         if (isSignUp) {
             dispatch(signup(formData, history));
+            setisSignUp(false);
         } else {
             dispatch(signin(formData, history));
         }
@@ -38,7 +41,9 @@ const Authentication = () => {
         setShowPassword(false);
     };
 
+    // toggle show password in password text field
     const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
+
 
     const googleSuccess = async (res) => {
         const userInfo = res?.profileObj;
@@ -46,7 +51,7 @@ const Authentication = () => {
 
         try {
             dispatch({ type: AUTH, payload: { userInfo, token } });
-            history.push('/');
+            history.push('/dashboard');
         } catch (error) {
             console.log(error);
         }

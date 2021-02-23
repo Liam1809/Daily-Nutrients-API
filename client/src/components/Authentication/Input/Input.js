@@ -3,6 +3,7 @@ import { Grid, TextField, InputAdornment, IconButton } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
+// custom Input component to get input
 const Input = ({ name, label, half, handleChange, type, handleShowPassword }) => {
     return (
         <Grid item xs={12} sm={half ? 6 : 12}>
