@@ -14,7 +14,7 @@ const Recipes = () => {
                 </Grid>
             </Container>
         </Grow>
-    )
+    );
 }
 
 export default Recipes;

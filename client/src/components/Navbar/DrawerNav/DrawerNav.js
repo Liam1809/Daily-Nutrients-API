@@ -49,7 +49,7 @@ const DrawerNav = () => {
             case LOGOUT:
                 return '/authentication';
             default:
-                return '/';
+                return;
         }
     };
     // toggle AUTH LOGOUT

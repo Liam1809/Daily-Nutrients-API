@@ -1,21 +1,26 @@
 import React from 'react';
 import { Box, Container, Grid, Grow, Typography, Button, Tooltip } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
 import UpdateIcon from '@material-ui/icons/Update';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+// import Hook
+import { useDispatch } from 'react-redux';
+// import action
 import { deleteHD } from '../../../actions/healthDetail.js';
+// import style
 import useStyles from './styles.js';
 
-const Hd = ({ H, setCurrentId }) => {
+const Hd = ({ user, H, setCurrentId }) => {
+
     const classes = useStyles();
     const dispatch = useDispatch();
+
+    // check property of Health Data object
     const checkData = (given) => H.hasOwnProperty(given) ? H[given] : 'null';
 
     return (
         <Container className={classes.container}>
             <div className={`${classes.mainOverlay} ${classes.overlay1}`}>
-                <Typography variant='h4'>Welcome {checkData('name')}</Typography>
+                <Typography variant='h4'>Welcome {user?.userInfo?.name}</Typography>
             </div>
             <div className={`${classes.mainOverlay} ${classes.overlay2}`}>
                 <Button size="small" onClick={() => { setCurrentId(H._id) }}><Tooltip title='Update'><UpdateIcon fontSize="large" /></Tooltip></Button>

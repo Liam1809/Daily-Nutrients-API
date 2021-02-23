@@ -14,7 +14,7 @@ const Mealplan = () => {
                 </Grid>
             </Container>
         </Grow>
-    )
+    );
 }
 
 export default Mealplan;

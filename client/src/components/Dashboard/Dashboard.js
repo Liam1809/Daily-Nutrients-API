@@ -13,29 +13,33 @@ import { getHD } from '../../actions/healthDetail.js';
 import useStyles from './styles.js';
 
 const Dashboard = () => {
-    const dispatch = useDispatch();
     const [currentId, setCurrentId] = useState(0);
+
+    const dispatch = useDispatch();
+    const classes = useStyles();
+
+    // retrieve user from localStorage
+    const user = JSON.parse(localStorage.getItem('userProfile'));
+    console.log('Current User', user);
 
     useEffect(() => {
         dispatch(getHD());
     }, [currentId, dispatch]);
-
-    const classes = useStyles();
 
     return (
         <Grow in>
             <Container className={classes.mainContainer}>
                 <Grid container justify="space-between" alignItems="stretch" spacing={3}>
                     <Grid item xs={12} sm={6}>
-                        <HealthDetail setCurrentId={setCurrentId} />
+                        <HealthDetail user={user} setCurrentId={setCurrentId} />
                     </Grid>
                     <Grid item xs={12} sm={5}>
-                        <Form currentId={currentId} setCurrentId={setCurrentId} />
+                        <Form user={user} currentId={currentId} setCurrentId={setCurrentId} />
                     </Grid>
                 </Grid>
             </Container>
         </Grow>
-    )
+    );
 }
 
 export default Dashboard;
