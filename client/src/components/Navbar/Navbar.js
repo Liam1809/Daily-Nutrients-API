@@ -12,19 +12,23 @@ const Navbar = () => {
     const classes = useStyles();
 
     return (
-        <AppBar className={classes.appBar} position='static' color='inherit'>
-            <Grid container alignItems='center'>
-                <Grid item container justify='flex-start' xs={4}>
-                    <DrawerNav />
-                </Grid>
-                <Grid item>
-                    <img className={classes.image} src={doctor} alt="icon" height="100" />
-                </Grid>
-                <Grid item>
-                    <Typography className={classes.heading} component={Link} to='/' variant='h2' align='center'>Daily Nutrients</Typography>
+        <AppBar className={classes.appBar} position='sticky' color='inherit'>
+            <Grid container justify='flex-start' alignItems='center' spacing={3}>
+                <Grid item container justify='flex-start' xs={12} md={1}>
+                    <img className={classes.icon} src={doctor} alt="icon" height="100" />
                 </Grid>
             </Grid>
-        </AppBar>
+            <Grid item xs={12} md={10} container justify='center' alignItems='center' >
+
+                <Typography className={classes.heading} component={Link} to='/' variant='h4' align='center'>DAILY NUTRIENTS</Typography>
+            </Grid>
+            <Grid item xs={12} md={10} container justify='flex-end' alignItems='center' >
+                <Grid item container justify='flex-end' xs={12} md={1}>
+                    <DrawerNav />
+                </Grid>
+            </Grid>
+
+        </AppBar >
     )
 }
 

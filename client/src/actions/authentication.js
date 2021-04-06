@@ -11,6 +11,7 @@ export const signin = (formData, history) => async (dispatch) => {
         dispatch({ type: AUTH, payload: data });
         // push back from current path to /dashboard
         history.push('/dashboard');
+        // console.log(data);
 
     } catch (error) {
         console.log(error.message);
@@ -27,6 +28,7 @@ export const signup = (formData, history) => async (dispatch) => {
         localStorage.clear();
         // push back from current path to /authentication
         history.push('/authentication');
+        // console.log(data);
     } catch (error) {
         console.log(error.message);
     }

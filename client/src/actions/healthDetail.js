@@ -1,5 +1,5 @@
 import * as api from '../api/index.js';
-import { FETCH, FETCH_BY_ID, CREATE, UPDATE, DELETE } from '../constants/constantTypes.js';
+import { FETCH, CREATE, UPDATE, DELETE } from '../constants/constantTypes.js';
 
 // CREATE ACTION CREATORS
 

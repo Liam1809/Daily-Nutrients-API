@@ -2,8 +2,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(({
     mainContainer: {
+        maxWidth: 'inherit',
         background: 'white',
-        height: '80vh',
+        height: '200vh',
         borderRadius: 30,
         border: '1px solid rgba(0,0,0, 0.2)',
         paddingTop: 20,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Container, Grid, Grow, Typography, Button, Tooltip } from '@material-ui/core';
 import UpdateIcon from '@material-ui/icons/Update';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -8,14 +8,13 @@ import { useDispatch } from 'react-redux';
 import { deleteHD } from '../../../actions/healthDetail.js';
 // import style
 import useStyles from './styles.js';
+import { SettingsCellOutlined } from '@material-ui/icons';
 
-const Hd = ({ user, H, setCurrentId }) => {
-
+const Hd = ({ user, H, setCurrentId, flag, setFlag }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-
     // check property of Health Data object
-    const checkData = (given) => H.hasOwnProperty(given) ? H[given] : 'null';
+    const checkData = (given) => H.hasOwnProperty(given) ? H[given] : 'N/A';
 
     return (
         <Container className={classes.container}>
@@ -23,7 +22,7 @@ const Hd = ({ user, H, setCurrentId }) => {
                 <Typography variant='h4'>Welcome {user?.userInfo?.name}</Typography>
             </div>
             <div className={`${classes.mainOverlay} ${classes.overlay2}`}>
-                <Button size="small" onClick={() => { setCurrentId(H._id) }}><Tooltip title='Update'><UpdateIcon fontSize="large" /></Tooltip></Button>
+                <Button size="small" onClick={() => { setCurrentId(H._id); localStorage.setItem('count', 0); }}><Tooltip title='Update'><UpdateIcon fontSize="large" /></Tooltip></Button>
             </div>
             <Grid container justify='space-between' alignItems="stretch" spacing={4}>
                 <Grid item xs={12} sm={1}>
@@ -57,7 +56,7 @@ const Hd = ({ user, H, setCurrentId }) => {
                 </Grid>
             </Grid>
             <div className={`${classes.mainOverlay} ${classes.overlay3}`}>
-                <Button size="small" onClick={() => { dispatch(deleteHD(H._id)) }}><Tooltip title='Delete'><DeleteIcon fontSize="large" /></Tooltip></Button>
+                <Button size="small" onClick={() => { setFlag(!flag); localStorage.setItem('count', 0); dispatch(deleteHD(H._id)); }}><Tooltip title='Delete'><DeleteIcon fontSize="large" /></Tooltip></Button>
             </div>
         </Container >
     )

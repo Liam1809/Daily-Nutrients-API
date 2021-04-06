@@ -13,3 +13,4 @@ export const Home = 'Home';
 export const Dashboard = 'Dashboard';
 export const MealPlan = 'Meal Plan';
 export const Recipes = 'Recipes';
+export const Schedule = 'Schedule';

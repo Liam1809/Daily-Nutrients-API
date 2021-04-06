@@ -14,22 +14,11 @@ export default makeStyles((theme) => ({
         color: '#20565c',
         textDecoration: 'none'
     },
-    image: {
-        marginRight: '15px',
-    },
-    /////
-    profile: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        width: '400px',
-    },
-    userName: {
-        display: 'flex',
-        alignItems: 'center',
-    },
-    brandContainer: {
-        display: 'flex',
-        alignItems: 'center',
+    icon: {
+        width: 70,
+        height: 70,
+        padding: 10,
+        paddingLeft: 40
     },
 
 }));

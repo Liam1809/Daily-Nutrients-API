@@ -1,6 +1,9 @@
+// import hook
 import React, { useState, useEffect, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
+
+// import tools & icons from material ui
 import { Button, Drawer, Tooltip, List, Divider, ListItem, ListItemIcon, ListItemText, Avatar } from '@material-ui/core';
 import DehazeIcon from '@material-ui/icons/Dehaze';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -10,12 +13,16 @@ import KitchenIcon from '@material-ui/icons/Kitchen';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 
-import { Home, Dashboard, MealPlan, Recipes, AUTH, LOGOUT } from '../../../constants/constantTypes.js';
+// import constants, styles, image
+import { Home, Dashboard, MealPlan, Recipes, Schedule, AUTH, LOGOUT } from '../../../constants/constantTypes.js';
 import useStyles from './styles.js';
 
 const DrawerNav = () => {
+
     const classes = useStyles();
+
     const [state, setState] = useState({ right: false });
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('userProfile')));
     const dispatch = useDispatch();
@@ -45,6 +52,8 @@ const DrawerNav = () => {
                 return '/mealplan';
             case Recipes:
                 return '/recipes';
+            case Schedule:
+                return '/schedule';
             case AUTH:
             case LOGOUT:
                 return '/authentication';
@@ -70,6 +79,8 @@ const DrawerNav = () => {
                 return <KitchenIcon fontSize='large' className={classes.setColor} />
             case Recipes:
                 return <FastfoodIcon fontSize='large' className={classes.setColor} />
+            case Schedule:
+                return <ScheduleIcon fontSize='large' className={classes.setColor} />
             case AUTH:
                 return <VpnKeyIcon fontSize='large' className={classes.setColor} />
             case LOGOUT:
@@ -101,7 +112,7 @@ const DrawerNav = () => {
                         </List>
                         <Divider />
                         <List>
-                            {[Home, Dashboard, MealPlan, Recipes].map((text) => (
+                            {[Home, Dashboard, MealPlan, Recipes, Schedule].map((text) => (
                                 <ListItem button key={text} component={Link} to={navigation(text)}>
                                     <ListItemIcon>{checkIcon(text)}</ListItemIcon>
                                     <ListItemText primary={text} />
@@ -110,15 +121,15 @@ const DrawerNav = () => {
                         </List>
                     </>
                 ) : (
-                        <List>
-                            {[Home].map((text) => (
-                                <ListItem button key={text} component={Link} to={navigation(text)}>
-                                    <ListItemIcon>{checkIcon(text)}</ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItem>
-                            ))}
-                        </List>
-                    )
+                    <List>
+                        {[Home].map((text) => (
+                            <ListItem button key={text} component={Link} to={navigation(text)}>
+                                <ListItemIcon>{checkIcon(text)}</ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItem>
+                        ))}
+                    </List>
+                )
             }
             <Divider />
             {
@@ -132,14 +143,14 @@ const DrawerNav = () => {
                     </List>
 
                 ) : (
-                        // SIGN IN BUTTON
-                        <List>
-                            <ListItem button key={AUTH} component={Link} to={navigation(AUTH)}>
-                                <ListItemIcon>{checkIcon(AUTH)}</ListItemIcon>
-                                <ListItemText primary={AUTH} />
-                            </ListItem>
-                        </List>
-                    )
+                    // SIGN IN BUTTON
+                    <List>
+                        <ListItem button key={AUTH} component={Link} to={navigation(AUTH)}>
+                            <ListItemIcon>{checkIcon(AUTH)}</ListItemIcon>
+                            <ListItemText primary={AUTH} />
+                        </ListItem>
+                    </List>
+                )
             }
         </div >
     );
@@ -149,7 +160,8 @@ const DrawerNav = () => {
             <Fragment key={'right'}>
                 <Button onClick={toggleDrawer('right', true)}>
                     <Tooltip title="Navigation">
-                        <DehazeIcon fontSize='large' className={classes.icon} />
+                        <DehazeIcon className={classes.fontIcon} />
+
                     </Tooltip>
                 </Button>
                 <Drawer anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}>

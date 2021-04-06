@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import { Container, Typography } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 // Hook
 import { useSelector } from 'react-redux';
 // import component
 import Hd from './Hd.js';
 
-const HealthDetail = ({ user, currentId, setCurrentId }) => {
+const HealthDetail = ({ user, currentId, setCurrentId, flag, setFlag }) => {
 
     // retrieve an array of healthDetail
     const HDs = useSelector((state) => state.healthDetails);
-
+    // console.log(HDs);
     // mark UserId to compare
     const UserId = user?.userInfo?._id;
     // console.log(`user ._id token: ${user?.userInfo?._id}`);
@@ -28,7 +28,7 @@ const HealthDetail = ({ user, currentId, setCurrentId }) => {
             {
                 H ? (
                     <Container key={H._id}>
-                        <Hd user={user} H={H} setCurrentId={setCurrentId} />
+                        <Hd user={user} H={H} setCurrentId={setCurrentId} flag={flag} setFlag={setFlag} />
                     </Container>
                 )
                     : (

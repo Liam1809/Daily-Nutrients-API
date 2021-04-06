@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Typography, Paper, ButtonGroup } from '@material-ui/core';
+import { TextField, Button, Typography, Paper, ButtonGroup, MenuItem } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { createHD, updateHD } from '../../../actions/healthDetail.js'
@@ -12,17 +12,17 @@ const Form = ({ user, currentId, setCurrentId }) => {
     const classes = useStyles();
 
     const HD = useSelector((state) => currentId ? state.healthDetails.find((h) => h._id === currentId) : null);
-    const HDs = useSelector((state) => state.healthDetails);
-    // console.log(HD);
+
 
     useEffect(() => {
         if (HD) setHDData(HD);
     }, [HD]);
 
     const handleSubmit = (e) => {
+        localStorage.setItem('count', 1);
         e.preventDefault();
-        console.log(currentId);
         if (currentId === 0) {
+
             dispatch(createHD(hdData));
             clear();
         } else {
@@ -45,20 +45,35 @@ const Form = ({ user, currentId, setCurrentId }) => {
                     currentId ? (
                         <>
                             <TextField name="age" variant="outlined" label="Age" fullWidth value={hdData.age} onChange={onChange} />
-                            <TextField name="sex" disabled variant="outlined" label="Gender" fullWidth value={hdData.sex} onChange={onChange} />
-                            <TextField name="weight" variant="outlined" label="Weight" fullWidth value={hdData.weight} onChange={onChange} />
-                            <TextField name="height" variant="outlined" label="Height" fullWidth value={hdData.height} onChange={onChange} />
+                            <TextField name="sex" disabled variant="outlined" label="Gender" fullWidth value={hdData.sex} onChange={onChange} select>
+                                <MenuItem value="male">Male</MenuItem>
+                                <MenuItem value="female">Female</MenuItem>
+                            </TextField>
+
+                            <TextField name="weight" variant="outlined" label="Weight: kg" fullWidth value={hdData.weight} onChange={onChange} />
+                            <TextField name="height" variant="outlined" label="Height: cm" fullWidth value={hdData.height} onChange={onChange} />
                         </>
                     ) : (
-                            <>
-                                <TextField name="age" variant="outlined" label="Age" fullWidth value={hdData.age} onChange={onChange} />
-                                <TextField name="sex" variant="outlined" label="Gender" fullWidth value={hdData.sex} onChange={onChange} />
-                                <TextField name="weight" variant="outlined" label="Weight" fullWidth value={hdData.weight} onChange={onChange} />
-                                <TextField name="height" variant="outlined" label="Height" fullWidth value={hdData.height} onChange={onChange} />
-                            </>
-                        )
+                        <>
+                            <TextField name="age" variant="outlined" label="Age" fullWidth value={hdData.age} onChange={onChange} />
+                            <TextField name="sex" variant="outlined" label="Gender" fullWidth value={hdData.sex} onChange={onChange} select>
+                                <MenuItem value="male">Male</MenuItem>
+                                <MenuItem value="female">Female</MenuItem>
+                            </TextField>
+                            <TextField name="weight" variant="outlined" label="Weight: kg" fullWidth value={hdData.weight} onChange={onChange} />
+                            <TextField name="height" variant="outlined" label="Height: cm" fullWidth value={hdData.height} onChange={onChange} />
+                        </>
+                    )
                 }
-                <Button className={classes.buttonSubmit} variant='contained' color="primary" size='large' fullWidth type="submit" >{!currentId ? 'Create' : 'Update'}</Button>
+
+                {
+                    localStorage.getItem('count') < 1 ? (
+                        <Button className={classes.buttonSubmit} variant='contained' color="primary" size='large' fullWidth type="submit" >{!currentId ? 'Create' : 'Update'}</Button>
+                    ) : (
+                        <Button disabled className={classes.buttonSubmit} variant='contained' color="primary" size='large' fullWidth type="submit" >{!currentId ? 'Create' : 'Update'}</Button>
+                    )
+                }
+
 
                 <Button variant='contained' color="secondary" size='large' onClick={clear} fullWidth>Clear</Button>
             </form>

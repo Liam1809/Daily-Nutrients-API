@@ -24,11 +24,6 @@ export default makeStyles((theme) => ({
         color: theme.palette.getContrastText(deepPurple[500]),
         backgroundColor: deepPurple[500]
     },
-    icon: {
-        width: 50,
-        height: 50,
-        paddingLeft: 20
-    },
     footer: {
         position: 'absolute',
         bottom: 0,
@@ -41,6 +36,10 @@ export default makeStyles((theme) => ({
         height: 50,
         fontSize: '1.125rem',
         paddingTop: 15
+    },
+    fontIcon: {
+        paddingRight: 40,
+        fontSize: '3rem'
     }
 }));
 
