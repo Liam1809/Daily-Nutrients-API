@@ -3,7 +3,6 @@ import { AppBar, Button, Toolbar, Typography, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 // import components
 import DrawerNav from './DrawerNav/DrawerNav.js';
-
 // import styles/images
 import useStyles from './styles.js';
 import doctor from '../../image/doctor.png';

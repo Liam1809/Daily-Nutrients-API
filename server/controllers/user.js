@@ -12,12 +12,15 @@ export const signin = async (req, res) => {
 
     try {
         const existingUser = await User.findOne({ email });
+        // console.log("Signin: existingUser");
+        // console.log(existingUser);
         // if no user found
         if (!existingUser) {
             console.log('User does not exist.');
             return res.status(404).json({ message: 'User does not exist.' });
         }
 
+        // compare password
         const checkPassword = await bcrypt.compare(password, existingUser.password);
 
         // if password is not matched
@@ -27,7 +30,9 @@ export const signin = async (req, res) => {
         }
 
         // get existing user's token and send to front end and set up user's expire time
-        const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, '@user', { expiresIn: '1h' });
+        const token = jwt.sign({ email: existingUser.email, name: existingUser.name, id: existingUser._id }, '@user', { expiresIn: '2h' });
+        // console.log("signin token");
+        // console.log(token);
         // send
         res.status(200).json({ userInfo: existingUser, token });
     } catch (error) {
@@ -59,11 +64,13 @@ export const signup = async (req, res) => {
         const hashPassword = await bcrypt.hash(password, 2);
 
         // create new user
-        const newUser = await User.create({ email, password: hashPassword, name: `${firstName} ${lastName}` });
-        console.log(`New User Sign-Up: ${newUser}`);
+        const newUser = await User.create({ email, password: hashPassword, name: `${firstName} ${lastName}`, role: 'USER' });
+        // console.log(`New User Sign-Up: ${newUser}`);
 
         // create user token
-        const token = jwt.sign({ email: newUser.email, id: newUser._id }, '@user', { expiresIn: '1h' });
+        const token = jwt.sign({ email: newUser.email, name: newUser.name, id: newUser._id }, '@user', { expiresIn: '2h' });
+        // console.log("signup token");
+        // console.log(token);
         // send 
         res.status(200).json({ userInfo: newUser, token });
 

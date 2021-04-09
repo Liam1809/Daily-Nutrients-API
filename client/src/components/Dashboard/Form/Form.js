@@ -13,6 +13,10 @@ const Form = ({ user, currentId, setCurrentId }) => {
 
     const HD = useSelector((state) => currentId ? state.healthDetails.find((h) => h._id === currentId) : null);
 
+    const UserId = user?.userInfo?._id;
+
+    const H = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === UserId || h.googleId === UserId) : null);
+
 
     useEffect(() => {
         if (HD) setHDData(HD);
@@ -67,13 +71,15 @@ const Form = ({ user, currentId, setCurrentId }) => {
                 }
 
                 {
-                    localStorage.getItem('count') < 1 ? (
-                        <Button className={classes.buttonSubmit} variant='contained' color="primary" size='large' fullWidth type="submit" >{!currentId ? 'Create' : 'Update'}</Button>
-                    ) : (
-                        <Button disabled className={classes.buttonSubmit} variant='contained' color="primary" size='large' fullWidth type="submit" >{!currentId ? 'Create' : 'Update'}</Button>
-                    )
+                    !H ? (
+                        <Button className={classes.buttonSubmit} variant='contained' color="primary" size='large' fullWidth type="submit" >Create</Button>
+                    ) : null
                 }
-
+                {
+                    currentId != 0 ? (
+                        <Button className={classes.buttonSubmit} variant='contained' color="primary" size='large' fullWidth type="submit" >Update</Button>
+                    ) : null
+                }
 
                 <Button variant='contained' color="secondary" size='large' onClick={clear} fullWidth>Clear</Button>
             </form>

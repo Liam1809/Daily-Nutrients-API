@@ -9,12 +9,6 @@ export default makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    searchBar: {
-        width: '40%',
-        position: 'relative',
-        top: 0,
-        left: "30%"
-    },
     root: {
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,

@@ -17,17 +17,16 @@ export const createHealthDetail = async (req, res) => {
 
     const newHD = new healthDetail({ age, sex, weight, height, userID: req.userId });
 
-    console.log(newHD);
     // Calculate BMI & BMR
     newHD.bmi = Cal_bmi(newHD.weight, newHD.height);
     newHD.bmr = Cal_bmr(newHD.age, newHD.weight, newHD.height, newHD.sex);
-    console.log(newHD);
+    // console.log(newHD);
 
     try {
         await newHD.save();
 
         res.status(201).json(newHD);
-        // console.log(newHD);
+        console.log(newHD);
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
@@ -39,12 +38,12 @@ export const updateHealthDetail = async (req, res) => {
     const { age, sex, weight, height } = req.body;
 
     // check if _id invalid of mongoDB _id
-
     if (!mongoose.Types.ObjectId.isValid(id)) {
         console.log('No Health Data found with that id');
     }
+
     const updatedHD = { age, sex, weight, height, userID: req.userId, _id: id };
-    console.log(updatedHD);
+    // console.log(updatedHD);
 
     // Calculate BMI & BMR
     updatedHD.bmi = Cal_bmi(updatedHD.weight, updatedHD.height);
@@ -52,7 +51,7 @@ export const updateHealthDetail = async (req, res) => {
 
     try {
         await healthDetail.findByIdAndUpdate(id, updatedHD);
-
+        console.log(" This one comes from update health details \n", updatedHD);
         res.json(updatedHD);
     } catch (error) {
         res.status(409).json({ message: error.message });

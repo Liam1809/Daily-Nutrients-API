@@ -2,18 +2,20 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles({
     media: {
-        height: "50px",
-        paddingTop: '56.25%',
-
+        backgroundSize: '250px 250px',
+        height: "100px",
+        paddingTop: '200px',
     },
     card: {
-        width: '100%',
+        margin: '20',
+        width: '280px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         borderRadius: '30px',
         height: '95%',
         position: 'relative',
+        border: '2px solid #EDF3EB',
     },
     overlay: {
         position: 'absolute',
@@ -37,28 +39,24 @@ export default makeStyles({
     grid: {
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'top'
     },
     Infor1: {
         paddingLeft: 0
     },
     Infor2: {
-        paddingRight: '20%'
+        paddingRight: '15px'
     },
     Infor3: {
         color: 'black',
-        paddingRight: '10%',
-        background: 'white',
+        background: '#EDF3EB',
         borderRadius: 30,
     },
-    pa1: {
-        paddingLeft: 10,
+    pa: {
+        padding: '0 10px',
         position: 'relative',
         top: 5,
         left: 0,
-    },
-    pa2: {
-        padding: '5px 10px 0 2px'
     }
 });
 

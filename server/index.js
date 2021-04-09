@@ -10,8 +10,10 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
+// import routers
 import healthDetailRouter from './routes/healthDetail.js';
 import userRouter from './routes/user.js';
+import dietRouter from './routes/diet.js';
 
 const app = express();
 
@@ -23,6 +25,8 @@ app.use(cors());
 app.use('/HD', healthDetailRouter);
 // user Router
 app.use('/user', userRouter);
+// diet Router
+app.use('/diet', dietRouter);
 
 // connect to mongoDB
 const CONNECTION_URL = 'mongodb+srv://Liam:18091999@cluster0.edpoc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
