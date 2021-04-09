@@ -9,7 +9,6 @@ import Pievisual from './Pievisual/Pievisual.js';
 import useStyles from './styles.js';
 // import actions
 import { getHD } from '../../actions/healthDetail.js';
-
 const Mealplan = () => {
     const [currentId, setCurrentId] = useState(0);
     const [BMR, setBMR] = useState(0);

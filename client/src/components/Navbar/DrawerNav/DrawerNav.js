@@ -2,7 +2,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-
+import { setSnackBar } from '../../../actions/snackBar.js';
 // import tools & icons from material ui
 import { Button, Drawer, Tooltip, List, Divider, ListItem, ListItemIcon, ListItemText, Avatar } from '@material-ui/core';
 import DehazeIcon from '@material-ui/icons/Dehaze';
@@ -65,6 +65,7 @@ const DrawerNav = () => {
     const logout = () => {
         dispatch({ type: LOGOUT });
         history.push('/authentication');
+        dispatch(setSnackBar(true, "success", "SUCCESSFULLY LOGGED OUT"));
         setUser(null);
     };
 

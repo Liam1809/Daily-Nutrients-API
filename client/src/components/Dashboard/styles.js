@@ -4,7 +4,7 @@ export default makeStyles(() => ({
     mainContainer: {
         maxWidth: 'inherit',
         background: 'white',
-        height: '80vh',
+        height: '90vh',
         borderRadius: 30,
         border: '1px solid rgba(0,0,0, 0.2)',
         paddingTop: 20,

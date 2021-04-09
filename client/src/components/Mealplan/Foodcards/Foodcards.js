@@ -72,7 +72,6 @@ const Foodcards = ({ user }) => {
     useEffect(() => {
         if (value == 0) {
             setTimeout(() => dispatch(setSnackBar(true, "info", "RECOMMEND SELECTING MORE THAN 2 VEGETABLES")), 1000);
-
         } else if (value == 1) {
             setTimeout(() => dispatch(setSnackBar(true, "info", "RECOMMEND SELECTING MORE THAN 2 FRUITS")), 1000);
         } else if (value == 2) {

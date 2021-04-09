@@ -21,6 +21,11 @@ export const deleteHD = (id) => API.delete(`/HD/${id}`);
 export const signIn = (FormData) => API.post('/user/signin', FormData);
 export const signUp = (FormData) => API.post('/user/signup', FormData);
 
+// API REQUESTS to retrive Diet Model from server
+export const fetchDiet = () => API.get('/diet');
+export const createDiet = (newDiet) => API.post('/diet', newDiet);
+export const updateDiet = (id, updatedDiet) => API.patch(`/diet/${id}`, updatedDiet);
+export const deleteDiet = (id) => API.delete(`/diet/${id}`);
 
 
 

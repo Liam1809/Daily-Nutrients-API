@@ -2,8 +2,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
     container: {
-        height: '75vh',
-        paddingTop: 100,
+        height: '100%',
+        paddingTop: -80,
         position: 'relative'
     },
     Round: {
@@ -29,21 +29,14 @@ export default makeStyles((theme) => ({
     text: { left: 65 },
     text1: { left: 60, },
     text2: { left: 50, },
+
     mainOverlay: {
-        position: 'absolute',
+        display: 'flex',
+        justifyContent: 'flex-end',
         color: 'black',
-    },
-    overlay1: {
-        top: 70,
-        left: 40
-    },
-    overlay2: {
-        top: 70,
-        right: -150
-    },
-    overlay3: {
-        bottom: 20,
-        right: -150
+        position: 'relative',
+        top: 0,
+        left: '30%'
     },
     [theme.breakpoints.down('md')]: {
         Round: {

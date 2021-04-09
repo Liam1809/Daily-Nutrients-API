@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Grow, Grid, } from '@material-ui/core';
+import { Container, Grow, Grid, Divider, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
 // import componentss
@@ -28,7 +28,9 @@ const Dashboard = () => {
     return (
         <Grow in>
             <Container className={classes.mainContainer}>
-                <Grid container justify="space-between" alignItems="stretch" spacing={3}>
+                <Typography variant="h4" style={{ padding: '10px 0px 10px 50px' }}>Welcome to Dashboard</Typography>
+                <Divider style={{ margin: 20, width: '35%' }} />
+                <Grid container justify="space-between" alignItems="center" spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <HealthDetail user={user} setCurrentId={setCurrentId} />
                     </Grid>

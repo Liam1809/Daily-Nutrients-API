@@ -28,7 +28,7 @@ const CustomizedSnackbars = () => {
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 open={snackbarOpen}
-                autoHideDuration={2000}
+                autoHideDuration={3000}
                 onClose={handleClose}
             >
                 <Alert

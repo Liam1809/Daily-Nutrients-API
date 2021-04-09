@@ -10,7 +10,6 @@ import Mealplan from './components/Mealplan/Mealplan.js';
 import Recipes from './components/Recipes/Recipes.js';
 import Authentication from './components/Authentication/Authentication.js';
 import Schedule from './components/Schedule/Schedule.js';
-import Post from './components/Post/Post.js';
 import Snackbar from './components/Snackbar/Snackbar.js';
 const App = () => {
     return (
@@ -20,7 +19,6 @@ const App = () => {
         // Recipes: /recipes 
         // Schedule: /schedule
         // sign in / sign out: /authentication
-        // Post: post
         < BrowserRouter >
             <Container maxWidth={false}>
                 <Snackbar />
@@ -28,7 +26,6 @@ const App = () => {
                 <Switch>
                     <Route path='/' exact component={Home} />
                     <Route path='/dashboard' exact component={Dashboard} />
-                    <Route path='/post' exact component={Post} />
                     <Route path='/mealplan' exact component={Mealplan} />
                     <Route path='/recipes' exact component={Recipes} />
                     <Route path='/authentication' exact component={Authentication} />
