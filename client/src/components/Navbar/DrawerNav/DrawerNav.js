@@ -2,6 +2,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
+import decode from 'jwt-decode';
 import { setSnackBar } from '../../../actions/snackBar.js';
 // import tools & icons from material ui
 import { Button, Drawer, Tooltip, List, Divider, ListItem, ListItemIcon, ListItemText, Avatar } from '@material-ui/core';
@@ -30,8 +31,17 @@ const DrawerNav = () => {
     const location = useLocation();
 
     useEffect(() => {
+        // auto log out
         const token = user?.token;
 
+        if (token) {
+            const decodedToken = decode(token);
+            if (token.length < 500) {
+                if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+            } else {
+                if (decodedToken.exp < new Date().getTime()) logout();
+            }
+        }
         setUser(JSON.parse(localStorage.getItem('userProfile')));
     }, [location]);
 
