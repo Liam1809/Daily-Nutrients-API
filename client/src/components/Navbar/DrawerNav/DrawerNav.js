@@ -33,13 +33,19 @@ const DrawerNav = () => {
     useEffect(() => {
         // auto log out
         const token = user?.token;
-
         if (token) {
             const decodedToken = decode(token);
+            // Custom token
             if (token.length < 500) {
                 if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+                // Google Token
             } else {
-                if (decodedToken.exp < new Date().getTime()) logout();
+                // testing auto logout
+                // decodedToken.exp * 1000 - 2000000: expire in 25mins
+                // decodedToken.exp * 1000 - 3000000: expire in 10mins
+                // decodedToken.exp * 1000 - 3500000: expire in a few mins
+
+                if (decodedToken.exp * 1000 - 3500000 < new Date().getTime()) logout();
             }
         }
         setUser(JSON.parse(localStorage.getItem('userProfile')));

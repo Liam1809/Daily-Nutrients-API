@@ -23,7 +23,7 @@ const Mealplan = () => {
     useEffect(() => {
         setBMR(HD?.bmr);
         dispatch(getHD());
-    }, [user]);
+    }, []);
 
     return (
         <Grow in>
