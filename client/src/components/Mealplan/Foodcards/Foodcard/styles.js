@@ -57,6 +57,9 @@ export default makeStyles({
         position: 'relative',
         top: 5,
         left: 0,
+    },
+    quantity: {
+        width: 120
     }
 });
 

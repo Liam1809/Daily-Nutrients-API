@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Grid, CircularProgress, Container, Button, Tabs, Tab, Paper, AppBar, TextField, Typography, Divider } from '@material-ui/core';
+import PropTypes, { oneOfType } from 'prop-types';
+import { Grid, CircularProgress, Container, Button, Tabs, Tab, Paper, AppBar, TextField, Typography, Divider, Tooltip } from '@material-ui/core';
 import Foodcard from './Foodcard/Foodcard.js';
 import useStyles from './styles.js';
 import Carousel from 'react-elastic-carousel';
 import SearchIcon from '@material-ui/icons/Search';
+import RefreshIcon from '@material-ui/icons/Refresh';
 
 import { getNutrients } from '../../../actions/rawProduct.js';
 import { getRecipesByIngredients } from '../../../actions/recipesIngredients.js';
 import { setSnackBar } from '../../../actions/snackBar.js';
-import { Vegetables, Fruits, Grains, Proteins } from './defaultData.js';
+import { Vegetables, Fruits, Grains, Proteins } from './Data/defaultData.js';
 import "./styles.css";
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -49,34 +51,63 @@ function a11yProps(index) {
 }
 
 
-const Foodcards = ({ user }) => {
+const Foodcards = ({ user, setVeggiesArray, setFruitsArray, setGrainsArray, setProteinsArray }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
     const [value, setValue] = useState(0);
+    // flag to display recipes
+    const [flag, setFlag] = useState(false);
+    // flag to reset chosen ingredients/ products
+    const [flag1, setFlag1] = useState(false);
 
+    const one = "1";
+    const two = "2";
+    const three = "3";
+    const four = "4";
+    const text = "food";
+    const text1 = "fruit";
+    // search
     const [searchWord1, setSearchWord1] = useState("");
-    const [recipesWord1, setRecipesWord1] = useState([]);
-
     const [searchWord2, setSearchWord2] = useState("");
     const [searchWord3, setSearchWord3] = useState("");
     const [searchWord4, setSearchWord4] = useState("");
 
-    const [currentArray, setCurrentArray] = useState([]);
-    const [recipesFound, setRecipesFound] = useState([]);
+    const [recipesWord1, setRecipesWord1] = useState([]);
+    const [recipesWord2, setRecipesWord2] = useState([]);
+    const [recipesWord3, setRecipesWord3] = useState([]);
+    const [recipesWord4, setRecipesWord4] = useState([]);
 
+
+    const [currentArray, setCurrentArray] = useState([]);
+    const [currentArray1, setCurrentArray1] = useState([]);
+
+    const [recipesFound1, setRecipesFound1] = useState([]);
+    const [recipesFound2, setRecipesFound2] = useState([]);
+    const [recipesFound3, setRecipesFound3] = useState([]);
+    const [recipesFound4, setRecipesFound4] = useState([]);
+
+    const [countRecipes, setCountRecipes] = useState(0);
     const [countIngredients, setCountIngredients] = useState(0);
 
     const HD = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === user?.userInfo?._id || h.googleId === user?.userInfo?._id) : null);
 
     useEffect(() => {
         if (value == 0) {
+            clear();
+            clear1();
             setTimeout(() => dispatch(setSnackBar(true, "info", "RECOMMEND SELECTING MORE THAN 2 VEGETABLES")), 1000);
         } else if (value == 1) {
+            clear();
+            clear1();
             setTimeout(() => dispatch(setSnackBar(true, "info", "RECOMMEND SELECTING MORE THAN 2 FRUITS")), 1000);
         } else if (value == 2) {
+            clear();
+            clear1();
             setTimeout(() => dispatch(setSnackBar(true, "info", "RECOMMEND SELECTING NO MORE THAN 1 GRAIN")), 1000);
         } else if (value == 3) {
+            clear();
+            clear1();
             setTimeout(() => dispatch(setSnackBar(true, "info", "RECOMMEND SELECTING NO MORE THAN 2 PROTEINS")), 1000);
         }
     }, [value]);
@@ -94,72 +125,164 @@ const Foodcards = ({ user }) => {
         setValue(newValue);
     };
 
-    const handleChangeSearch1 = async (e) => {
-        setSearchWord1(e.target.value);
-    };
-    const handleChangeSearch2 = async (e) => {
-        setSearchWord2(e.target.value);
-    };
-    const handleChangeSearch3 = async (e) => {
-        setSearchWord3(e.target.value);
-    };
-    const handleChangeSearch4 = async (e) => {
-        setSearchWord4(e.target.value);
+    const handleChangeSearch = (e, string) => {
+        switch (string) {
+            case one:
+                setSearchWord1(e.target.value);
+                break;
+            case two:
+                setSearchWord2(e.target.value);
+                break;
+            case three:
+                setSearchWord3(e.target.value);
+                break;
+            case four:
+                setSearchWord4(e.target.value);
+                break;
+            default:
+                return;
+        }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e, string1, string2) => {
         e.preventDefault();
-        if (searchWord1 == "") {
+        if (string1 == "") {
             dispatch(setSnackBar(true, "error", "PLEASE SEARCH SOMETHING"));
         } else {
-            // console.log(searchWord1);
-            // console.log(getNutrients("4", searchWord1));
-            getNutrients("4", searchWord1).then((data) => setRecipesWord1(data));
-            setSearchWord1("");
+            switch (string2) {
+                case one: // Vegetables
+                    getNutrients("4", searchWord1).then((data) => setRecipesWord1(data));
+                    setSearchWord1("");
+                    break;
+                case two: // Fruits
+                    getNutrients("3", searchWord2).then((data) => setRecipesWord2(data));
+                    setSearchWord2("");
+                    break;
+                case three: // Grains
+                    getNutrients("5", searchWord3).then((data) => setRecipesWord3(data));
+                    setSearchWord3("");
+                    break;
+                case four: // Proteins
+                    getNutrients("2", searchWord4).then((data) => setRecipesWord4(data));
+                    setSearchWord4("");
+                    break;
+                default:
+                    return;
+            }
         }
     };
 
-    const stringConcentation1 = (arr) => {
-        let string = "";
-        for (let i = 0; i < arr.length; i++) {
-            if (i >= arr.length - 1) {
-                string += arr[i].name;
-            } else {
-                string += arr[i].name + ", ";
-            }
-        }
-        return string;
-    }
-
-
-    const handlleRecipes = (e) => {
+    const handlleRecipes = (e, string) => {
         e.preventDefault();
         if (currentArray.length == 0) {
             dispatch(setSnackBar(true, "error", "PLEASE CHOOSE ANY INGREDIENTS BEFORE GENERATE RECIPES"));
         } else {
             console.log(currentArray);
-            let meno = "";
-            currentArray.map((value) => meno += value.replace(" ", "%20") + ',+');
-            console.log(meno)
-            let arrne = [];
-            getRecipesByIngredients(meno);
-            // console.log(arrne);
-            // setRecipesFound(arrne);
+            let str = "";
+            currentArray.map((value) => str += value.title.replace(" ", "%20") + ',+');
+            // console.log(str);
+            switch (string) {
+                case one:
+                    getRecipesByIngredients(str).then((data) => setRecipesFound1(data));
+                    break;
+                case two:
+                    getRecipesByIngredients(str).then((data) => setRecipesFound2(data));
+                    break;
+                case three:
+                    getRecipesByIngredients(str).then((data) => setRecipesFound3(data));
+                    break;
+                case four:
+                    getRecipesByIngredients(str).then((data) => setRecipesFound4(data));
+                    break;
+                default:
+                    return;
+            }
+            setFlag(false);
+
         }
-    }
+    };
+
     const clear = () => {
+        setRecipesWord1([]);
+        setRecipesWord2([]);
+        setRecipesWord3([]);
+        setRecipesWord4([]);
         setCountIngredients(0);
         setCurrentArray([]);
-        window.location.reload();
-    }
+        setFlag(false);
+        setFlag1(true);
+    };
 
-    const handleModel = (e) => {
+    const clear1 = () => {
+        setCurrentArray1([]);
+        setCountRecipes(0);
+        setFlag1(true);
+    };
+
+    const handleModel = (e, string) => {
         e.preventDefault();
-        dispatch(setSnackBar(true, "error", "CANNOT ADD EMPTY RECIPES TO MODEL"));
-    }
+        if (string === two) {
+            // if current array of fruits products is empty
+            if (currentArray.length == 0) {
+                dispatch(setSnackBar(true, "error", "CANNOT ADD EMPTY PRODUCTS TO MODEL"));
+            } else {
+                // fruit calories
+                let total1 = 0;
+                currentArray.map((item) => total1 += item.calories);
+                if (total1 > (HD?.bmr * 20 / 100)) {
+                    dispatch(setSnackBar(true, "error", "TOTAL CALORIES REACH OVER LIMIT, PLEASE RESELECT AGAIN"));
+                } else {
+                    // add to model
+                    console.log("GOOD TO GO");
+                    setFruitsArray(currentArray);
+                }
+            }
+        } else {
+            // if current array of recipes is empty
+            if (currentArray1.length == 0) {
+                dispatch(setSnackBar(true, "error", "CANNOT ADD EMPTY RECIPES TO MODEL"));
+            } else {
+                // Recipes Calories
+                let total = 0;
+                currentArray1.map((item) => total += item.calories);
+
+                switch (string) {
+                    case one:
+                        if (total > (HD?.bmr * 30 / 100)) {
+                            dispatch(setSnackBar(true, "error", "TOTAL CALORIES REACH OVER LIMIT, PLEASE RESELECT AGAIN"));
+                        } else {
+                            // add to model
+                            console.log("GOOD TO GO");
+                            setVeggiesArray(currentArray1);
+                        }
+                        break;
+                    case three:
+                        if (total > (HD?.bmr * 25 / 100)) {
+                            dispatch(setSnackBar(true, "error", "TOTAL CALORIES REACH OVER LIMIT, PLEASE RESELECT AGAIN"));
+                        } else {
+                            console.log("GOOD TO GO");
+                            setGrainsArray(currentArray1);
+                        }
+                        break;
+                    case four:
+                        if (total > (HD?.bmr * 25 / 100)) {
+                            dispatch(setSnackBar(true, "error", "TOTAL CALORIES REACH OVER LIMIT, PLEASE RESELECT AGAIN"));
+                        } else {
+                            console.log("GOOD TO GO");
+                            setProteinsArray(currentArray1);
+                        }
+                        break;
+                    default:
+                        return;
+                }
+            }
+        }
+
+
+    };
+
     return (
         <Container className={classes.mainContainer}>
-            <div>{HD?.bmr}</div>
             <Typography variant="h4" className={`${classes.text} ${classes.text1}`}>Welcome to Meal Plan</Typography>
             <Divider />
             <div className={classes.root}>
@@ -179,17 +302,16 @@ const Foodcards = ({ user }) => {
                 <TabPanel value={value} index={0}>
                     <Container className={classes.secondContainer}>
                         <Container>
-                            <form autoComplete="off" noValidate onSubmit={handleSubmit}>
+                            <form autoComplete="off" noValidate onSubmit={(e) => handleSubmit(e, searchWord1, one)}>
                                 <Grid container justify='center' alignItems='flex-start' spacing={1}>
                                     <Grid item xs={12} md={5}>
-                                        <TextField name="searchWord1" type='text' variant="outlined" label="Search for ingredients, ex: carrot, tomato,..." fullWidth value={searchWord1} onChange={handleChangeSearch1} />
+                                        <TextField name="searchWord1" type='text' variant="outlined" label="Search for ingredients" fullWidth value={searchWord1} onChange={(e) => handleChangeSearch(e, one)} />
                                     </Grid>
                                     <Grid item xs={12} md={2}>
                                         <Button variant='contained' color="primary" size='large' type="submit" style={{ padding: '15px 30px' }}><SearchIcon /></Button>
                                     </Grid>
                                 </Grid>
                             </form>
-
                             <Divider style={{ margin: '20px 0' }} />
                         </Container>
                         <div>
@@ -199,12 +321,12 @@ const Foodcards = ({ user }) => {
                                     recipesWord1?.length ? (recipesWord1.map((cardi) => (
                                         <div
                                             key={cardi.id}>
-                                            <Foodcard cardi={cardi} currentArray={currentArray} setCurrentArray={setCurrentArray} countIngredients={countIngredients} setCountIngredients={setCountIngredients} />
+                                            <Foodcard cardi={cardi} text={text} flag1={flag1} setFlag1={setFlag1} currentArray={currentArray} setCurrentArray={setCurrentArray} countIngredients={countIngredients} setCountIngredients={setCountIngredients} />
                                         </div>
                                     ))) : (Vegetables.map((cardi) => (
                                         <div
                                             key={cardi.id}>
-                                            <Foodcard cardi={cardi} currentArray={currentArray} setCurrentArray={setCurrentArray} countIngredients={countIngredients} setCountIngredients={setCountIngredients} />
+                                            <Foodcard cardi={cardi} text={text} flag1={flag1} setFlag1={setFlag1} currentArray={currentArray} setCurrentArray={setCurrentArray} countIngredients={countIngredients} setCountIngredients={setCountIngredients} />
                                         </div>
                                     )))
                                 }
@@ -218,31 +340,47 @@ const Foodcards = ({ user }) => {
                                         <Button variant="contained" color='secondary' size='large' fullWidth onClick={clear}>Reset</Button>
                                     </Grid>
                                     <Grid item>
-                                        <Button variant="contained" color='primary' size='large' fullWidth onClick={handlleRecipes}>Find Recipes</Button>
+                                        <Button variant="contained" color='primary' size='large' fullWidth onClick={(e) => handlleRecipes(e, one)}>Find Recipes</Button>
                                     </Grid>
                                 </Grid>
                             </Container>
                         </div>
                         <div>
                             <Divider style={{ margin: '20px 0' }} />
-                            <Typography className={`${classes.text} ${classes.text3} ${classes.text31}`}>Recipes With Chosen Ingredients</Typography>
-                            {recipesFound?.length ? (
-                                <Carousel breakPoints={bP}>
-                                    {
-                                        recipesFound.map((cardi) => (
-                                            <div
-                                                key={cardi.id}>
-                                                <Foodcard cardi={cardi} />
-                                            </div>
-                                        ))
-                                    }
-                                </Carousel>) : null
-
-                            }
+                            <Grid container justify='space-between'>
+                                <Grid item xs={12} md={11}><Typography className={`${classes.text} ${classes.text3} ${classes.text31}`}>Recipes With Chosen Ingredients</Typography></Grid>
+                                <Grid item xs={12} md={1}><Button onClick={(e) => {
+                                    e.preventDefault();
+                                    setFlag(true);
+                                    if (recipesFound1.length <= 0) dispatch(setSnackBar(true, "error", "NO RECIPES WITH THOSE INGREDIENTS"));
+                                }}><Tooltip title="Refresh"><RefreshIcon fontSize='large' /></Tooltip></Button></Grid>
+                            </Grid>
+                            <Carousel breakPoints={bP}>
+                                {
+                                    flag ? (
+                                        recipesFound1?.length ? (
+                                            recipesFound1.map((cardi) => (
+                                                <div
+                                                    key={cardi.id}>
+                                                    <Foodcard cardi={cardi} flag1={flag1} setFlag1={setFlag1} currentArray1={currentArray1} setCurrentArray1={setCurrentArray1} countRecipes={countRecipes} setCountRecipes={setCountRecipes} />
+                                                </div>
+                                            ))
+                                        ) : <div></div>
+                                    ) : (
+                                        <div>NO RECIPES SELECTED</div>
+                                    )
+                                }
+                            </Carousel>
                             <Container>
-                                <Grid container justify='flex-end'>
+                                <Grid container justify='flex-end' alignItems='center' spacing={3}>
                                     <Grid item>
-                                        <Button variant="contained" color='secondary' size='large' fullWidth onClick={handleModel}>Add to Model</Button>
+                                        <Typography variant="h6">{countRecipes}&nbsp;Dishes</Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button variant="contained" color='secondary' size='large' fullWidth onClick={clear1}>Reset</Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button variant="contained" color='primary' size='large' fullWidth onClick={(e) => handleModel(e, one)}>Add to Model</Button>
                                     </Grid>
                                 </Grid>
                             </Container>
@@ -252,43 +390,46 @@ const Foodcards = ({ user }) => {
                 <TabPanel value={value} index={1}>
                     <Container className={classes.secondContainer}>
                         <Container>
-                            <TextField type="text" variant="outlined" label="Search" fullWidth className={classes.searchBar} onChange={handleChangeSearch2} />
+                            <form autoComplete="off" noValidate onSubmit={(e) => handleSubmit(e, searchWord2, two)}>
+                                <Grid container justify='center' alignItems='flex-start' spacing={1}>
+                                    <Grid item xs={12} md={5}>
+                                        <TextField name="searchWord1" type='text' variant="outlined" label="Search for ingredients" fullWidth value={searchWord2} onChange={(e) => handleChangeSearch(e, two)} />
+                                    </Grid>
+                                    <Grid item xs={12} md={2}>
+                                        <Button variant='contained' color="primary" size='large' type="submit" style={{ padding: '15px 30px' }}><SearchIcon /></Button>
+                                    </Grid>
+                                </Grid>
+                            </form>
+
                             <Divider style={{ margin: '20px 0' }} />
                         </Container>
                         <div>
-                            <Typography className={`${classes.text} ${classes.text2} ${classes.text22}`}>Raw Food Products</Typography>
-                            {!Fruits.length ? <CircularProgress /> : (<Carousel breakPoints={bP}>
+                            <Typography className={`${classes.text} ${classes.text2} ${classes.text21}`}>Raw Food Products</Typography>
+                            <Carousel breakPoints={bP}>
                                 {
-                                    Fruits.filter((cardi) => {
-                                        if (searchWord2 == "") {
-                                            return cardi
-                                        } else if (cardi.name.toLowerCase().includes(searchWord2.toLowerCase())) {
-                                            return cardi
-                                        }
-                                    }).map((cardi) => (
+                                    recipesWord2?.length ? (recipesWord2.map((cardi) => (
                                         <div
                                             key={cardi.id}>
-                                            <Foodcard cardi={cardi} />
+                                            <Foodcard cardi={cardi} text={text} text1={text1} flag1={flag1} setFlag1={setFlag1} currentArray={currentArray} setCurrentArray={setCurrentArray} countIngredients={countIngredients} setCountIngredients={setCountIngredients} />
                                         </div>
-                                    ))
+                                    ))) : (Fruits.map((cardi) => (
+                                        <div
+                                            key={cardi.id}>
+                                            <Foodcard cardi={cardi} text={text} text1={text1} flag1={flag1} setFlag1={setFlag1} currentArray={currentArray} setCurrentArray={setCurrentArray} countIngredients={countIngredients} setCountIngredients={setCountIngredients} />
+                                        </div>
+                                    )))
                                 }
                             </Carousel>
-                            )}
                             <Container>
-                                <Grid container justify='flex-end'>
+                                <Grid container justify='flex-end' alignItems='center' spacing={3}>
                                     <Grid item>
-                                        <Button variant="contained" color='primary' size='large' fullWidth>Find Recipes</Button>
+                                        <Typography variant="h6">{countIngredients}&nbsp;Fruit Types</Typography>
                                     </Grid>
-                                </Grid>
-                            </Container>
-                        </div>
-                        <div>
-                            <Divider style={{ margin: '20px 0' }} />
-                            <Typography className={`${classes.text} ${classes.text3} ${classes.text32}`}>Recipes With Chosen Ingredients</Typography>
-                            <Container>
-                                <Grid container justify='flex-end'>
                                     <Grid item>
-                                        <Button variant="contained" color='secondary' size='large' fullWidth>Add to Model</Button>
+                                        <Button variant="contained" color='secondary' size='large' fullWidth onClick={clear}>Reset</Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button variant="contained" color='primary' size='large' fullWidth onClick={(e) => handleModel(e, two)}>Add to Model</Button>
                                     </Grid>
                                 </Grid>
                             </Container>
@@ -298,44 +439,86 @@ const Foodcards = ({ user }) => {
                 <TabPanel value={value} index={2}>
                     <Container className={classes.secondContainer}>
                         <Container>
-                            <TextField type="text" variant="outlined" label="Search" fullWidth className={classes.searchBar} onChange={handleChangeSearch3} />
+                            <form autoComplete="off" noValidate onSubmit={(e) => handleSubmit(e, searchWord3, three)}>
+                                <Grid container justify='center' alignItems='flex-start' spacing={1}>
+                                    <Grid item xs={12} md={5}>
+                                        <TextField name="searchWord3" type='text' variant="outlined" label="Search for ingredients" fullWidth value={searchWord3} onChange={(e) => handleChangeSearch(e, three)} />
+                                    </Grid>
+                                    <Grid item xs={12} md={2}>
+                                        <Button variant='contained' color="primary" size='large' type="submit" style={{ padding: '15px 30px' }}><SearchIcon /></Button>
+                                    </Grid>
+                                </Grid>
+                            </form>
+
                             <Divider style={{ margin: '20px 0' }} />
                         </Container>
                         <div>
-                            <Typography className={`${classes.text} ${classes.text2} ${classes.text23}`}>Raw Food Products</Typography>
-                            {!Grains.length ? <CircularProgress /> : (
-                                <Carousel breakPoints={bP}>
-                                    {
-                                        Grains.filter((cardi) => {
-                                            if (searchWord3 == "") {
-                                                return cardi
-                                            } else if (cardi.name.toLowerCase().includes(searchWord3.toLowerCase())) {
-                                                return cardi
-                                            }
-                                        }).map((cardi) => (
-                                            <div
-                                                key={cardi.id}>
-                                                <Foodcard cardi={cardi} />
-                                            </div>
-                                        ))
-                                    }
-                                </Carousel>
-                            )}
+                            <Typography className={`${classes.text} ${classes.text2} ${classes.text21}`}>Raw Food Products</Typography>
+                            <Carousel breakPoints={bP}>
+                                {
+                                    recipesWord3?.length ? (recipesWord3.map((cardi) => (
+                                        <div
+                                            key={cardi.id}>
+                                            <Foodcard cardi={cardi} text={text} flag1={flag1} setFlag1={setFlag1} currentArray={currentArray} setCurrentArray={setCurrentArray} countIngredients={countIngredients} setCountIngredients={setCountIngredients} />
+                                        </div>
+                                    ))) : (Grains.map((cardi) => (
+                                        <div
+                                            key={cardi.id}>
+                                            <Foodcard cardi={cardi} text={text} flag1={flag1} setFlag1={setFlag1} currentArray={currentArray} setCurrentArray={setCurrentArray} countIngredients={countIngredients} setCountIngredients={setCountIngredients} />
+                                        </div>
+                                    )))
+                                }
+                            </Carousel>
                             <Container>
-                                <Grid container justify='flex-end'>
+                                <Grid container justify='flex-end' alignItems='center' spacing={3}>
                                     <Grid item>
-                                        <Button variant="contained" color='primary' size='large' fullWidth>Find Recipes</Button>
+                                        <Typography variant="h6">{countIngredients}&nbsp;Ingredients</Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button variant="contained" color='secondary' size='large' fullWidth onClick={clear}>Reset</Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button variant="contained" color='primary' size='large' fullWidth onClick={(e) => handlleRecipes(e, three)}>Find Recipes</Button>
                                     </Grid>
                                 </Grid>
                             </Container>
                         </div>
                         <div>
                             <Divider style={{ margin: '20px 0' }} />
-                            <Typography className={`${classes.text} ${classes.text3} ${classes.text33}`}>Recipes With Chosen Ingredients</Typography>
+                            <Grid container justify='space-between'>
+                                <Grid item xs={12} md={11}><Typography className={`${classes.text} ${classes.text3} ${classes.text31}`}>Recipes With Chosen Ingredients</Typography></Grid>
+                                <Grid item xs={12} md={1}><Button onClick={(e) => {
+                                    e.preventDefault();
+                                    setFlag(true);
+                                    if (recipesFound3.length <= 0) dispatch(setSnackBar(true, "error", "NO RECIPES WITH THOSE INGREDIENTS"));
+                                }}><Tooltip title="Refresh"><RefreshIcon fontSize='large' /></Tooltip></Button></Grid>
+                            </Grid>
+                            <Carousel breakPoints={bP}>
+                                {
+                                    flag ? (
+                                        recipesFound3?.length ? (
+                                            recipesFound3.map((cardi) => (
+                                                <div
+                                                    key={cardi.id}>
+                                                    <Foodcard cardi={cardi} flag1={flag1} setFlag1={setFlag1} currentArray1={currentArray1} setCurrentArray1={setCurrentArray1} countRecipes={countRecipes} setCountRecipes={setCountRecipes} />
+                                                </div>
+                                            ))
+                                        ) : null
+                                    ) : (
+                                        <div>NO RECIPES SELECTED</div>
+                                    )
+                                }
+                            </Carousel>
                             <Container>
-                                <Grid container justify='flex-end'>
+                                <Grid container justify='flex-end' alignItems='center' spacing={3}>
                                     <Grid item>
-                                        <Button variant="contained" color='secondary' size='large' fullWidth>Add to Model</Button>
+                                        <Typography variant="h6">{countRecipes}&nbsp;Dishes</Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button variant="contained" color='secondary' size='large' fullWidth onClick={clear1}>Reset</Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button variant="contained" color='primary' size='large' fullWidth onClick={(e) => handleModel(e, three)}>Add to Model</Button>
                                     </Grid>
                                 </Grid>
                             </Container>
@@ -345,43 +528,86 @@ const Foodcards = ({ user }) => {
                 <TabPanel value={value} index={3}>
                     <Container className={classes.secondContainer}>
                         <Container>
-                            <TextField type="text" variant="outlined" label="Search" fullWidth className={classes.searchBar} onChange={handleChangeSearch4} />
+                            <form autoComplete="off" noValidate onSubmit={(e) => handleSubmit(e, searchWord4, four)}>
+                                <Grid container justify='center' alignItems='flex-start' spacing={1}>
+                                    <Grid item xs={12} md={5}>
+                                        <TextField name="searchWord4" type='text' variant="outlined" label="Search for ingredients" fullWidth value={searchWord4} onChange={(e) => handleChangeSearch(e, four)} />
+                                    </Grid>
+                                    <Grid item xs={12} md={2}>
+                                        <Button variant='contained' color="primary" size='large' type="submit" style={{ padding: '15px 30px' }}><SearchIcon /></Button>
+                                    </Grid>
+                                </Grid>
+                            </form>
+
                             <Divider style={{ margin: '20px 0' }} />
                         </Container>
                         <div>
-                            <Typography className={`${classes.text} ${classes.text2} ${classes.text24}`}>Raw Food Products</Typography>
-                            {!Proteins.length ? <CircularProgress /> : (<Carousel breakPoints={bP}>
+                            <Typography className={`${classes.text} ${classes.text2} ${classes.text21}`}>Raw Food Products</Typography>
+                            <Carousel breakPoints={bP}>
                                 {
-                                    Proteins.filter((cardi) => {
-                                        if (searchWord4 == "") {
-                                            return cardi
-                                        } else if (cardi.name.toLowerCase().includes(searchWord4.toLowerCase())) {
-                                            return cardi
-                                        }
-                                    }).map((cardi) => (
+                                    recipesWord4?.length ? (recipesWord4.map((cardi) => (
                                         <div
                                             key={cardi.id}>
-                                            <Foodcard cardi={cardi} />
+                                            <Foodcard cardi={cardi} text={text} flag1={flag1} setFlag1={setFlag1} currentArray={currentArray} setCurrentArray={setCurrentArray} countIngredients={countIngredients} setCountIngredients={setCountIngredients} />
                                         </div>
-                                    ))
+                                    ))) : (Proteins.map((cardi) => (
+                                        <div
+                                            key={cardi.id}>
+                                            <Foodcard cardi={cardi} text={text} flag1={flag1} setFlag1={setFlag1} currentArray={currentArray} setCurrentArray={setCurrentArray} countIngredients={countIngredients} setCountIngredients={setCountIngredients} />
+                                        </div>
+                                    )))
                                 }
                             </Carousel>
-                            )}
                             <Container>
-                                <Grid container justify='flex-end'>
+                                <Grid container justify='flex-end' alignItems='center' spacing={3}>
                                     <Grid item>
-                                        <Button variant="contained" color='primary' size='large' fullWidth>Find Recipes</Button>
+                                        <Typography variant="h6">{countIngredients}&nbsp;Ingredients</Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button variant="contained" color='secondary' size='large' fullWidth onClick={clear}>Reset</Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button variant="contained" color='primary' size='large' fullWidth onClick={(e) => handlleRecipes(e, four)}>Find Recipes</Button>
                                     </Grid>
                                 </Grid>
                             </Container>
                         </div>
                         <div>
                             <Divider style={{ margin: '20px 0' }} />
-                            <Typography className={`${classes.text} ${classes.text3} ${classes.text34}`}>Recipes With Chosen Ingredients</Typography>
+                            <Grid container justify='space-between'>
+                                <Grid item xs={12} md={11}><Typography className={`${classes.text} ${classes.text3} ${classes.text31}`}>Recipes With Chosen Ingredients</Typography></Grid>
+                                <Grid item xs={12} md={1}><Button onClick={(e) => {
+                                    e.preventDefault();
+                                    setFlag(true);
+                                    if (recipesFound4.length <= 0) dispatch(setSnackBar(true, "error", "NO RECIPES WITH THOSE INGREDIENTS"));
+                                }}><Tooltip title="Refresh"><RefreshIcon fontSize='large' /></Tooltip></Button></Grid>
+                            </Grid>
+                            <Carousel breakPoints={bP}>
+                                {
+                                    flag ? (
+                                        recipesFound4?.length ? (
+                                            recipesFound4.map((cardi) => (
+                                                <div
+                                                    key={cardi.id}>
+                                                    <Foodcard cardi={cardi} flag1={flag1} setFlag1={setFlag1} currentArray1={currentArray1} setCurrentArray1={setCurrentArray1} countRecipes={countRecipes} setCountRecipes={setCountRecipes} />
+                                                </div>
+                                            ))
+                                        ) : null
+                                    ) : (
+                                        <div>NO RECIPES SELECTED</div>
+                                    )
+                                }
+                            </Carousel>
                             <Container>
-                                <Grid container justify='flex-end'>
+                                <Grid container justify='flex-end' alignItems='center' spacing={3}>
                                     <Grid item>
-                                        <Button variant="contained" color='secondary' size='large' fullWidth>Add to Model</Button>
+                                        <Typography variant="h6">{countRecipes}&nbsp;Dishes</Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button variant="contained" color='secondary' size='large' fullWidth onClick={clear1}>Reset</Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button variant="contained" color='primary' size='large' fullWidth onClick={(e) => handleModel(e, four)}>Add to Model</Button>
                                     </Grid>
                                 </Grid>
                             </Container>

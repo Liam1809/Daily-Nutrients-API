@@ -2,13 +2,11 @@ import { API } from '../api/rawProductAPI.js';
 
 export const getNutrients = async (foodGroup, string) => {
     try {
-
         const params = { query: string.replace(",", ", ").replace(" ", ", ") };
-        // const params = { query: string };
         const result = await API.post('/natural/nutrients', params);
 
         let newArr = result.data;
-
+        console.log(result);
         let arr = [];
         // console.log(foodGroup);
         for (let i = 0; i < newArr['foods'].length; i++) {
@@ -32,7 +30,7 @@ export const getNutrients = async (foodGroup, string) => {
                 arr.push(obj)
             }
         }
-        // console.log(arr);
+        console.log(arr);
         return arr;
     } catch (error) {
         console.log(error);

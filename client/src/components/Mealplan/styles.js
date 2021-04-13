@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { Rotate90DegreesCcw } from '@material-ui/icons';
 
 export default makeStyles(({
     mainContainer: {
@@ -15,7 +16,9 @@ export default makeStyles(({
     },
     shape: {
         padding: '10px 10px',
-        borderRadius: '20px'
+        margin: '0 5px',
+        borderRadius: '20px',
+        textAlign: 'center'
     },
     shape1: {
         background: "#98ddca"
@@ -34,5 +37,18 @@ export default makeStyles(({
         top: 0,
         left: '10%',
         textTransform: 'uppercase'
+    },
+    image: {
+        width: 100,
+        height: 100,
+        position: 'relative',
+        top: -100,
+        left: -70,
+        transform: 'rotate(0deg)',
+    },
+    position: {
+        position: 'relative',
+        top: -230,
+        left: -120,
     }
 }));

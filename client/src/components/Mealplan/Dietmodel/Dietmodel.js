@@ -1,124 +1,82 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import 'date-fns';
-import { Container, Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Select, Avatar, Typography, Tooltip, Grid, Divider } from '@material-ui/core'
+import { Container, Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Select, Avatar, Typography, Grid, Divider, Tooltip } from '@material-ui/core'
 import DateFnsUtils from '@date-io/date-fns';
-import { DatePicker, TimePicker, DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles.js';
+import { setSnackBar } from '../../../actions/snackBar.js';
 
-const ok = [
-    {
-        title: '1',
-        img: '11',
-        calories: '111'
-    },
-    {
-        title: '2',
-        img: '22',
-        calories: '222'
-    }
-];
-const ok1 = [
-    {
-        title: '3',
-        img: '33',
-        calories: '333'
-    },
-    {
-        title: '4',
-        img: '44',
-        calories: '444'
-    }
-];
-const ok2 = [
-    {
-        title: '5',
-        img: '55',
-        calories: '555'
-    },
-    {
-        title: '6',
-        img: '66',
-        calories: '666'
-    }
-];
-const ok3 = [
-    {
-        title: '7',
-        img: '77',
-        calories: '777'
-    },
-    {
-        title: '8',
-        img: '88',
-        calories: '888'
-    }
-];
-
-const Dietmodel = ({ BMR }) => {
+const Dietmodel = ({ user, veggiesArray, setVeggiesArray, fruitsArray, setFruitsArray, grainsArray, setGrainsArray, proteinsArray, setProteinsArray }) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     const [flag, setFlag] = useState(false);
-    const [vegies, setVegies] = useState({ recipes: [{ title: '', img: '', calories: '' }], start: new Date(), end: new Date() });
-    const [fruits, setFruits] = useState({ recipes: [{ title: '', img: '', calories: '' }], start: new Date(), end: new Date() });
-    const [grains, setGrains] = useState({ recipes: [{ title: '', img: '', calories: '' }], start: new Date(), end: new Date() });
-    const [proteins, setProteins] = useState({ recipes: [{ title: '', img: '', calories: '' }], start: new Date(), end: new Date() });
-    const [dietData, setDietData] = useState({ Vegetables: vegies, Fruits: fruits, Grains: grains, Proteins: proteins });
+    const initial = { recipes: [{ title: '', img: '', calories: '', serving_qty: '' }], start: new Date(), end: new Date() };
+    const [dietData, setDietData] = useState({ Vegetables: initial, Fruits: initial, Grains: initial, Proteins: initial });
+
+    const HD = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === user?.userInfo?._id || h.googleId === user?.userInfo?._id) : null);
 
     useEffect(() => {
-
-    }, [ok]);
+        if (dietData) setDietData(dietData);
+    }, [dietData]);
 
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
+        setDietData({ Vegetables: initial, Fruits: initial, Grains: initial, Proteins: initial });
         setOpen(false);
     };
 
+    // dispatch to create model
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (dietData.Vegetables.recipes[0].title == "") {
+            dispatch(setSnackBar(true, "error", "PLEASE SET TIME BEFORE CREATE MODEL"));
+        } else {
+            if (dietData.Vegetables.start.getDate() > new Date().getDate()) {
+                dispatch(setSnackBar(true, "error", "DIET PLAN FOR TODAY ALREADY CREATED"));
+            } else {
+                console.log(dietData);
+            }
+        }
 
-    const clickme = (e) => {
-        console.log(vegies);
     }
 
-
-    const deletene = (value, e) => {
-        let index = ok.indexOf(value);
-        ok.splice(index, 1);
-    }
     return (
         <Container>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>Calories:0/{BMR}Kcal</Button>
+            <Button variant="outlined" color="primary" onClick={handleClickOpen}>Total Calories: 0 / {HD?.bmr} Kcal</Button>
             <Dialog fullWidth maxWidth='md' open={open} onClose={handleClose}>
-                <DialogTitle>Total Calories:0/{BMR}Kcal</DialogTitle>
+                <DialogTitle>Total Calories: 0 / {HD?.bmr} Kcal</DialogTitle>
                 <DialogContent>
-                    <form noValidate>
-                        <DialogContentText >Vegetales Group Recipes</DialogContentText>
+                    <form noValidate onSubmit={handleSubmit}>
+                        <DialogContentText className={`${classes.text} ${classes.vegies}`}>Vegetales Group: {veggiesArray.map} / {HD?.bmr * 30 / 100} Kcal</DialogContentText>
                         <Container>
                             <Grid container justify='flex-start'>
                                 {
-                                    ok.map((k) => (
+                                    veggiesArray?.map((k) => (
                                         <>
-                                            <Grid item container justify='flex-start' alignItems='baseline' xs={12} md={5} style={{ paddingBottom: 20 }}>
+                                            <Grid item container justify='flex-start' alignItems='center' xs={12} md={5} style={{ paddingBottom: 20 }}>
                                                 <Grid item xs={12} md={3}>
-                                                    <Avatar>{k.img}</Avatar>
+                                                    <Avatar src={k.img} />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography variant="subtitle1">{k.title}</Typography>
                                                 </Grid>
                                                 <Grid item xs={12} md={3}>
-                                                    <Typography variant="h6">{k.title}</Typography>
-                                                </Grid>
-                                                <Grid item xs={12} md={3}>
-                                                    <Typography variant="h6">{k.calories}</Typography>
+                                                    <Typography variant="subtitle1">{k.calories} Kcal</Typography>
                                                 </Grid>
                                             </Grid>
                                             <Grid item container xs={12} md={7} justify='center' alignItems='stretch' style={{ paddingTop: 2 }}>
                                                 <Grid item xs={12} md={12}>
                                                     <Button onClick={(e) => {
-
-                                                        let index = ok.indexOf(k);
+                                                        // fix here
+                                                        let index = veggiesArray.indexOf(k);
                                                         if (index != -1) {
-                                                            ok.splice(index, 1);
+                                                            veggiesArray.splice(index, 1);
                                                             setFlag(!flag);
                                                         }
 
@@ -135,41 +93,41 @@ const Dietmodel = ({ BMR }) => {
                                 </Grid>
                                 <Grid item xs={12} md={2}>
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                        <TimePicker label="Start Time" value={vegies.start} onChange={(e) => setVegies({ ...vegies, recipes: ok, start: e })} />
+                                        <KeyboardTimePicker label="Start Time" value={dietData.Vegetables.start} onChange={(e) => setDietData({ ...dietData, Vegetables: { start: e } })} />
                                     </MuiPickersUtilsProvider>
                                 </Grid>
                                 <Grid item xs={12} md={2}>
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                        <TimePicker label="End Time" value={vegies.end} onChange={(e) => setVegies({ ...vegies, end: e })} />
+                                        <KeyboardTimePicker label="End Time" value={dietData.Vegetables.end} onChange={(e) => setDietData({ ...dietData, Vegetables: { recipes: veggiesArray, start: dietData.Vegetables.start, end: e } })} />
                                     </MuiPickersUtilsProvider>
                                 </Grid>
                             </Grid>
                         </Container>
                         <Divider style={{ margin: '20px 2px' }} />
-                        <DialogContentText>Fruits Group Recipes</DialogContentText>
+                        <DialogContentText className={`${classes.text} ${classes.fruits}`}>Fruits Group: 0 / {HD?.bmr * 20 / 100} Kcal</DialogContentText>
                         <Container>
                             <Grid container justify='flex-start'>
                                 {
-                                    ok1.map((k) => (
+                                    fruitsArray?.map((k) => (
                                         <>
-                                            <Grid item container justify='flex-start' alignItems='baseline' xs={12} md={5} style={{ paddingBottom: 20 }}>
+                                            <Grid item container justify='flex-start' alignItems='center' xs={12} md={5} style={{ paddingBottom: 20 }}>
                                                 <Grid item xs={12} md={3}>
-                                                    <Avatar>{k.img}</Avatar>
+                                                    <Avatar src={k.img} />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography variant="subtitle1">{k.title}</Typography>
                                                 </Grid>
                                                 <Grid item xs={12} md={3}>
-                                                    <Typography variant="h6">{k.title}</Typography>
-                                                </Grid>
-                                                <Grid item xs={12} md={3}>
-                                                    <Typography variant="h6">{k.calories}</Typography>
+                                                    <Typography variant="subtitle1">{k.calories} Kcal</Typography>
                                                 </Grid>
                                             </Grid>
                                             <Grid item container xs={12} md={7} justify='center' alignItems='stretch' style={{ paddingTop: 2 }}>
                                                 <Grid item xs={12} md={12}>
                                                     <Button onClick={(e) => {
 
-                                                        let index = ok1.indexOf(k);
+                                                        let index = fruitsArray.indexOf(k);
                                                         if (index != -1) {
-                                                            ok1.splice(index, 1);
+                                                            fruitsArray.splice(index, 1);
                                                             setFlag(!flag);
                                                         }
 
@@ -186,41 +144,41 @@ const Dietmodel = ({ BMR }) => {
                                 </Grid>
                                 <Grid item xs={12} md={2}>
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                        <TimePicker label="Start Time" value={fruits.start} onChange={(e) => setFruits({ ...fruits, recipes: ok1, start: e })} />
+                                        <KeyboardTimePicker label="Start Time" value={dietData.Fruits.start} onChange={(e) => setDietData({ ...dietData, Fruits: { start: e } })} />
                                     </MuiPickersUtilsProvider>
                                 </Grid>
                                 <Grid item xs={12} md={2}>
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                        <TimePicker label="End Time" value={fruits.end} onChange={(e) => setFruits({ ...fruits, end: e })} />
+                                        <KeyboardTimePicker label="End Time" value={dietData.Fruits.end} onChange={(e) => setDietData({ ...dietData, Fruits: { recipes: fruitsArray, start: dietData.Fruits.start, end: e } })} />
                                     </MuiPickersUtilsProvider>
                                 </Grid>
                             </Grid>
                         </Container>
                         <Divider style={{ margin: '20px 2px' }} />
-                        <DialogContentText>Whole Grains Group Recipes</DialogContentText>
+                        <DialogContentText className={`${classes.text} ${classes.grains}`}>Whole Grains Group: 0 / {HD?.bmr * 25 / 100} Kcal</DialogContentText>
                         <Container>
                             <Grid container justify='flex-start'>
                                 {
-                                    ok2.map((k) => (
+                                    grainsArray?.map((k) => (
                                         <>
-                                            <Grid item container justify='flex-start' alignItems='baseline' xs={12} md={5} style={{ paddingBottom: 20 }}>
+                                            <Grid item container justify='flex-start' alignItems='center' xs={12} md={5} style={{ paddingBottom: 20 }}>
                                                 <Grid item xs={12} md={3}>
-                                                    <Avatar>{k.img}</Avatar>
+                                                    <Avatar src={k.img} />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography variant="subtitle1">{k.title}</Typography>
                                                 </Grid>
                                                 <Grid item xs={12} md={3}>
-                                                    <Typography variant="h6">{k.title}</Typography>
-                                                </Grid>
-                                                <Grid item xs={12} md={3}>
-                                                    <Typography variant="h6">{k.calories}</Typography>
+                                                    <Typography variant="subtitle1">{k.calories} Kcal</Typography>
                                                 </Grid>
                                             </Grid>
                                             <Grid item container xs={12} md={7} justify='center' alignItems='stretch' style={{ paddingTop: 2 }}>
                                                 <Grid item xs={12} md={12}>
                                                     <Button onClick={(e) => {
 
-                                                        let index = ok2.indexOf(k);
+                                                        let index = grainsArray.indexOf(k);
                                                         if (index != -1) {
-                                                            ok2.splice(index, 1);
+                                                            grainsArray.splice(index, 1);
                                                             setFlag(!flag);
                                                         }
 
@@ -237,41 +195,41 @@ const Dietmodel = ({ BMR }) => {
                                 </Grid>
                                 <Grid item xs={12} md={2}>
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                        <TimePicker label="Start Time" value={grains.start} onChange={(e) => setGrains({ ...grains, recipes: ok2, start: e })} />
+                                        <KeyboardTimePicker label="Start Time" value={dietData.Grains.start} onChange={(e) => setDietData({ ...dietData, Grains: { start: e } })} />
                                     </MuiPickersUtilsProvider>
                                 </Grid>
                                 <Grid item xs={12} md={2}>
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                        <TimePicker label="End Time" value={grains.end} onChange={(e) => setGrains({ ...grains, end: e })} />
+                                        <KeyboardTimePicker label="End Time" value={dietData.Grains.end} onChange={(e) => setDietData({ ...dietData, Grains: { recipes: grainsArray, start: dietData.Grains.start, end: e } })} />
                                     </MuiPickersUtilsProvider>
                                 </Grid>
                             </Grid>
                         </Container>
                         <Divider style={{ margin: '20px 2px' }} />
-                        <DialogContentText>Healthy Proteins Group Recipes</DialogContentText>
+                        <DialogContentText className={`${classes.text} ${classes.proteins}`}>Healthy Proteins Group: 0 / {HD?.bmr * 25 / 100} Kcal</DialogContentText>
                         <Container>
                             <Grid container justify='flex-start'>
                                 {
-                                    ok3.map((k) => (
+                                    proteinsArray?.map((k) => (
                                         <>
-                                            <Grid item container justify='flex-start' alignItems='baseline' xs={12} md={5} style={{ paddingBottom: 20 }}>
+                                            <Grid item container justify='flex-start' alignItems='center' xs={12} md={5} style={{ paddingBottom: 20 }}>
                                                 <Grid item xs={12} md={3}>
-                                                    <Avatar>{k.img}</Avatar>
+                                                    <Avatar src={k.img} />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography variant="subtitle1">{k.title}</Typography>
                                                 </Grid>
                                                 <Grid item xs={12} md={3}>
-                                                    <Typography variant="h6">{k.title}</Typography>
-                                                </Grid>
-                                                <Grid item xs={12} md={3}>
-                                                    <Typography variant="h6">{k.calories}</Typography>
+                                                    <Typography variant="subtitle1">{k.calories} Kcal</Typography>
                                                 </Grid>
                                             </Grid>
                                             <Grid item container xs={12} md={7} justify='center' alignItems='stretch' style={{ paddingTop: 2 }}>
                                                 <Grid item xs={12} md={12}>
                                                     <Button onClick={(e) => {
 
-                                                        let index = ok3.indexOf(k);
+                                                        let index = proteinsArray.indexOf(k);
                                                         if (index != -1) {
-                                                            ok3.splice(index, 1);
+                                                            proteinsArray.splice(index, 1);
                                                             setFlag(!flag);
                                                         }
 
@@ -288,12 +246,12 @@ const Dietmodel = ({ BMR }) => {
                                 </Grid>
                                 <Grid item xs={12} md={2}>
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                        <TimePicker label="Start Time" value={proteins.start} onChange={(e) => setProteins({ ...proteins, recipes: ok3, start: e })} />
+                                        <KeyboardTimePicker label="Start Time" value={dietData.Proteins.start} onChange={(e) => setDietData({ ...dietData, Proteins: { start: e } })} />
                                     </MuiPickersUtilsProvider>
                                 </Grid>
                                 <Grid item xs={12} md={2}>
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                        <TimePicker label="End Time" value={proteins.end} onChange={(e) => setProteins({ ...proteins, end: e })} />
+                                        <KeyboardTimePicker label="End Time" value={dietData.Proteins.end} onChange={(e) => setDietData({ ...dietData, Proteins: { recipes: grainsArray, start: dietData.Proteins.start, end: e } })} />
                                     </MuiPickersUtilsProvider>
                                 </Grid>
                             </Grid>
@@ -301,7 +259,7 @@ const Dietmodel = ({ BMR }) => {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button variant='contained' color='primary' onClick={clickme}>Create</Button>
+                    <Button type="submit" variant='contained' color='primary' onClick={handleSubmit}>Create</Button>
                     <Button variant='contained' onClick={handleClose} color="secondary">Close</Button>
                 </DialogActions>
             </Dialog>
