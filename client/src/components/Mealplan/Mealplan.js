@@ -15,6 +15,12 @@ const Mealplan = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
+    const [totalVeggies, setTotalVeggies] = useState(0);
+    const [totalFruits, setTotalFruits] = useState(0);
+    const [totalGrains, setTotalGrains] = useState(0);
+    const [totalProteins, setTotalProteins] = useState(0);
+    const [totalCalories, setTotalCalories] = useState(0);
+
     const [veggiesArray, setVeggiesArray] = useState([]);
     const [fruitsArray, setFruitsArray] = useState([]);
     const [grainsArray, setGrainsArray] = useState([]);
@@ -27,6 +33,35 @@ const Mealplan = () => {
 
     useEffect(() => {
         dispatch(getHD());
+        let TOTAL = 0;
+        veggiesArray.map((item) => TOTAL += item.calories);
+        fruitsArray.map((item) => TOTAL += item.calories);
+        grainsArray.map((item) => TOTAL += item.calories);
+        proteinsArray.map((item) => TOTAL += item.calories);
+
+        setTotalCalories(TOTAL.toFixed(2));
+
+        if (veggiesArray.length != 0) {
+            let total = 0;
+            veggiesArray.map((item) => total += item.calories);
+            setTotalVeggies(total.toFixed(2));
+        }
+        if (fruitsArray.length != 0) {
+            let total = 0;
+            fruitsArray.map((item) => total += item.calories);
+            setTotalFruits(total.toFixed(2));
+        }
+        if (grainsArray.length != 0) {
+            let total = 0;
+            grainsArray.map((item) => total += item.calories);
+            setTotalGrains(total.toFixed(2));
+        }
+        if (proteinsArray.length != 0) {
+            let total = 0;
+            proteinsArray.map((item) => total += item.calories);
+            setTotalProteins(total.toFixed(2));
+        }
+
     }, [veggiesArray, fruitsArray, grainsArray, proteinsArray]);
 
     return (
@@ -45,7 +80,22 @@ const Mealplan = () => {
                     <Divider style={{ margin: '30px 0 0 0', width: '80%' }} />
                     <Grid item xs={12} md={12} container justify='center' alignItems='center'>
                         <Grid item xs={12} md={3}>
-                            <Dietmodel user={user} veggiesArray={veggiesArray} setVeggiesArray={setVeggiesArray} fruitsArray={fruitsArray} setFruitsArray={setFruitsArray} grainsArray={grainsArray} setGrainsArray={setGrainsArray} proteinsArray={proteinsArray} setProteinsArray={setProteinsArray} />
+                            <Dietmodel
+                                user={user}
+                                totalCalories={totalCalories}
+                                veggiesArray={veggiesArray}
+                                setVeggiesArray={setVeggiesArray}
+                                totalVeggies={totalVeggies}
+                                fruitsArray={fruitsArray}
+                                setFruitsArray={setFruitsArray}
+                                totalFruits={totalFruits}
+                                grainsArray={grainsArray}
+                                setGrainsArray={setGrainsArray}
+                                totalGrains={totalGrains}
+                                proteinsArray={proteinsArray}
+                                setProteinsArray={setProteinsArray}
+                                totalProteins={totalProteins}
+                            />
                             <img src={arrow} className={classes.image} />
                             <Typography variant="h6" className={classes.position}>Create Model Here</Typography>
 

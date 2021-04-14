@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import 'date-fns';
-import { Container, Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Select, Avatar, Typography, Grid, Divider, Tooltip } from '@material-ui/core'
+import { Container, Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Select, Avatar, Typography, Grid, Divider, Tooltip } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles.js';
 import { setSnackBar } from '../../../actions/snackBar.js';
 
-const Dietmodel = ({ user, veggiesArray, setVeggiesArray, fruitsArray, setFruitsArray, grainsArray, setGrainsArray, proteinsArray, setProteinsArray }) => {
+const Dietmodel = ({ user, totalCalories, veggiesArray, setVeggiesArray, totalVeggies, fruitsArray, setFruitsArray, totalFruits, grainsArray, setGrainsArray, totalGrains, proteinsArray, setProteinsArray, totalProteins }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
@@ -43,17 +43,16 @@ const Dietmodel = ({ user, veggiesArray, setVeggiesArray, fruitsArray, setFruits
                 console.log(dietData);
             }
         }
-
     }
 
     return (
         <Container>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>Total Calories: 0 / {HD?.bmr} Kcal</Button>
+            <Button variant="outlined" color="primary" onClick={handleClickOpen}>Total Calories: {totalCalories} / {HD?.bmr} Kcal</Button>
             <Dialog fullWidth maxWidth='md' open={open} onClose={handleClose}>
-                <DialogTitle>Total Calories: 0 / {HD?.bmr} Kcal</DialogTitle>
+                <DialogTitle>Total Calories: {totalCalories} / {HD?.bmr} Kcal</DialogTitle>
                 <DialogContent>
                     <form noValidate onSubmit={handleSubmit}>
-                        <DialogContentText className={`${classes.text} ${classes.vegies}`}>Vegetales Group: {veggiesArray.map} / {HD?.bmr * 30 / 100} Kcal</DialogContentText>
+                        <DialogContentText className={`${classes.text} ${classes.vegies}`}>Vegetales Group: {totalVeggies} / {HD?.bmr * 30 / 100} Kcal</DialogContentText>
                         <Container>
                             <Grid container justify='flex-start'>
                                 {
@@ -104,7 +103,7 @@ const Dietmodel = ({ user, veggiesArray, setVeggiesArray, fruitsArray, setFruits
                             </Grid>
                         </Container>
                         <Divider style={{ margin: '20px 2px' }} />
-                        <DialogContentText className={`${classes.text} ${classes.fruits}`}>Fruits Group: 0 / {HD?.bmr * 20 / 100} Kcal</DialogContentText>
+                        <DialogContentText className={`${classes.text} ${classes.fruits}`}>Fruits Group: {totalFruits} / {HD?.bmr * 20 / 100} Kcal</DialogContentText>
                         <Container>
                             <Grid container justify='flex-start'>
                                 {
@@ -155,7 +154,7 @@ const Dietmodel = ({ user, veggiesArray, setVeggiesArray, fruitsArray, setFruits
                             </Grid>
                         </Container>
                         <Divider style={{ margin: '20px 2px' }} />
-                        <DialogContentText className={`${classes.text} ${classes.grains}`}>Whole Grains Group: 0 / {HD?.bmr * 25 / 100} Kcal</DialogContentText>
+                        <DialogContentText className={`${classes.text} ${classes.grains}`}>Whole Grains Group: {totalGrains} / {HD?.bmr * 25 / 100} Kcal</DialogContentText>
                         <Container>
                             <Grid container justify='flex-start'>
                                 {
@@ -206,7 +205,7 @@ const Dietmodel = ({ user, veggiesArray, setVeggiesArray, fruitsArray, setFruits
                             </Grid>
                         </Container>
                         <Divider style={{ margin: '20px 2px' }} />
-                        <DialogContentText className={`${classes.text} ${classes.proteins}`}>Healthy Proteins Group: 0 / {HD?.bmr * 25 / 100} Kcal</DialogContentText>
+                        <DialogContentText className={`${classes.text} ${classes.proteins}`}>Healthy Proteins Group: {totalProteins} / {HD?.bmr * 25 / 100} Kcal</DialogContentText>
                         <Container>
                             <Grid container justify='flex-start'>
                                 {
@@ -251,7 +250,7 @@ const Dietmodel = ({ user, veggiesArray, setVeggiesArray, fruitsArray, setFruits
                                 </Grid>
                                 <Grid item xs={12} md={2}>
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                        <KeyboardTimePicker label="End Time" value={dietData.Proteins.end} onChange={(e) => setDietData({ ...dietData, Proteins: { recipes: grainsArray, start: dietData.Proteins.start, end: e } })} />
+                                        <KeyboardTimePicker label="End Time" value={dietData.Proteins.end} onChange={(e) => setDietData({ ...dietData, Proteins: { recipes: proteinsArray, start: dietData.Proteins.start, end: e } })} />
                                     </MuiPickersUtilsProvider>
                                 </Grid>
                             </Grid>

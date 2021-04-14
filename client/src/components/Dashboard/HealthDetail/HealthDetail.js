@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Box, Container, Grid, Grow, Typography, Button, Tooltip } from '@material-ui/core';
+import { Box, Container, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Grid, Grow, Typography, Button, Tooltip } from '@material-ui/core';
 import UpdateIcon from '@material-ui/icons/Update';
 import DeleteIcon from '@material-ui/icons/Delete';
+import InfoIcon from '@material-ui/icons/Info';
 // Hook
 import { useSelector } from 'react-redux';
 // import action
 import { deleteHD } from '../../../actions/healthDetail.js';
 // import style
 import useStyles from './styles.js';
+import { Info } from '@material-ui/icons';
 
 
 const HealthDetail = ({ user, currentId, setCurrentId }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const [open, setOpen] = useState(false);
 
     // mark UserId to compare
     const UserId = user?.userInfo?._id;
@@ -25,11 +28,49 @@ const HealthDetail = ({ user, currentId, setCurrentId }) => {
     // check property of Health Data object
     const checkData = (given) => H?.hasOwnProperty(given) ? H[given] : 'N/A';
 
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
     return (
         <Container className={classes.container}>
             <Container>
                 <Typography variant='h4'>Welcome {user?.userInfo?.name}</Typography>
                 <div className={classes.mainOverlay}>
+                    <div>
+                        <Button size='small' onClick={handleClickOpen}><Tooltip title='infomation'><Info fontSize='large' /></Tooltip></Button>
+                        <Dialog fullWidth maxWidth='sm' open={open} onClose={handleClose}>
+                            <DialogTitle>Information About Health Statistics</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    - Age counted as in years unit (y)
+                                    <br />
+                                    <br />
+                                    - Weight counted as in kilogram unit (kg)
+                                    <br />
+                                    <br />
+                                    - Height counted as in centimeter unit (cm)
+                                    <br />
+                                    <br />
+                                    - BMI (Body Mass Index) a value derived from the mass and height of a person.
+                                    The formula is equal to Weight(kg) / (Height(cm) * Height(cm)), the normal figure ranging from 18.5 - 24.9
+                                    <br />
+                                    <br />
+                                    - BMR (Basal Metabolic Rate) is the number of calories required to keep your body functioning at rest.
+                                    <br />
+                                    The formula for men is 66.47 + (13.75 * weight in kilogram) + (5.003 * height in centimeter) − (6.755 * age in years)
+                                    <br />
+                                    The formula for women is 655.1 + (9.563 * weight in kilogram) + (1.85 * height in centimeter) - (4.676 * age in years)
+                                </DialogContentText>
+                                <DialogActions>
+                                    <Button variant='contained' color='primary' onClick={handleClose}>Close</Button>
+                                </DialogActions>
+                            </DialogContent>
+                        </Dialog>
+                    </div>
                     <div>
                         {H && (
                             <Button size="small" onClick={() => { setCurrentId(H._id) }}><Tooltip title='Update'><UpdateIcon fontSize="large" /></Tooltip></Button>
