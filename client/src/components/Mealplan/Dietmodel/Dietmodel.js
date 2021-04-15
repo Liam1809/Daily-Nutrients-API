@@ -6,9 +6,11 @@ import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles.js';
-import { setSnackBar } from '../../../actions/snackBar.js';
 
-const Dietmodel = ({ user, totalCalories, veggiesArray, setVeggiesArray, totalVeggies, fruitsArray, setFruitsArray, totalFruits, grainsArray, setGrainsArray, totalGrains, proteinsArray, setProteinsArray, totalProteins }) => {
+import { setSnackBar } from '../../../actions/snackBar.js';
+import { createDietPost } from '../../../actions/diet.js';
+
+const Dietmodel = ({ user, setMainFlag, veggiesArray, setVeggiesArray, totalVeggies, setTotalVeggies, fruitsArray, setFruitsArray, totalFruits, setTotalFruits, grainsArray, setGrainsArray, totalGrains, setTotalGrains, proteinsArray, setProteinsArray, totalProteins, setTotalProteins }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
@@ -35,21 +37,28 @@ const Dietmodel = ({ user, totalCalories, veggiesArray, setVeggiesArray, totalVe
     const handleSubmit = (e) => {
         e.preventDefault();
         if (dietData.Vegetables.recipes[0].title == "") {
-            dispatch(setSnackBar(true, "error", "PLEASE SET TIME BEFORE CREATE MODEL"));
+            dispatch(setSnackBar(true, "error", "PLEASE ADD PRODUCTS OR SET TIME BEFORE CREATE MODEL"));
         } else {
             if (dietData.Vegetables.start.getDate() > new Date().getDate()) {
                 dispatch(setSnackBar(true, "error", "DIET PLAN FOR TODAY ALREADY CREATED"));
             } else {
+                dispatch(setSnackBar(true, "success", "SUCCESSFULLY CREATED DIET PLAN"));
                 console.log(dietData);
+                dispatch(createDietPost(dietData));
+                setVeggiesArray([]);
+                setFruitsArray([]);
+                setGrainsArray([]);
+                setProteinsArray([]);
+                setMainFlag(true);
             }
         }
-    }
+    };
 
     return (
         <Container>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>Total Calories: {totalCalories} / {HD?.bmr} Kcal</Button>
+            <Button variant="outlined" color="primary" onClick={handleClickOpen}>Total Calories: {HD?.bmr} Kcal</Button>
             <Dialog fullWidth maxWidth='md' open={open} onClose={handleClose}>
-                <DialogTitle>Total Calories: {totalCalories} / {HD?.bmr} Kcal</DialogTitle>
+                <DialogTitle>Total Calories: {HD?.bmr} Kcal</DialogTitle>
                 <DialogContent>
                     <form noValidate onSubmit={handleSubmit}>
                         <DialogContentText className={`${classes.text} ${classes.vegies}`}>Vegetales Group: {totalVeggies} / {HD?.bmr * 30 / 100} Kcal</DialogContentText>
@@ -77,6 +86,10 @@ const Dietmodel = ({ user, totalCalories, veggiesArray, setVeggiesArray, totalVe
                                                         if (index != -1) {
                                                             veggiesArray.splice(index, 1);
                                                             setFlag(!flag);
+                                                            let total = 0;
+                                                            // console.log(veggiesArray);
+                                                            veggiesArray.map((item) => total += item.calories);
+                                                            setTotalVeggies(total);
                                                         }
 
                                                     }}><Tooltip title="delete"><DeleteIcon fontSize='default' /></Tooltip></Button>
@@ -113,8 +126,11 @@ const Dietmodel = ({ user, totalCalories, veggiesArray, setVeggiesArray, totalVe
                                                 <Grid item xs={12} md={3}>
                                                     <Avatar src={k.img} />
                                                 </Grid>
-                                                <Grid item xs={12} md={6}>
+                                                <Grid item xs={12} md={3}>
                                                     <Typography variant="subtitle1">{k.title}</Typography>
+                                                </Grid>
+                                                <Grid item xs={12} md={3}>
+                                                    <Typography variant="subtitle1">{k.serving_qty} units</Typography>
                                                 </Grid>
                                                 <Grid item xs={12} md={3}>
                                                     <Typography variant="subtitle1">{k.calories} Kcal</Typography>
@@ -128,6 +144,10 @@ const Dietmodel = ({ user, totalCalories, veggiesArray, setVeggiesArray, totalVe
                                                         if (index != -1) {
                                                             fruitsArray.splice(index, 1);
                                                             setFlag(!flag);
+                                                            let total = 0;
+                                                            // console.log(fruitsArray);
+                                                            fruitsArray.map((item) => total += item.calories);
+                                                            setTotalFruits(total);
                                                         }
 
                                                     }}><Tooltip title="delete"><DeleteIcon fontSize='default' /></Tooltip></Button>
@@ -179,6 +199,10 @@ const Dietmodel = ({ user, totalCalories, veggiesArray, setVeggiesArray, totalVe
                                                         if (index != -1) {
                                                             grainsArray.splice(index, 1);
                                                             setFlag(!flag);
+                                                            let total = 0;
+                                                            // console.log(grainsArray);
+                                                            grainsArray.map((item) => total += item.calories);
+                                                            setTotalGrains(total);
                                                         }
 
                                                     }}><Tooltip title="delete"><DeleteIcon fontSize='default' /></Tooltip></Button>
@@ -230,6 +254,10 @@ const Dietmodel = ({ user, totalCalories, veggiesArray, setVeggiesArray, totalVe
                                                         if (index != -1) {
                                                             proteinsArray.splice(index, 1);
                                                             setFlag(!flag);
+                                                            let total = 0;
+                                                            // console.log(proteinsArray);
+                                                            proteinsArray.map((item) => total += item.calories);
+                                                            setTotalProteins(total);
                                                         }
 
                                                     }}><Tooltip title="delete"><DeleteIcon fontSize='default' /></Tooltip></Button>

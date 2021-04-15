@@ -2,10 +2,11 @@ import * as api from '../api/index.js';
 import { FETCH, CREATE, UPDATE, DELETE } from '../constants/constantTypes.js';
 
 // get Diet Posts
-export const getDiet = () => async (dispatch) => {
+export const getDietPost = () => async (dispatch) => {
     try {
-        const { data } = await api.fetchDiet();
+        const { data } = await api.fetchDietPost();
 
+        // dispatch action  to get data
         dispatch({ type: FETCH, payload: data });
     } catch (error) {
         console.log(error.message);
@@ -13,9 +14,9 @@ export const getDiet = () => async (dispatch) => {
 };
 
 // create Diet Post
-export const createDiet = (diet) => async (dispatch) => {
+export const createDietPost = (dietPost) => async (dispatch) => {
     try {
-        const { data } = await api.createDiet(diet);
+        const { data } = await api.createDietPost(dietPost);
 
         dispatch({ type: CREATE, payload: data });
     } catch (error) {
@@ -24,9 +25,9 @@ export const createDiet = (diet) => async (dispatch) => {
 };
 
 // update Diet Post
-export const updateDiet = (id, diet) => async (dispatch) => {
+export const updateDietPost = (id, dietPost) => async (dispatch) => {
     try {
-        const { data } = await api.updateDiet(id, diet);
+        const { data } = await api.updateDietPost(id, dietPost);
 
         dispatch({ type: UPDATE, payload: data });
     } catch (error) {
@@ -35,7 +36,7 @@ export const updateDiet = (id, diet) => async (dispatch) => {
 };
 
 // like Diet Post
-export const likeDiet = () => async (dispatch) => {
+export const likeDietPost = () => async (dispatch) => {
     try {
 
     } catch (error) {
@@ -44,9 +45,9 @@ export const likeDiet = () => async (dispatch) => {
 };
 
 // delete Diet Post
-export const deleteDiet = (id) => async (dispatch) => {
+export const deleteDietPost = (id) => async (dispatch) => {
     try {
-        await api.deleteDiet(id);
+        await api.deleteDietPost(id);
 
         dispatch({ type: DELETE, payload: id });
     } catch (error) {

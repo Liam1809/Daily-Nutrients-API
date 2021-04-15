@@ -14,12 +14,12 @@ const Mealplan = () => {
     const [currentId, setCurrentId] = useState(0);
     const classes = useStyles();
     const dispatch = useDispatch();
+    const [mainFlag, setMainFlag] = useState(false);
 
     const [totalVeggies, setTotalVeggies] = useState(0);
     const [totalFruits, setTotalFruits] = useState(0);
     const [totalGrains, setTotalGrains] = useState(0);
     const [totalProteins, setTotalProteins] = useState(0);
-    const [totalCalories, setTotalCalories] = useState(0);
 
     const [veggiesArray, setVeggiesArray] = useState([]);
     const [fruitsArray, setFruitsArray] = useState([]);
@@ -33,42 +33,25 @@ const Mealplan = () => {
 
     useEffect(() => {
         dispatch(getHD());
-        let TOTAL = 0;
-        veggiesArray.map((item) => TOTAL += item.calories);
-        fruitsArray.map((item) => TOTAL += item.calories);
-        grainsArray.map((item) => TOTAL += item.calories);
-        proteinsArray.map((item) => TOTAL += item.calories);
-
-        setTotalCalories(TOTAL.toFixed(2));
-
-        if (veggiesArray.length != 0) {
-            let total = 0;
-            veggiesArray.map((item) => total += item.calories);
-            setTotalVeggies(total.toFixed(2));
-        }
-        if (fruitsArray.length != 0) {
-            let total = 0;
-            fruitsArray.map((item) => total += item.calories);
-            setTotalFruits(total.toFixed(2));
-        }
-        if (grainsArray.length != 0) {
-            let total = 0;
-            grainsArray.map((item) => total += item.calories);
-            setTotalGrains(total.toFixed(2));
-        }
-        if (proteinsArray.length != 0) {
-            let total = 0;
-            proteinsArray.map((item) => total += item.calories);
-            setTotalProteins(total.toFixed(2));
-        }
-
-    }, [veggiesArray, fruitsArray, grainsArray, proteinsArray]);
+    }, []);
 
     return (
         <Grow in>
             <Container className={classes.mainContainer}>
                 <Grid container justify='center' alignItems='center' >
-                    <Foodcards user={user} setVeggiesArray={setVeggiesArray} setFruitsArray={setFruitsArray} setGrainsArray={setGrainsArray} setProteinsArray={setProteinsArray} />
+                    <Foodcards
+                        user={user}
+                        mainFlag={mainFlag}
+                        setMainFlag={setMainFlag}
+                        setVeggiesArray={setVeggiesArray}
+                        setTotalVeggies={setTotalVeggies}
+                        setFruitsArray={setFruitsArray}
+                        setTotalFruits={setTotalFruits}
+                        setGrainsArray={setGrainsArray}
+                        setTotalGrains={setTotalGrains}
+                        setProteinsArray={setProteinsArray}
+                        setTotalProteins={setTotalProteins}
+                    />
                 </Grid>
                 <Grid container justify='center' alignItems='center' className={classes.secondContainer}>
                     <Grid item xs={12} md={12} container justify='center' alignItems='center' spacing={3}>
@@ -82,19 +65,23 @@ const Mealplan = () => {
                         <Grid item xs={12} md={3}>
                             <Dietmodel
                                 user={user}
-                                totalCalories={totalCalories}
+                                setMainFlag={setMainFlag}
                                 veggiesArray={veggiesArray}
                                 setVeggiesArray={setVeggiesArray}
                                 totalVeggies={totalVeggies}
+                                setTotalVeggies={setTotalVeggies}
                                 fruitsArray={fruitsArray}
                                 setFruitsArray={setFruitsArray}
                                 totalFruits={totalFruits}
+                                setTotalFruits={setTotalFruits}
                                 grainsArray={grainsArray}
                                 setGrainsArray={setGrainsArray}
                                 totalGrains={totalGrains}
+                                setTotalGrains={setTotalGrains}
                                 proteinsArray={proteinsArray}
                                 setProteinsArray={setProteinsArray}
                                 totalProteins={totalProteins}
+                                setTotalProteins={setTotalProteins}
                             />
                             <img src={arrow} className={classes.image} />
                             <Typography variant="h6" className={classes.position}>Create Model Here</Typography>

@@ -22,10 +22,10 @@ export const signIn = (FormData) => API.post('/user/signin', FormData);
 export const signUp = (FormData) => API.post('/user/signup', FormData);
 
 // API REQUESTS to retrive Diet Model from server
-export const fetchDiet = () => API.get('/diet');
-export const createDiet = (newDiet) => API.post('/diet', newDiet);
-export const updateDiet = (id, updatedDiet) => API.patch(`/diet/${id}`, updatedDiet);
-export const deleteDiet = (id) => API.delete(`/diet/${id}`);
+export const fetchDietPost = () => API.get('/diet');
+export const createDietPost = (newDietPost) => API.post('/diet', newDietPost);
+export const updateDietPost = (id, updatedDietPost) => API.patch(`/diet/${id}`, updatedDietPost);
+export const deleteDietPost = (id) => API.delete(`/diet/${id}`);
 
 
 

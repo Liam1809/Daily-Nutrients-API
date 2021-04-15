@@ -51,7 +51,7 @@ function a11yProps(index) {
 }
 
 
-const Foodcards = ({ user, setVeggiesArray, setFruitsArray, setGrainsArray, setProteinsArray }) => {
+const Foodcards = ({ user, mainFlag, setMainFlag, setVeggiesArray, setTotalVeggies, setFruitsArray, setTotalFruits, setGrainsArray, setTotalGrains, setProteinsArray, setTotalProteins }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -93,6 +93,11 @@ const Foodcards = ({ user, setVeggiesArray, setFruitsArray, setGrainsArray, setP
     const HD = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === user?.userInfo?._id || h.googleId === user?.userInfo?._id) : null);
 
     useEffect(() => {
+        if (mainFlag == true) {
+            clear();
+            clear1();
+            setMainFlag(false);
+        }
         if (value == 0) {
             clear();
             clear1();
@@ -235,6 +240,7 @@ const Foodcards = ({ user, setVeggiesArray, setFruitsArray, setGrainsArray, setP
                     // add to model
                     console.log("GOOD TO GO");
                     setFruitsArray(currentArray);
+                    setTotalFruits(total1.toFixed(2));
                 }
             }
         } else {
@@ -245,7 +251,6 @@ const Foodcards = ({ user, setVeggiesArray, setFruitsArray, setGrainsArray, setP
                 // Recipes Calories
                 let total = 0;
                 currentArray1.map((item) => total += item.calories);
-
                 switch (string) {
                     case one:
                         if (total > (HD?.bmr * 30 / 100)) {
@@ -254,6 +259,7 @@ const Foodcards = ({ user, setVeggiesArray, setFruitsArray, setGrainsArray, setP
                             // add to model
                             console.log("GOOD TO GO");
                             setVeggiesArray(currentArray1);
+                            setTotalVeggies(total.toFixed(2));
                         }
                         break;
                     case three:
@@ -262,6 +268,7 @@ const Foodcards = ({ user, setVeggiesArray, setFruitsArray, setGrainsArray, setP
                         } else {
                             console.log("GOOD TO GO");
                             setGrainsArray(currentArray1);
+                            setTotalGrains(total.toFixed(2));
                         }
                         break;
                     case four:
@@ -270,6 +277,7 @@ const Foodcards = ({ user, setVeggiesArray, setFruitsArray, setGrainsArray, setP
                         } else {
                             console.log("GOOD TO GO");
                             setProteinsArray(currentArray1);
+                            setTotalProteins(total.toFixed(2));
                         }
                         break;
                     default:
@@ -277,8 +285,6 @@ const Foodcards = ({ user, setVeggiesArray, setFruitsArray, setGrainsArray, setP
                 }
             }
         }
-
-
     };
 
     return (
