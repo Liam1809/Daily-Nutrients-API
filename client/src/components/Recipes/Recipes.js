@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grow, Grid } from '@material-ui/core';
+import { Container, Grow, Grid, Typography } from '@material-ui/core';
 
 import useStyles from './styles.js';
 
@@ -10,7 +10,7 @@ const Recipes = () => {
         <Grow in>
             <Container className={classes.mainContainer}>
                 <Grid container justify='center' alignItems='center' >
-                    THIS IS  RECIPES HOMEPAGE
+                    <Typography variant="h4">Searching for Recipes</Typography>
                 </Grid>
             </Container>
         </Grow>

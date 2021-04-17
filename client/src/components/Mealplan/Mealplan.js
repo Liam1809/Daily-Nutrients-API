@@ -47,64 +47,75 @@ const Mealplan = () => {
 
     return (
         <Grow in>
-            <Container className={classes.mainContainer}>
-                <Grid container justify='center' alignItems='center' >
-                    <Foodcards
-                        user={user}
-                        mainFlag={mainFlag}
-                        setMainFlag={setMainFlag}
-                        setVeggiesArray={setVeggiesArray}
-                        setTotalVeggies={setTotalVeggies}
-                        setFruitsArray={setFruitsArray}
-                        setTotalFruits={setTotalFruits}
-                        setGrainsArray={setGrainsArray}
-                        setTotalGrains={setTotalGrains}
-                        setProteinsArray={setProteinsArray}
-                        setTotalProteins={setTotalProteins}
-                    />
-                </Grid>
-                <Grid container justify='center' alignItems='center' className={classes.secondContainer}>
-                    <Grid item xs={12} md={12} container justify='center' alignItems='center' spacing={3}>
-                        <Grid item xs={12} md={2} className={`${classes.shape} ${classes.shape1}`}>Vegetables: {HD?.bmr * 30 / 100} Kcal</Grid>
-                        <Grid item xs={12} md={2} className={`${classes.shape} ${classes.shape2}`} >Fruits: {HD?.bmr * 20 / 100} Kcal</Grid>
-                        <Grid item xs={12} md={2} className={`${classes.shape} ${classes.shape3}`}>Whole Grains: {HD?.bmr * 25 / 100} Kcal</Grid>
-                        <Grid item xs={12} md={2} className={`${classes.shape} ${classes.shape4}`}>Healthy Proteins: {HD?.bmr * 25 / 100} Kcal</Grid>
-                    </Grid>
-                    <Divider style={{ margin: '30px 0 0 0', width: '80%' }} />
-                    <Grid item xs={12} md={12} container justify='center' alignItems='center'>
-                        <Grid item xs={12} md={3}>
-                            <Dietmodel
+            {
+                !user ? (
+                    <Container className={classes.mainContainer}>
+                        <Grid container justify='center' alignItems='center' >
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="h5">YOU ARE NOT AUTHORIZED . . .</Typography>
+                            </Grid>
+                        </Grid>
+                    </Container>
+                ) : (
+                    <Container className={classes.mainContainer}>
+                        <Grid container justify='center' alignItems='center' >
+                            <Foodcards
                                 user={user}
+                                mainFlag={mainFlag}
                                 setMainFlag={setMainFlag}
-                                veggiesArray={veggiesArray}
                                 setVeggiesArray={setVeggiesArray}
-                                totalVeggies={totalVeggies}
                                 setTotalVeggies={setTotalVeggies}
-                                fruitsArray={fruitsArray}
                                 setFruitsArray={setFruitsArray}
-                                totalFruits={totalFruits}
                                 setTotalFruits={setTotalFruits}
-                                grainsArray={grainsArray}
                                 setGrainsArray={setGrainsArray}
-                                totalGrains={totalGrains}
                                 setTotalGrains={setTotalGrains}
-                                proteinsArray={proteinsArray}
                                 setProteinsArray={setProteinsArray}
-                                totalProteins={totalProteins}
                                 setTotalProteins={setTotalProteins}
                             />
-                            <img src={arrow} className={classes.image} />
-                            <Typography variant="h6" className={classes.position}>Create Model Here</Typography>
-
                         </Grid>
-                        <Grid item xs={12} md={4}>
-                            <Pievisual />
-                            <Typography variant='body1' className={classes.text}>Your Healthy Eating Plate Model</Typography>
-                        </Grid>
-                    </Grid>
-                </Grid>
+                        <Grid container justify='center' alignItems='center' className={classes.secondContainer}>
+                            <Grid item xs={12} md={12} container justify='center' alignItems='center' spacing={3}>
+                                <Grid item xs={12} md={2} className={`${classes.shape} ${classes.shape1}`}>Vegetables: {HD?.bmr * 30 / 100} Kcal</Grid>
+                                <Grid item xs={12} md={2} className={`${classes.shape} ${classes.shape2}`} >Fruits: {HD?.bmr * 20 / 100} Kcal</Grid>
+                                <Grid item xs={12} md={2} className={`${classes.shape} ${classes.shape3}`}>Whole Grains: {HD?.bmr * 25 / 100} Kcal</Grid>
+                                <Grid item xs={12} md={2} className={`${classes.shape} ${classes.shape4}`}>Healthy Proteins: {HD?.bmr * 25 / 100} Kcal</Grid>
+                            </Grid>
+                            <Divider style={{ margin: '30px 0 0 0', width: '80%' }} />
+                            <Grid item xs={12} md={12} container justify='center' alignItems='center'>
+                                <Grid item xs={12} md={3}>
+                                    <Dietmodel
+                                        user={user}
+                                        setMainFlag={setMainFlag}
+                                        veggiesArray={veggiesArray}
+                                        setVeggiesArray={setVeggiesArray}
+                                        totalVeggies={totalVeggies}
+                                        setTotalVeggies={setTotalVeggies}
+                                        fruitsArray={fruitsArray}
+                                        setFruitsArray={setFruitsArray}
+                                        totalFruits={totalFruits}
+                                        setTotalFruits={setTotalFruits}
+                                        grainsArray={grainsArray}
+                                        setGrainsArray={setGrainsArray}
+                                        totalGrains={totalGrains}
+                                        setTotalGrains={setTotalGrains}
+                                        proteinsArray={proteinsArray}
+                                        setProteinsArray={setProteinsArray}
+                                        totalProteins={totalProteins}
+                                        setTotalProteins={setTotalProteins}
+                                    />
+                                    <img src={arrow} className={classes.image} />
+                                    <Typography variant="h6" className={classes.position}>Create Model Here</Typography>
 
-            </Container>
+                                </Grid>
+                                <Grid item xs={12} md={4}>
+                                    <Pievisual />
+                                    <Typography variant='body1' className={classes.text}>Your Healthy Eating Plate Model</Typography>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Container>
+                )
+            }
         </Grow >
     );
 }
