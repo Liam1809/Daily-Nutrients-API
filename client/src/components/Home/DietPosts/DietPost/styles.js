@@ -16,17 +16,14 @@ export default makeStyles({
     },
     overlay: {
         position: 'absolute',
-        top: '20px',
-        right: '20px',
-        color: 'white',
+        top: '10px',
+        right: '5px',
+        color: 'black',
     },
     cardActions: {
         padding: '0 16px 8px 16px',
         display: 'flex',
         justifyContent: 'space-between',
-    },
-    container: {
-        borderRadius: '0'
     },
     box1: {
         background: '#98ddca',

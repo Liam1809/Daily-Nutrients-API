@@ -1,11 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
-    container: {
-        height: '100%',
-        paddingTop: -80,
-        position: 'relative'
-    },
     Round: {
         zIndex: 2,
         width: '10em',
@@ -36,7 +31,12 @@ export default makeStyles((theme) => ({
         color: 'black',
         position: 'relative',
         top: 0,
-        left: '30%'
+        left: '28%'
+    },
+    secondOverlay: {
+        position: 'absolute',
+        top: 0,
+        left: '-23%'
     },
     [theme.breakpoints.down('md')]: {
         Round: {

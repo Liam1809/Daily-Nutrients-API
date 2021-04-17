@@ -4,9 +4,13 @@ export const setSnackBar = (
     snackbarOpen,
     snackbarType = "success",
     snackbarMessage = ""
-) => ({
-    type: SET_SNACKBAR,
-    snackbarOpen,
-    snackbarType,
-    snackbarMessage
-});
+) => async (dispatch) => {
+
+    const data = { snackbarOpen, snackbarType, snackbarMessage };
+
+    try {
+        dispatch({ type: SET_SNACKBAR, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+};

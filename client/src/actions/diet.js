@@ -1,5 +1,5 @@
 import * as api from '../api/index.js';
-import { FETCH, CREATE, UPDATE, DELETE } from '../constants/constantTypes.js';
+import { FETCH, CREATE, UPDATE, DELETE, LIKE } from '../constants/constantTypes.js';
 
 // get Diet Posts
 export const getDietPost = () => async (dispatch) => {
@@ -36,9 +36,12 @@ export const updateDietPost = (id, dietPost) => async (dispatch) => {
 };
 
 // like Diet Post
-export const likeDietPost = () => async (dispatch) => {
-    try {
+export const likeDietPost = (id) => async (dispatch) => {
 
+    try {
+        const { data } = await api.likeDietPost(id);
+
+        dispatch({ type: LIKE, payload: data });
     } catch (error) {
         console.log(error.message);
     }

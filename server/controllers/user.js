@@ -30,7 +30,7 @@ export const signin = async (req, res) => {
         }
 
         // get existing user's token and send to front end and set up user's expire time
-        const token = jwt.sign({ email: existingUser.email, name: existingUser.name, id: existingUser._id }, '@user', { expiresIn: '2h' });
+        const token = jwt.sign({ email: existingUser.email, name: existingUser.name, id: existingUser._id }, '@user', { expiresIn: '1h' });
         // console.log("signin token");
         // console.log(token);
         // send
@@ -68,7 +68,7 @@ export const signup = async (req, res) => {
         // console.log(`New User Sign-Up: ${newUser}`);
 
         // create user token
-        const token = jwt.sign({ email: newUser.email, name: newUser.name, id: newUser._id }, '@user', { expiresIn: '2h' });
+        const token = jwt.sign({ email: newUser.email, name: newUser.name, id: newUser._id }, '@user', { expiresIn: '1h' });
         // console.log("signup token");
         // console.log(token);
         // send 

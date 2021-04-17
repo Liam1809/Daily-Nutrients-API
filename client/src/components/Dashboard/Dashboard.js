@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Grow, Grid, Divider, Typography } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // import componentss
 import HealthDetail from './HealthDetail/HealthDetail.js';
@@ -17,19 +17,18 @@ const Dashboard = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    // retrieve user from localStorage
     const user = JSON.parse(localStorage.getItem('userProfile'));
-    // console.log('Current User', user);
 
     useEffect(() => {
         dispatch(getHD());
     }, [currentId]);
 
+
     return (
         <Grow in>
             <Container className={classes.mainContainer}>
                 <Typography variant="h4" style={{ padding: '10px 0px 10px 50px' }}>Welcome to Dashboard</Typography>
-                <Divider style={{ margin: 20, width: '35%' }} />
+                <Divider style={{ margin: 20 }} />
                 <Grid container justify="space-between" alignItems="center" spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <HealthDetail user={user} setCurrentId={setCurrentId} />

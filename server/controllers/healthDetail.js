@@ -26,7 +26,7 @@ export const createHealthDetail = async (req, res) => {
         await newHD.save();
 
         res.status(201).json(newHD);
-        console.log(newHD);
+        console.log(" This one comes from create health details \n", newHD);
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
@@ -42,12 +42,12 @@ export const updateHealthDetail = async (req, res) => {
         console.log('No Health Data found with that id');
     }
 
-    const updatedHD = { age, sex, weight, height, userID: req.userId, _id: id };
+    const updatedHD = { age: Number(age), sex, weight: Number(weight), height: Number(height), userID: req.userId, _id: id };
     // console.log(updatedHD);
 
     // Calculate BMI & BMR
-    updatedHD.bmi = Cal_bmi(updatedHD.weight, updatedHD.height);
-    updatedHD.bmr = Cal_bmr(updatedHD.age, updatedHD.weight, updatedHD.height, updatedHD.sex);
+    updatedHD.bmi = Number(Cal_bmi(updatedHD.weight, updatedHD.height));
+    updatedHD.bmr = Number(Cal_bmr(updatedHD.age, updatedHD.weight, updatedHD.height, updatedHD.sex));
 
     try {
         await healthDetail.findByIdAndUpdate(id, updatedHD);

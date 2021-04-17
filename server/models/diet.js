@@ -4,36 +4,65 @@ const dietSchema = mongoose.Schema({
     ID: { type: String },
     creator: { type: String },
     Grains: {
-        type: [{
+        recipes: [{
             title: { type: String },
-            calories: { type: Number },
-            time: { type: String }
+            img: { type: String },
+            calories: { type: Number }
         }],
-        default: []
+        start: {
+            type: Date,
+            default: new Date()
+        },
+        end: {
+            type: Date,
+            default: new Date()
+        }
     },
     Proteins: {
-        type: [{
+        recipes: [{
             title: { type: String },
-            calories: { type: Number },
-            time: { type: String }
+            img: { type: String },
+            calories: { type: Number }
         }],
-        default: []
+        start: {
+            type: Date,
+            default: new Date()
+        },
+        end: {
+            type: Date,
+            default: new Date()
+        }
     },
     Vegetables: {
-        type: [{
+        recipes: [{
             title: { type: String },
-            calories: { type: Number },
-            time: { type: String }
+            img: { type: String },
+            calories: { type: Number }
         }],
-        default: []
+        start: {
+            type: Date,
+            default: new Date()
+        },
+        end: {
+            type: Date,
+            default: new Date()
+        }
     },
     Fruits: {
-        type: [{
+        recipes: [{
             title: { type: String },
+            img: { type: String },
             calories: { type: Number },
-            time: { type: String }
+            serving_qty: { type: Number }
         }],
-        default: []
+        start: {
+            type: Date,
+            default: new Date()
+        },
+        end: {
+            type: Date,
+            default: new Date()
+        }
     },
     likes: { type: [String], default: [] },
     createdAt: {

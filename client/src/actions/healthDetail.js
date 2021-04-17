@@ -6,7 +6,7 @@ import { setSnackBar } from './snackBar.js';
 // get HD
 export const getHD = () => async (dispatch) => {
     try {
-        const { data } = await api.fetchHD();
+        const { data } = await api.fetchHealthDetail();
         // dispatch action  to get data
         dispatch({ type: FETCH, payload: data });
     } catch (error) {
@@ -17,7 +17,7 @@ export const getHD = () => async (dispatch) => {
 // create HD
 export const createHD = (HD) => async (dispatch) => {
     try {
-        const { data } = await api.createHD(HD);
+        const { data } = await api.createHealthDetail(HD);
 
         dispatch({ type: CREATE, payload: data });
         dispatch(setSnackBar(true, "success", "SUCCESSFULLY CREATED HEALTH FORM DATA"));
@@ -30,7 +30,7 @@ export const createHD = (HD) => async (dispatch) => {
 // update HD
 export const updateHD = (id, HD) => async (dispatch) => {
     try {
-        const { data } = await api.updateHD(id, HD);
+        const { data } = await api.updateHealthDetail(id, HD);
 
         dispatch({ type: UPDATE, payload: data });
         dispatch(setSnackBar(true, "success", "SUCCESSFULLY UPDATED"));
@@ -43,7 +43,7 @@ export const updateHD = (id, HD) => async (dispatch) => {
 // delete HD
 export const deleteHD = (id) => async (dispatch) => {
     try {
-        await api.deleteHD(id);
+        await api.deleteHealthDetail(id);
 
         dispatch({ type: DELETE, payload: id });
         dispatch(setSnackBar(true, "success", "SUCCESSFULLY DELETED"));

@@ -1,4 +1,4 @@
-import React, { useStat } from 'react';
+import React from 'react';
 import { Container } from '@material-ui/core';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
@@ -11,6 +11,7 @@ import Recipes from './components/Recipes/Recipes.js';
 import Authentication from './components/Authentication/Authentication.js';
 import Schedule from './components/Schedule/Schedule.js';
 import Snackbar from './components/Snackbar/Snackbar.js';
+
 const App = () => {
     return (
         // Home: /
@@ -33,7 +34,7 @@ const App = () => {
                 </Switch>
             </Container >
         </BrowserRouter >
-    )
-}
+    );
+};
 
 export default App;

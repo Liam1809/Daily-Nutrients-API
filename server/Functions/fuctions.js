@@ -1,4 +1,4 @@
-export const Cal_bmi = (weight, height) => Math.round(weight / (height / 100));
+export const Cal_bmi = (weight, height) => (weight / (height * height) * 10000).toFixed(1);
 
 export const Cal_bmr = (age, weight, height, sex) => {
     if (sex == 'male') {

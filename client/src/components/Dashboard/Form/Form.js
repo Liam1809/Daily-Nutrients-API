@@ -13,26 +13,21 @@ const Form = ({ user, currentId, setCurrentId }) => {
 
     const HD = useSelector((state) => currentId ? state.healthDetails.find((h) => h._id === currentId) : null);
 
-    const UserId = user?.userInfo?._id;
-
-    const H = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === UserId || h.googleId === UserId) : null);
+    const H = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === user?.userInfo?._id || h.userID === user?.userInfo?.googleId) : null);
 
 
     useEffect(() => {
         if (HD) setHDData(HD);
     }, [HD]);
 
-    const handleSubmit = (e) => {
-        localStorage.setItem('count', 1);
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (currentId === 0) {
-
             dispatch(createHD(hdData));
-            clear();
         } else {
             dispatch(updateHD(currentId, hdData));
-            clear();
         }
+        clear();
     };
 
     const onChange = (e) => setHDData({ ...hdData, [e.target.name]: e.target.value });
@@ -69,18 +64,16 @@ const Form = ({ user, currentId, setCurrentId }) => {
                         </>
                     )
                 }
-
                 {
                     !H ? (
                         <Button className={classes.buttonSubmit} variant='contained' color="primary" size='large' fullWidth type="submit" >Create</Button>
                     ) : null
                 }
                 {
-                    currentId != 0 ? (
+                    currentId !== 0 ? (
                         <Button className={classes.buttonSubmit} variant='contained' color="primary" size='large' fullWidth type="submit" >Update</Button>
                     ) : null
                 }
-
                 <Button variant='contained' color="secondary" size='large' onClick={clear} fullWidth>Clear</Button>
             </form>
         </Paper>

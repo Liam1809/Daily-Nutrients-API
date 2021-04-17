@@ -39,7 +39,6 @@ const DrawerNav = () => {
             if (token.length < 500) {
                 if (decodedToken.exp * 1000 < new Date().getTime()) {
                     logout();
-                    window.location.reload();
                 }
                 // Google Token
             } else {
@@ -48,9 +47,8 @@ const DrawerNav = () => {
                 // decodedToken.exp * 1000 - 3000000: expire in 10mins
                 // decodedToken.exp * 1000 - 3500000: expire in a few mins
 
-                if (decodedToken.exp * 1000 - 3500000 < new Date().getTime()) {
+                if (decodedToken.exp * 1000 - 2000000 < new Date().getTime()) {
                     logout();
-                    window.location.reload();
                 }
             }
         }

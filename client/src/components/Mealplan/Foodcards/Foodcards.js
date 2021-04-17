@@ -90,7 +90,7 @@ const Foodcards = ({ user, mainFlag, setMainFlag, setVeggiesArray, setTotalVeggi
     const [countRecipes, setCountRecipes] = useState(0);
     const [countIngredients, setCountIngredients] = useState(0);
 
-    const HD = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === user?.userInfo?._id || h.googleId === user?.userInfo?._id) : null);
+    const HD = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === user?.userInfo?._id || h.userID === user?.userInfo?.googleId) : null);
 
     useEffect(() => {
         if (mainFlag == true) {

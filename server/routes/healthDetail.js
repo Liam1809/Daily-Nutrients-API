@@ -6,7 +6,7 @@ import authentication from '../middleware/authentication.js';
 
 const router = express.Router();
 
-router.get('/', authentication, getHealthDetails);
+router.get('/', getHealthDetails);
 router.post('/', authentication, createHealthDetail);
 router.patch('/:id', authentication, updateHealthDetail);
 router.delete('/:id', authentication, deleteHealthDetail);

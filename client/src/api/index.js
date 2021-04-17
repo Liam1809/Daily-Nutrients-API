@@ -12,10 +12,10 @@ API.interceptors.request.use((req) => {
 });
 
 // API REQUESTS to retrieve Health Details from server
-export const fetchHD = () => API.get('/HD');
-export const createHD = (newHD) => API.post('/HD', newHD);
-export const updateHD = (id, updatedHD) => API.patch(`/HD/${id}`, updatedHD);
-export const deleteHD = (id) => API.delete(`/HD/${id}`);
+export const fetchHealthDetail = () => API.get('/HD');
+export const createHealthDetail = (newHD) => API.post('/HD', newHD);
+export const updateHealthDetail = (id, updatedHD) => API.patch(`/HD/${id}`, updatedHD);
+export const deleteHealthDetail = (id) => API.delete(`/HD/${id}`);
 
 // API REQUESTS to retrieve Authentication from server
 export const signIn = (FormData) => API.post('/user/signin', FormData);
@@ -26,6 +26,7 @@ export const fetchDietPost = () => API.get('/diet');
 export const createDietPost = (newDietPost) => API.post('/diet', newDietPost);
 export const updateDietPost = (id, updatedDietPost) => API.patch(`/diet/${id}`, updatedDietPost);
 export const deleteDietPost = (id) => API.delete(`/diet/${id}`);
+export const likeDietPost = (id) => API.patch(`/diet/${id}/likeDietPost`);
 
 
 

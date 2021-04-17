@@ -1,22 +1,17 @@
 import { SET_SNACKBAR } from '../constants/constantTypes.js';
 
-const initialState = {
+const initial = {
     snackbarOpen: false,
     snackbarType: "success",
     snackbarMessage: ""
 };
 
-export default (state = initialState, action) => {
+export default (snackbar = initial, action) => {
     switch (action.type) {
         case SET_SNACKBAR:
-            const { snackbarOpen, snackbarType, snackbarMessage } = action;
-            return {
-                ...state,
-                snackbarOpen,
-                snackbarType,
-                snackbarMessage
-            };
+            const { snackbarOpen, snackbarType, snackbarMessage } = action.payload;
+            return { ...snackbar, snackbarOpen, snackbarType, snackbarMessage };
         default:
-            return state;
+            return snackbar;
     }
 };

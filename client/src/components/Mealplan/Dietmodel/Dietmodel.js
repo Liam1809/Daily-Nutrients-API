@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import 'date-fns';
 import { Container, Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Select, Avatar, Typography, Grid, Divider, Tooltip } from '@material-ui/core';
@@ -18,11 +18,7 @@ const Dietmodel = ({ user, setMainFlag, veggiesArray, setVeggiesArray, totalVegg
     const initial = { recipes: [{ title: '', img: '', calories: '', serving_qty: '' }], start: new Date(), end: new Date() };
     const [dietData, setDietData] = useState({ Vegetables: initial, Fruits: initial, Grains: initial, Proteins: initial });
 
-    const HD = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === user?.userInfo?._id || h.googleId === user?.userInfo?._id) : null);
-
-    useEffect(() => {
-        if (dietData) setDietData(dietData);
-    }, [dietData]);
+    const HD = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === user?.userInfo?._id || h.userID === user?.userInfo?.googleId) : null);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -34,23 +30,19 @@ const Dietmodel = ({ user, setMainFlag, veggiesArray, setVeggiesArray, totalVegg
     };
 
     // dispatch to create model
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (dietData.Vegetables.recipes[0].title == "") {
             dispatch(setSnackBar(true, "error", "PLEASE ADD PRODUCTS OR SET TIME BEFORE CREATE MODEL"));
         } else {
-            if (dietData.Vegetables.start.getDate() > new Date().getDate()) {
-                dispatch(setSnackBar(true, "error", "DIET PLAN FOR TODAY ALREADY CREATED"));
-            } else {
-                dispatch(setSnackBar(true, "success", "SUCCESSFULLY CREATED DIET PLAN"));
-                console.log(dietData);
-                dispatch(createDietPost(dietData));
-                setVeggiesArray([]);
-                setFruitsArray([]);
-                setGrainsArray([]);
-                setProteinsArray([]);
-                setMainFlag(true);
-            }
+            dispatch(setSnackBar(true, "success", "SUCCESSFULLY CREATED DIET PLAN"));
+            console.log(dietData);
+            dispatch(createDietPost(dietData));
+            setVeggiesArray([]);
+            setFruitsArray([]);
+            setGrainsArray([]);
+            setProteinsArray([]);
+            setMainFlag(true);
         }
     };
 

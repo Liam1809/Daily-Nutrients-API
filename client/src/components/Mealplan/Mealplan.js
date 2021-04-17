@@ -10,6 +10,7 @@ import arrow from '../../image/arrow-gif.gif';
 import useStyles from './styles.js';
 // import actions
 import { getHD } from '../../actions/healthDetail.js';
+
 const Mealplan = () => {
     const [currentId, setCurrentId] = useState(0);
     const classes = useStyles();
@@ -28,12 +29,21 @@ const Mealplan = () => {
 
     const user = JSON.parse(localStorage.getItem('userProfile'));
 
-    const HD = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === user?.userInfo?._id || h.googleId === user?.userInfo?._id) : null);
+    const HD = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === user?.userInfo?._id || h.userID === user?.userInfo?.googleId) : null);
 
+    let bP = [
+        { width: 1, itemsToShow: 1 },
+        { width: 550, itemsToShow: 2, itemsToScroll: 2, pagination: false },
+        { width: 850, itemsToShow: 3 },
+        { width: 1150, itemsToShow: 4, itemsToScroll: 2 },
+        { width: 1450, itemsToShow: 5 },
+        { width: 1750, itemsToShow: 6 },
+    ]
 
     useEffect(() => {
         dispatch(getHD());
-    }, []);
+    }, [dispatch]);
+
 
     return (
         <Grow in>
@@ -93,6 +103,7 @@ const Mealplan = () => {
                         </Grid>
                     </Grid>
                 </Grid>
+
             </Container>
         </Grow >
     );
