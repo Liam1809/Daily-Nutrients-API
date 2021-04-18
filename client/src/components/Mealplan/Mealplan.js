@@ -42,8 +42,7 @@ const Mealplan = () => {
 
     useEffect(() => {
         dispatch(getHD());
-    }, [dispatch]);
-
+    }, []);
 
     return (
         <Grow in>

@@ -255,6 +255,93 @@ export const Proteins = [
     }
 ];
 
-export const Recipes = [];
+// defauly Recipes display for searching
+export const RecipesArr = [
+    {
+        calories: 304.77,
+        carbs: 42.22,
+        cholesterol: 7.5,
+        cookInstruction: [
+            {
+                ingredients: [{
+                    id: 4053,
+                    image: "olive-oil.jpg",
+                    name: "olive oil",
+                }],
+                number: 1,
+                step: "Heat olive oil in a large skillet over medium heat."
+            }, {
+                ingredients: [{
+                    id: 10211821,
+                    image: "bell-pepper-orange.png",
+                    name: "bell pepper"
+                }, {
+                    id: 11477,
+                    image: "zucchini.jpg",
+                    name: "zucchini"
+                }, {
+                    id: 11282,
+                    image: "brown-onion.png",
+                    name: "onion"
+                }],
+                number: 2,
+                step: "Add onion, bell pepper, and zucchini and saut for about 7 minutes, stirring occasionally, until slightly softened."
+            }, {
+                ingredients: [{
+                    id: 11583,
+                    image: "mixed-vegetables.png",
+                    name: "vegetable"
+                }, {
+                    id: 11209,
+                    image: "eggplant.png",
+                    name: "eggplant"
+                }, {
+                    id: 11215,
+                    image: "garlic.png",
+                    name: "garlic"
+                }],
+                number: 3,
+                step: "Add eggplant and continue to saut mixture for another 3 minutes, stirring frequently. When vegetables are softened, add garlic and cook until fragrant, about 1 minute."
+            }, {
+                ingredients: [{
+                    id: 93820,
+                    image: "white-cream-fluffy.jpg",
+                    name: "mascarpone"
+                }, {
+                    id: 11549,
+                    image: "tomato-sauce-or-pasta-sauce.jpg",
+                    name: "tomato sauce"
+                }, {
+                    id: 1002030,
+                    image: "pepper.jpg",
+                    name: "pepper"
+                }, {
+                    id: 2035,
+                    image: "spices.png",
+                    name: "spices"
+                }, {
+                    id: 14412,
+                    image: "water.png",
+                    name: "water"
+                }, {
+                    id: 2047,
+                    image: "salt.jpg",
+                    name: "salt"
+                }],
+                number: 4,
+                step: "Add dried spices, salt, and pepper, followed by the tomato sauce and water. Allow mixture to come to a simmer and cook for 5 minutes, until slightly thickened.Stir in mascarpone cheese and serve immediately."
+            }],
+        cuisines: ["Mediterranean", "French", "European"],
+        dishTypes: ["side dish"],
+        fat: 11.92,
+        id: 640693,
+        imgURL: "https://spoonacular.com/recipeImages/640693-312x231.jpg",
+        proteins: 8.67,
+        readyInMinutes: 45,
+        serving: 2,
+        sugar: 9.49,
+        title: "Creamy Ratatouille Over Penne",
+    }
+];
 
 

@@ -3,12 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles({
     media: {
         backgroundSize: '250px 250px',
+        borderRadius: '200px',
         height: "100px",
         paddingTop: '200px',
     },
     card: {
         margin: '20',
-        width: '280px',
+        width: '300px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -22,6 +23,11 @@ export default makeStyles({
         top: '20px',
         right: '20px',
         color: 'white',
+    },
+    details: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        margin: '20px 20px 0 20px',
     },
     title: {
         padding: '0 16px',

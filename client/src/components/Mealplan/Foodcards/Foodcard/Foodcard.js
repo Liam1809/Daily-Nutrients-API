@@ -94,15 +94,11 @@ const Foodcard = ({ cardi, text, text1, flag1, setFlag1, currentArray, setCurren
                     </div>
                 </div>
             </div>
-            <div className={classes.details}>
-                <Typography variant="body2" color="textSecondary"></Typography>
-            </div>
-            <div className={`${classes.grid1} ${classes.Infor1}`}>
+            <div className={`${classes.grid1} ${classes.Infor1}`} style={{ paddingTop: 20 }}>
                 <div>
                     <Typography className={classes.title} gutterBottom variant="h5">{cardi.name || cardi.title}</Typography>
                 </div>
             </div>
-
             <CardContent>
                 <div className={classes.grid}>
                     <div className={classes.Infor1}>
