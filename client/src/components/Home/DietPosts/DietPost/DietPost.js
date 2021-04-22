@@ -48,7 +48,6 @@ const DietPost = ({ user, dietPost }) => {
         } else {
             // console.log(newDietData);
             dispatch(updateDietPost(dietPost._id, newDietData));
-            dispatch(setSnackBar(true, 'success', "SUCCESSFULLY UPDATED"));
             setNewDietData(initial);
             setFlag(false);
             setOpen(false);

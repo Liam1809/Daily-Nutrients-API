@@ -9,8 +9,17 @@ export const signin = (formData, history) => async (dispatch) => {
         const { data } = await api.signIn(formData);
         // dispatch AUTH type action with data as payload
         dispatch({ type: AUTH, payload: data });
-        // push back from current path to /dashboard
-        history.push('/dashboard');
+
+        const user = JSON.parse(localStorage.getItem('userProfile'));
+
+        if (user?.userInfo?.role === "USER") {
+            // push back from current path to /dashboard
+            history.push('/dashboard');
+        } else {
+            // push back from current path to /admin
+            history.push('/admin');
+        }
+
         // console.log(data);
         dispatch(setSnackBar(true, "success", "SUCCESSFULLY SIGNED IN"));
 

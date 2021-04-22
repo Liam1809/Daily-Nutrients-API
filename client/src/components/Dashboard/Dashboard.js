@@ -37,18 +37,30 @@ const Dashboard = () => {
                         </Grid>
                     </Container>
                 ) : (
-                    <Container className={classes.mainContainer}>
-                        <Typography variant="h4" style={{ padding: '10px 0px 10px 50px' }}>Welcome to Dashboard</Typography>
-                        <Divider style={{ margin: 20 }} />
-                        <Grid container justify="space-between" alignItems="center" spacing={3}>
-                            <Grid item xs={12} sm={6}>
-                                <HealthDetail user={user} setCurrentId={setCurrentId} />
+                    user?.userInfo?.role === "USER" ? (
+                        <Container className={classes.mainContainer}>
+                            <Typography variant="h4" style={{ padding: '10px 0px 10px 50px' }}>Welcome to Dashboard</Typography>
+                            <Divider style={{ margin: 20 }} />
+                            <Grid container justify="space-between" alignItems="center" spacing={3}>
+                                <Grid item xs={12} sm={6}>
+                                    <HealthDetail user={user} setCurrentId={setCurrentId} />
+                                </Grid>
+                                <Grid item xs={12} sm={5}>
+                                    <Form user={user} currentId={currentId} setCurrentId={setCurrentId} />
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} sm={5}>
-                                <Form user={user} currentId={currentId} setCurrentId={setCurrentId} />
+                        </Container>
+                    ) : (
+                        <Container className={classes.mainContainer}>
+                            <Typography variant="h4" style={{ padding: '10px 0px 10px 50px' }}>Welcome to Dashboard</Typography>
+                            <Divider style={{ margin: 20 }} />
+                            <Grid container justify="center" alignItems="center" spacing={3}>
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="h5">ADMIN ARE NOT AUTHORIZED . . .</Typography>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Container>
+                        </Container>
+                    )
                 )
             }
         </Grow>

@@ -15,9 +15,10 @@ import FastfoodIcon from '@material-ui/icons/Fastfood';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ScheduleIcon from '@material-ui/icons/Schedule';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 
 // import constants, styles, image
-import { Home, Dashboard, MealPlan, Recipes, Schedule, AUTH, LOGOUT } from '../../../constants/constantTypes.js';
+import { AdminDB, Home, Dashboard, MealPlan, Recipes, Schedule, AUTH, LOGOUT } from '../../../constants/constantTypes.js';
 import useStyles from './styles.js';
 
 const DrawerNav = () => {
@@ -26,6 +27,7 @@ const DrawerNav = () => {
 
     const [state, setState] = useState({ right: false });
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('userProfile')));
+    // console.log(user);
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
@@ -64,6 +66,8 @@ const DrawerNav = () => {
     // navigate pages
     const navigation = (text) => {
         switch (text) {
+            case AdminDB:
+                return '/admin';
             case Home:
                 return '/';
             case Dashboard:
@@ -92,6 +96,8 @@ const DrawerNav = () => {
     // check icon show
     const checkIcon = (text) => {
         switch (text) {
+            case AdminDB:
+                return <SupervisorAccountIcon fontSize='large' className={classes.setColor} />
             case Home:
                 return <HomeIcon fontSize='large' className={classes.setColor} />
             case Dashboard:
@@ -119,7 +125,6 @@ const DrawerNav = () => {
             className={classes.list}
             onKeyDown={toggleDrawer(anchor, false)}
         >
-
             {
                 user ? (
                     <>
@@ -132,8 +137,36 @@ const DrawerNav = () => {
                             </ListItem>
                         </List>
                         <Divider />
+                        {
+                            user?.userInfo?.role === "USER" ? (
+                                <>
+                                    <List>
+                                        {[Home, Dashboard, MealPlan, Recipes, Schedule].map((text) => (
+                                            <ListItem button key={text} component={Link} to={navigation(text)}>
+                                                <ListItemIcon>{checkIcon(text)}</ListItemIcon>
+                                                <ListItemText primary={text} />
+                                            </ListItem>
+                                        ))}
+                                    </List>
+                                </>
+                            ) : (
+                                <>
+                                    <List>
+                                        {[Home, AdminDB].map((text) => (
+                                            <ListItem button key={text} component={Link} to={navigation(text)}>
+                                                <ListItemIcon>{checkIcon(text)}</ListItemIcon>
+                                                <ListItemText primary={text} />
+                                            </ListItem>
+                                        ))}
+                                    </List>
+                                </>
+                            )
+                        }
+                    </>
+                ) : (
+                    <>
                         <List>
-                            {[Home, Dashboard, MealPlan, Recipes, Schedule].map((text) => (
+                            {[Home].map((text) => (
                                 <ListItem button key={text} component={Link} to={navigation(text)}>
                                     <ListItemIcon>{checkIcon(text)}</ListItemIcon>
                                     <ListItemText primary={text} />
@@ -141,15 +174,6 @@ const DrawerNav = () => {
                             ))}
                         </List>
                     </>
-                ) : (
-                    <List>
-                        {[Home].map((text) => (
-                            <ListItem button key={text} component={Link} to={navigation(text)}>
-                                <ListItemIcon>{checkIcon(text)}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
                 )
             }
             <Divider />

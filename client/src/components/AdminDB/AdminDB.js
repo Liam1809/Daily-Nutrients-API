@@ -1,12 +1,10 @@
 import React from 'react';
-import { Container, Grow, Grid, Typography, Divider } from '@material-ui/core';
+import { Container, Grow, Typography, Grid, Divider } from '@material-ui/core';
+import useStyle from './styles.js';
 
-// import styles/images
-import useStyles from './styles.js';
 
-const Schedule = () => {
-    const classes = useStyles();
-
+const AdminDB = () => {
+    const classes = useStyle();
     const user = JSON.parse(localStorage.getItem('userProfile'));
 
     return (
@@ -14,7 +12,7 @@ const Schedule = () => {
             {
                 !user ? (
                     <Container className={classes.mainContainer}>
-                        <Typography variant="h4" style={{ padding: '10px 0px 10px 50px' }}>Welcome to Schedule</Typography>
+                        <Typography variant="h4" style={{ padding: '10px 0px 10px 50px' }}>Welcome to Admin Dashboard</Typography>
                         <Divider style={{ margin: 20 }} />
                         <Grid container justify="center" alignItems="center" spacing={3}>
                             <Grid item xs={12} sm={6}>
@@ -25,21 +23,19 @@ const Schedule = () => {
                 ) : (
                     user?.userInfo?.role === "USER" ? (
                         <Container className={classes.mainContainer}>
-                            <Typography variant="h4" style={{ padding: '10px 0px 10px 50px' }}>Welcome to Schedule</Typography>
+                            <Typography variant="h4" style={{ padding: '10px 0px 10px 50px' }}>Welcome to Dashboard</Typography>
                             <Divider style={{ margin: 20 }} />
-                            <Grid container justify="space-between" alignItems="center" spacing={3}>
-                                THIS IS SCHEDULE PAGE
+                            <Grid container justify="center" alignItems="center" spacing={3}>
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="h5">USER ARE NOT AUTHORIZED . . .</Typography>
+                                </Grid>
                             </Grid>
                         </Container>
                     ) : (
                         <Container className={classes.mainContainer}>
-                            <Typography variant="h4" style={{ padding: '10px 0px 10px 50px' }}>Welcome to Schedule</Typography>
-                            <Divider style={{ margin: 20 }} />
-                            <Grid container justify="center" alignItems="center" spacing={3}>
-                                <Grid item xs={12} sm={6}>
-                                    <Typography variant="h5">ADMIN ARE NOT AUTHORIZED . . .</Typography>
-                                </Grid>
-                            </Grid>
+                            <div>
+                                THIS IS ADMIN DB
+        </div>
                         </Container>
                     )
                 )
@@ -49,4 +45,4 @@ const Schedule = () => {
     )
 }
 
-export default Schedule;
+export default AdminDB;

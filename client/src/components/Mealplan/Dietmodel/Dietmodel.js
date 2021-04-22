@@ -35,7 +35,6 @@ const Dietmodel = ({ user, setMainFlag, veggiesArray, setVeggiesArray, totalVegg
         if (dietData.Vegetables.recipes[0].title == "") {
             dispatch(setSnackBar(true, "error", "PLEASE ADD PRODUCTS OR SET TIME BEFORE CREATE MODEL"));
         } else {
-            dispatch(setSnackBar(true, "success", "SUCCESSFULLY CREATED DIET PLAN"));
             console.log(dietData);
             dispatch(createDietPost(dietData));
             setVeggiesArray([]);

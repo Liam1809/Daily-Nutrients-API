@@ -15,7 +15,7 @@ export const Dashboard = 'Dashboard';
 export const MealPlan = 'Meal Plan';
 export const Recipes = 'Recipes';
 export const Schedule = 'Schedule';
-
+export const AdminDB = 'AdminDB';
 
 // notification
 export const SET_SNACKBAR = 'SET SNACKBAR';

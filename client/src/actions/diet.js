@@ -1,6 +1,6 @@
 import * as api from '../api/index.js';
 import { FETCH, CREATE, UPDATE, DELETE, LIKE } from '../constants/constantTypes.js';
-
+import { setSnackBar } from './snackBar.js';
 // get Diet Posts
 export const getDietPost = () => async (dispatch) => {
     try {
@@ -19,6 +19,7 @@ export const createDietPost = (dietPost) => async (dispatch) => {
         const { data } = await api.createDietPost(dietPost);
 
         dispatch({ type: CREATE, payload: data });
+        dispatch(setSnackBar(true, "success", "SUCCESSFULLY CREATED DIET PLAN"));
     } catch (error) {
         console.log(error.message);
     }
@@ -30,6 +31,7 @@ export const updateDietPost = (id, dietPost) => async (dispatch) => {
         const { data } = await api.updateDietPost(id, dietPost);
 
         dispatch({ type: UPDATE, payload: data });
+        dispatch(setSnackBar(true, 'success', "SUCCESSFULLY UPDATED"));
     } catch (error) {
         console.log(error.message);
     }
@@ -53,6 +55,7 @@ export const deleteDietPost = (id) => async (dispatch) => {
         await api.deleteDietPost(id);
 
         dispatch({ type: DELETE, payload: id });
+        dispatch(setSnackBar(true, 'success', "SUCCESSFULLY DELETED"));
     } catch (error) {
         console.log(error.message);
     }
