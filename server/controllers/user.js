@@ -6,6 +6,32 @@ import jwt from 'jsonwebtoken'; // token user
 import User from '../models/user.js';
 
 
+export const getUsers = async (req, res) => {
+    try {
+        const USERs = await User.find();
+
+        res.status(200).json(USERs);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};
+
+export const deleteUser = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        console.log('No User found with that id');
+    }
+
+    try {
+        await User.findByIdAndRemove(id);
+
+        res.json({ message: 'User by that id is successfully deleted' });
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+};
+
 export const signin = async (req, res) => {
     // retrieve email and password from form Sign In
     const { email, password } = req.body;
