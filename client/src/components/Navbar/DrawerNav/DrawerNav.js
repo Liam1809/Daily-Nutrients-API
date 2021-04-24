@@ -138,7 +138,7 @@ const DrawerNav = () => {
                         </List>
                         <Divider />
                         {
-                            user?.userInfo?.role === "USER" ? (
+                            user?.userInfo?.role !== "ADMIN" ? (
                                 <>
                                     <List>
                                         {[Home, Dashboard, MealPlan, Recipes, Schedule].map((text) => (

@@ -10,6 +10,7 @@ import arrow from '../../image/arrow-gif.gif';
 import useStyles from './styles.js';
 // import actions
 import { getHD } from '../../actions/healthDetail.js';
+import { getDietPost } from '../../actions/diet.js';
 
 const Mealplan = () => {
     const [currentId, setCurrentId] = useState(0);
@@ -29,7 +30,6 @@ const Mealplan = () => {
 
     const user = JSON.parse(localStorage.getItem('userProfile'));
 
-    const HD = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === user?.userInfo?._id || h.userID === user?.userInfo?.googleId) : null);
 
     let bP = [
         { width: 1, itemsToShow: 1 },
@@ -40,9 +40,12 @@ const Mealplan = () => {
         { width: 1750, itemsToShow: 6 },
     ]
 
+
     useEffect(() => {
         dispatch(getHD());
     }, []);
+
+    const HD = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === user?.userInfo?._id || h.userID === user?.userInfo?.googleId) : null);
 
     return (
         <Grow in>
@@ -58,10 +61,11 @@ const Mealplan = () => {
                         </Grid>
                     </Container>
                 ) : (
-                    user?.userInfo?.role === "USER" ? (
+                    user?.userInfo?.role !== "ADMIN" ? (
                         <Container className={classes.mainContainer}>
                             <Grid container justify='center' alignItems='center' >
                                 <Foodcards
+                                    HD={HD}
                                     user={user}
                                     mainFlag={mainFlag}
                                     setMainFlag={setMainFlag}
@@ -86,6 +90,7 @@ const Mealplan = () => {
                                 <Grid item xs={12} md={12} container justify='center' alignItems='center'>
                                     <Grid item xs={12} md={3}>
                                         <Dietmodel
+                                            HD={HD}
                                             user={user}
                                             setMainFlag={setMainFlag}
                                             veggiesArray={veggiesArray}

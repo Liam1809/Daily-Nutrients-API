@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import 'date-fns';
 import { Container, Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Select, Avatar, Typography, Grid, Divider, Tooltip } from '@material-ui/core';
@@ -6,19 +6,27 @@ import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles.js';
-
+import moment from 'moment';
 import { setSnackBar } from '../../../actions/snackBar.js';
-import { createDietPost } from '../../../actions/diet.js';
+import { getDietPost, createDietPost } from '../../../actions/diet.js';
+import { CREATE } from '../../../constants/constantTypes.js';
+import { getHD } from '../../../actions/healthDetail.js';
 
-const Dietmodel = ({ user, setMainFlag, veggiesArray, setVeggiesArray, totalVeggies, setTotalVeggies, fruitsArray, setFruitsArray, totalFruits, setTotalFruits, grainsArray, setGrainsArray, totalGrains, setTotalGrains, proteinsArray, setProteinsArray, totalProteins, setTotalProteins }) => {
+const Dietmodel = ({ HD, user, setMainFlag, veggiesArray, setVeggiesArray, totalVeggies, setTotalVeggies, fruitsArray, setFruitsArray, totalFruits, setTotalFruits, grainsArray, setGrainsArray, totalGrains, setTotalGrains, proteinsArray, setProteinsArray, totalProteins, setTotalProteins }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     const [flag, setFlag] = useState(false);
+    const [newFlag, setNewFlag] = useState(false);
     const initial = { recipes: [{ title: '', img: '', calories: '', serving_qty: '' }], start: new Date(), end: new Date() };
     const [dietData, setDietData] = useState({ Vegetables: initial, Fruits: initial, Grains: initial, Proteins: initial });
 
-    const HD = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === user?.userInfo?._id || h.userID === user?.userInfo?.googleId) : null);
+    useEffect(() => {
+        dispatch(getDietPost());
+    }, []);
+
+    const DBDietPost = useSelector((state) => state.diets.filter((diet) => diet.ID === user?.userInfo?._id || diet.ID === user?.userInfo?.googleId));
+    // console.log(DBDietPost);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -32,16 +40,27 @@ const Dietmodel = ({ user, setMainFlag, veggiesArray, setVeggiesArray, totalVegg
     // dispatch to create model
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         if (dietData.Vegetables.recipes[0].title == "") {
             dispatch(setSnackBar(true, "error", "PLEASE ADD PRODUCTS OR SET TIME BEFORE CREATE MODEL"));
         } else {
-            console.log(dietData);
-            dispatch(createDietPost(dietData));
-            setVeggiesArray([]);
-            setFruitsArray([]);
-            setGrainsArray([]);
-            setProteinsArray([]);
-            setMainFlag(true);
+            // constraint user to create one post per day
+            const today = new Date();
+            const post = DBDietPost.find((post) => moment(post?.createdAt).format("L") === moment(today).format("L"));
+
+            // console.log(post);
+
+            if (post) {
+                dispatch(setSnackBar(true, "error", "DIET PLAN CREATED FOR TODAY"));
+            } else {
+                console.log(dietData);
+                dispatch(createDietPost(dietData));
+                setVeggiesArray([]);
+                setFruitsArray([]);
+                setGrainsArray([]);
+                setProteinsArray([]);
+                setMainFlag(true);
+            }
         }
     };
 

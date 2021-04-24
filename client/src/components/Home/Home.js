@@ -22,7 +22,8 @@ const Home = () => {
             <Container className={classes.mainContainer}>
                 <Typography variant="h4" style={{ padding: '10px 0px 10px 50px' }}>Welcome to Home Page</Typography>
                 <Divider style={{ margin: 20 }} />
-                <Typography variant="h6" style={{ padding: '10px 0px 10px 50px' }}>NewsFeed</Typography>
+                <Typography variant="h5" style={{ padding: '10px 0px 10px 50px' }}>NewsFeed</Typography>
+                <Divider style={{ margin: 20, width: '300px' }} />
                 <Grid container justify='center' alignItems='baseline' >
                     <Grid item xs={12} md={12}>
                         <DietPosts user={user} />

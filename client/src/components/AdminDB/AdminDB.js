@@ -4,6 +4,7 @@ import { Container, Grow, Typography, Grid, Divider, TableRow, TableCell, Paper,
 import useStyle from './styles.js';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { getUser, deleteUser } from '../../actions/user.js';
+import { StarRate } from '@material-ui/icons';
 
 const AdminDB = () => {
     const classes = useStyle();

@@ -51,7 +51,7 @@ function a11yProps(index) {
 }
 
 
-const Foodcards = ({ user, mainFlag, setMainFlag, setVeggiesArray, setTotalVeggies, setFruitsArray, setTotalFruits, setGrainsArray, setTotalGrains, setProteinsArray, setTotalProteins }) => {
+const Foodcards = ({ HD, user, mainFlag, setMainFlag, setVeggiesArray, setTotalVeggies, setFruitsArray, setTotalFruits, setGrainsArray, setTotalGrains, setProteinsArray, setTotalProteins }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -90,7 +90,6 @@ const Foodcards = ({ user, mainFlag, setMainFlag, setVeggiesArray, setTotalVeggi
     const [countRecipes, setCountRecipes] = useState(0);
     const [countIngredients, setCountIngredients] = useState(0);
 
-    const HD = useSelector((state) => user ? state.healthDetails.find((h) => h.userID === user?.userInfo?._id || h.userID === user?.userInfo?.googleId) : null);
 
     useEffect(() => {
         if (mainFlag == true) {

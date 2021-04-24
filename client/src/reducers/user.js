@@ -1,10 +1,10 @@
-import { FETCH, DELETE } from '../constants/constantTypes.js';
+import { FETCH2, DELETE2 } from '../constants/constantTypes.js';
 
 export default (USER = [], action) => {
     switch (action.type) {
-        case FETCH:
+        case FETCH2:
             return action.payload;
-        case DELETE:
+        case DELETE2:
             return USER.filter((USER) => USER._id !== action.payload);
         default:
             return USER;

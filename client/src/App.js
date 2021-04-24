@@ -10,7 +10,7 @@ import Dashboard from './components/Dashboard/Dashboard.js';
 import Mealplan from './components/Mealplan/Mealplan.js';
 import Recipes from './components/Recipes/Recipes.js';
 import Authentication from './components/Authentication/Authentication.js';
-import Schedule from './components/Schedule/Schedule.js';
+import Scheduling from './components/Schedule/Schedule.js';
 import Snackbar from './components/Snackbar/Snackbar.js';
 
 const App = () => {
@@ -33,7 +33,7 @@ const App = () => {
                     <Route path='/mealplan' exact component={Mealplan} />
                     <Route path='/recipes' exact component={Recipes} />
                     <Route path='/authentication' exact component={Authentication} />
-                    <Route path='/schedule' exact component={Schedule} />
+                    <Route path='/schedule' exact component={Scheduling} />
                 </Switch>
             </Container >
         </BrowserRouter >

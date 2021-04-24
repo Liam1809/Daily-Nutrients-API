@@ -44,7 +44,7 @@ const Recipes = () => {
                         </Grid>
                     </Container>
                 ) : (
-                    user?.userInfo?.role === "USER" ? (
+                    user?.userInfo?.role !== "ADMIN" ? (
                         <Container className={classes.mainContainer}>
                             <Typography variant="h4" style={{ padding: '10px 0px 0px 50px' }}>Searching for Recipes</Typography>
                             <Divider style={{ margin: 20 }} />

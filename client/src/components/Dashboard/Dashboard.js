@@ -37,7 +37,7 @@ const Dashboard = () => {
                         </Grid>
                     </Container>
                 ) : (
-                    user?.userInfo?.role === "USER" ? (
+                    user?.userInfo?.role !== "ADMIN" ? (
                         <Container className={classes.mainContainer}>
                             <Typography variant="h4" style={{ padding: '10px 0px 10px 50px' }}>Welcome to Dashboard</Typography>
                             <Divider style={{ margin: 20 }} />

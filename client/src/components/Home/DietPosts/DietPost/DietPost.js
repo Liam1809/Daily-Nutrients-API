@@ -252,7 +252,10 @@ const DietPost = ({ user, dietPost }) => {
                         (dietPost?.likes?.length > 0) ? (
 
                             dietPost?.likes.find((id) => id === String(user?.userInfo?._id) || id === String(user?.userInfo?.googleId)) ? (
-                                <>< Tooltip title="Like"><FavoriteIcon fontSize='default' color='secondary' style={{ paddingRight: 5 }} /></Tooltip>{`You and ${dietPost?.likes?.length > 2 ? `${dietPost?.likes?.length - 1} Others` : 'another'}  like this`}</>
+
+                                <>< Tooltip title="Like"><FavoriteIcon fontSize='default' color='secondary' style={{ paddingRight: 5 }} /></Tooltip>
+                                    {
+                                        (dietPost?.likes?.length <= 1) ? 'You like this' : `You and ${dietPost?.likes?.length > 2 ? `${dietPost?.likes?.length - 1} Others` : 'another'}  like this`}</>
                             ) : (
                                 <>< Tooltip title="Like"><FavoriteIcon fontSize='default' color='secondary' style={{ paddingRight: 5 }} /></Tooltip>{`${dietPost?.likes?.length} ${dietPost?.likes?.length >= 2 ? 'people' : 'person'} like this`}</>
                             )
