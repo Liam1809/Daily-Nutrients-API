@@ -10,7 +10,7 @@ import Dashboard from './components/Dashboard/Dashboard.js';
 import Mealplan from './components/Mealplan/Mealplan.js';
 import Recipes from './components/Recipes/Recipes.js';
 import Authentication from './components/Authentication/Authentication.js';
-import Scheduling from './components/Schedule/Schedule.js';
+import Scheduling from './components/Scheduling/Scheduling.js';
 import Snackbar from './components/Snackbar/Snackbar.js';
 
 const App = () => {
