@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createHD, updateHD } from '../../../actions/healthDetail.js'
 
 import useStyles from './styles.js';
+import { setSnackBar } from '../../../actions/snackBar.js';
 
 const Form = ({ user, currentId, setCurrentId }) => {
     const [hdData, setHDData] = useState({ age: '', sex: '', weight: '', height: '' });
@@ -22,11 +23,16 @@ const Form = ({ user, currentId, setCurrentId }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (currentId === 0) {
-            dispatch(createHD(hdData));
+        if (hdData.age >= 18) {
+            if (currentId === 0) {
+                dispatch(createHD(hdData));
+            } else {
+                dispatch(updateHD(currentId, hdData));
+            }
         } else {
-            dispatch(updateHD(currentId, hdData));
+            dispatch(setSnackBar(true, 'error', "AGE MUST BE OVER 18"));
         }
+
         clear();
     };
 

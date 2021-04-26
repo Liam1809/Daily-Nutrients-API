@@ -6,7 +6,6 @@ import Foodcard from './Foodcard/Foodcard.js';
 import useStyles from './styles.js';
 import Carousel from 'react-elastic-carousel';
 import SearchIcon from '@material-ui/icons/Search';
-import RefreshIcon from '@material-ui/icons/Refresh';
 
 import { getNutrients } from '../../../actions/rawProduct.js';
 import { getRecipesByIngredients } from '../../../actions/recipesIngredients.js';
@@ -353,12 +352,12 @@ const Foodcards = ({ HD, user, mainFlag, setMainFlag, setVeggiesArray, setTotalV
                         <div>
                             <Divider style={{ margin: '20px 0' }} />
                             <Grid container justify='space-between'>
-                                <Grid item xs={12} md={11}><Typography className={`${classes.text} ${classes.text3} ${classes.text31}`}>Recipes With Chosen Ingredients</Typography></Grid>
-                                <Grid item xs={12} md={1}><Button onClick={(e) => {
+                                <Grid item xs={12} md={10}><Typography className={`${classes.text} ${classes.text3} ${classes.text31}`}>Recipes With Chosen Ingredients</Typography></Grid>
+                                <Grid item xs={12} md={2}><Button variant="outlined" fullwidth onClick={(e) => {
                                     e.preventDefault();
                                     setFlag(true);
                                     if (recipesFound1.length <= 0) dispatch(setSnackBar(true, "error", "NO RECIPES WITH THOSE INGREDIENTS"));
-                                }}><Tooltip title="Refresh"><RefreshIcon fontSize='large' /></Tooltip></Button></Grid>
+                                }}>Display Recipes</Button></Grid>
                             </Grid>
                             <Carousel breakPoints={bP}>
                                 {
@@ -491,12 +490,12 @@ const Foodcards = ({ HD, user, mainFlag, setMainFlag, setVeggiesArray, setTotalV
                         <div>
                             <Divider style={{ margin: '20px 0' }} />
                             <Grid container justify='space-between'>
-                                <Grid item xs={12} md={11}><Typography className={`${classes.text} ${classes.text3} ${classes.text31}`}>Recipes With Chosen Ingredients</Typography></Grid>
-                                <Grid item xs={12} md={1}><Button onClick={(e) => {
+                                <Grid item xs={12} md={10}><Typography className={`${classes.text} ${classes.text3} ${classes.text31}`}>Recipes With Chosen Ingredients</Typography></Grid>
+                                <Grid item xs={12} md={2}><Button variant="outlined" fullwidth onClick={(e) => {
                                     e.preventDefault();
                                     setFlag(true);
                                     if (recipesFound3.length <= 0) dispatch(setSnackBar(true, "error", "NO RECIPES WITH THOSE INGREDIENTS"));
-                                }}><Tooltip title="Refresh"><RefreshIcon fontSize='large' /></Tooltip></Button></Grid>
+                                }}>Display Recipes</Button></Grid>
                             </Grid>
                             <Carousel breakPoints={bP}>
                                 {
@@ -580,12 +579,12 @@ const Foodcards = ({ HD, user, mainFlag, setMainFlag, setVeggiesArray, setTotalV
                         <div>
                             <Divider style={{ margin: '20px 0' }} />
                             <Grid container justify='space-between'>
-                                <Grid item xs={12} md={11}><Typography className={`${classes.text} ${classes.text3} ${classes.text31}`}>Recipes With Chosen Ingredients</Typography></Grid>
-                                <Grid item xs={12} md={1}><Button onClick={(e) => {
+                                <Grid item xs={12} md={10}><Typography className={`${classes.text} ${classes.text3} ${classes.text31}`}>Recipes With Chosen Ingredients</Typography></Grid>
+                                <Grid item xs={12} md={2}><Button variant="outlined" fullwidth onClick={(e) => {
                                     e.preventDefault();
                                     setFlag(true);
                                     if (recipesFound4.length <= 0) dispatch(setSnackBar(true, "error", "NO RECIPES WITH THOSE INGREDIENTS"));
-                                }}><Tooltip title="Refresh"><RefreshIcon fontSize='large' /></Tooltip></Button></Grid>
+                                }}>Display Recipes</Button></Grid>
                             </Grid>
                             <Carousel breakPoints={bP}>
                                 {
