@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:4000' });
+const API = axios.create({ baseURL: 'https://daily-nutrients.herokuapp.com' });
 
 // send token back to server to verify authentication
 API.interceptors.request.use((req) => {
