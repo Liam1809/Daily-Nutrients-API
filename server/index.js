@@ -30,6 +30,10 @@ app.use('/user', userRouter);
 // diet Router
 app.use('/diet', dietRouter);
 
+app.get('/', (req, res) => {
+    res.send("Hello to Daily Nutrients API");
+});
+
 // connect to mongoDB
 // const CONNECTION_URL = 'mongodb+srv://Liam:Liam1809@cluster0.ifm61.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 4000;
