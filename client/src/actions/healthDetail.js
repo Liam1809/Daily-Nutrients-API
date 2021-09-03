@@ -23,7 +23,7 @@ export const createHD = (HD) => async (dispatch) => {
         dispatch(setSnackBar(true, "success", "SUCCESSFULLY CREATED HEALTH FORM DATA"));
     } catch (error) {
         console.log(error.message);
-        dispatch(setSnackBar(true, "error", "NO FILLED DATA OR USER EXPIRED PLEASE LOGOUT AND SIGN IN AGAIN"));
+        dispatch(setSnackBar(true, "error", "NO FILLED OR WRONG DATA"));
     }
 };
 
@@ -36,7 +36,7 @@ export const updateHD = (id, HD) => async (dispatch) => {
         dispatch(setSnackBar(true, "success", "SUCCESSFULLY UPDATED"));
     } catch (error) {
         console.log(error.message);
-        dispatch(setSnackBar(true, "error", "NO HEALTH DATA OR USER EXPIRED PLEASE LOGOUT AND SIGN IN AGAIN"));
+        dispatch(setSnackBar(true, "error", "NO FILLED OR WRONG DATA"));
     }
 };
 
@@ -49,6 +49,6 @@ export const deleteHD = (id) => async (dispatch) => {
         dispatch(setSnackBar(true, "success", "SUCCESSFULLY DELETED"));
     } catch (error) {
         console.log(error.message);
-        dispatch(setSnackBar(true, "error", "NO HEALTH DATA OR USER EXPIRED PLEASE LOGOUT AND SIGN IN AGAIN"));
+        dispatch(setSnackBar(true, "error", "NO FILLED OR WRONG DATA"));
     }
 };

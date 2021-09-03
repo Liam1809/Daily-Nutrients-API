@@ -29,8 +29,10 @@ const Form = ({ user, currentId, setCurrentId }) => {
             } else {
                 dispatch(updateHD(currentId, hdData));
             }
-        } else {
+        } else if (hdData.age >= 18) {
             dispatch(setSnackBar(true, 'error', "AGE MUST BE OVER 18"));
+        } else {
+            dispatch(setSnackBar(true, 'error', "NO FILLED OR WRONG DATA"));
         }
 
         clear();

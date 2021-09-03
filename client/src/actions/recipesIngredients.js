@@ -15,7 +15,7 @@ export const getRecipesByIngredients = async (string) => {
         let arr = [];
         // store recipes nutrients data
         let arr1 = [];
-        await fetch(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${key6}&ingredients=${string}&number=${num}`)
+        await fetch(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${key2}&ingredients=${string}&number=${num}`)
             .then((response) => response.json())
             .then((data) => {
                 data.map((object) => arr.push(object.id));
@@ -26,7 +26,7 @@ export const getRecipesByIngredients = async (string) => {
 
         // console.log(arr);
         arr.map((id) => {
-            fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${key6}&includeNutrition=true`)
+            fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${key2}&includeNutrition=true`)
                 .then((response) => response.json())
                 .then((data) => {
                     // console.log(data);

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { AppBar, Button, Toolbar, Typography, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 // import components
@@ -17,7 +17,7 @@ const Navbar = () => {
                     <img className={classes.icon} src={doctor} alt="icon" height="100" />
                 </Grid>
             </Grid>
-            <Grid item xs={12} md={10} container justify='center' alignItems='center' >
+            <Grid item xs={12} md={10} container jusfy='center' alignItems='center' >
 
                 <Typography className={classes.heading} component={Link} to='/' variant='h4' align='center'>DAILY NUTRIENTS</Typography>
             </Grid>
