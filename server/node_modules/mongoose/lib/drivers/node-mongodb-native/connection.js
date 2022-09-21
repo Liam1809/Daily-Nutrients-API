@@ -6,6 +6,8 @@
 
 const MongooseConnection = require('../../connection');
 const STATES = require('../../connectionstate');
+const immediate = require('../../helpers/immediate');
+const setTimeout = require('../../helpers/timers').setTimeout;
 
 /**
  * A [node-mongodb-native](https://github.com/mongodb/node-mongodb-native) connection implementation.
@@ -128,13 +130,16 @@ NativeConnection.prototype.useDb = function(name, options) {
  */
 
 function listen(conn) {
-  if (conn.db._listening) {
+  if (conn._listening) {
     return;
   }
-  conn.db._listening = true;
+  conn._listening = true;
 
-  conn.db.on('close', function(force) {
-    if (conn._closeCalled) return;
+  conn.client.on('close', function(force) {
+    if (conn._closeCalled) {
+      return;
+    }
+    conn._closeCalled = conn.client._closeCalled;
 
     // the driver never emits an `open` event. auto_reconnect still
     // emits a `close` event but since we never get another
@@ -146,26 +151,30 @@ function listen(conn) {
     }
     conn.onClose(force);
   });
-  conn.db.on('error', function(err) {
+  conn.client.on('error', function(err) {
     conn.emit('error', err);
   });
-  conn.db.on('reconnect', function() {
-    conn.readyState = STATES.connected;
-    conn.emit('reconnect');
-    conn.emit('reconnected');
-    conn.onOpen();
-  });
-  conn.db.on('timeout', function(err) {
-    conn.emit('timeout', err);
-  });
-  conn.db.on('open', function(err, db) {
-    if (STATES.disconnected === conn.readyState && db && db.databaseName) {
+
+  if (!conn.client.s.options.useUnifiedTopology) {
+    conn.db.on('reconnect', function() {
       conn.readyState = STATES.connected;
       conn.emit('reconnect');
       conn.emit('reconnected');
-    }
+      conn.onOpen();
+    });
+    conn.db.on('open', function(err, db) {
+      if (STATES.disconnected === conn.readyState && db && db.databaseName) {
+        conn.readyState = STATES.connected;
+        conn.emit('reconnect');
+        conn.emit('reconnected');
+      }
+    });
+  }
+
+  conn.client.on('timeout', function(err) {
+    conn.emit('timeout', err);
   });
-  conn.db.on('parseError', function(err) {
+  conn.client.on('parseError', function(err) {
     conn.emit('parseError', err);
   });
 }
@@ -181,7 +190,7 @@ function listen(conn) {
 
 NativeConnection.prototype.doClose = function(force, fn) {
   if (this.client == null) {
-    process.nextTick(() => fn());
+    immediate(() => fn());
     return this;
   }
 

@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 
+const immediate = require('../immediate');
 const promiseOrCallback = require('../promiseOrCallback');
 
 /**
@@ -26,6 +27,18 @@ module.exports = function eachAsync(next, fn, options, callback) {
   const enqueue = asyncQueue();
 
   return promiseOrCallback(callback, cb => {
+    if (batchSize != null) {
+      if (typeof batchSize !== 'number') {
+        throw new TypeError('batchSize must be a number');
+      }
+      if (batchSize < 1) {
+        throw new TypeError('batchSize must be at least 1');
+      }
+      if (batchSize !== Math.floor(batchSize)) {
+        throw new TypeError('batchSize must be a positive integer');
+      }
+    }
+
     iterate(cb);
   });
 
@@ -58,9 +71,9 @@ module.exports = function eachAsync(next, fn, options, callback) {
           drained = true;
           if (handleResultsInProgress <= 0) {
             finalCallback(null);
-          }
-          else if (batchSize && documentsBatch.length)
+          } else if (batchSize != null && documentsBatch.length) {
             handleNextResult(documentsBatch, currentDocumentIndex++, handleNextResultCallBack);
+          }
           return done();
         }
 
@@ -68,27 +81,27 @@ module.exports = function eachAsync(next, fn, options, callback) {
 
         // Kick off the subsequent `next()` before handling the result, but
         // make sure we know that we still have a result to handle re: #8422
-        process.nextTick(() => done());
+        immediate(() => done());
 
-        if (batchSize) {
+        if (batchSize != null) {
           documentsBatch.push(doc);
         }
 
         // If the current documents size is less than the provided patch size don't process the documents yet
-        if (batchSize && documentsBatch.length !== batchSize) {
+        if (batchSize != null && documentsBatch.length !== batchSize) {
           setTimeout(() => enqueue(fetch), 0);
           return;
         }
 
-        const docsToProcess = batchSize ? documentsBatch : doc;
+        const docsToProcess = batchSize != null ? documentsBatch : doc;
 
         function handleNextResultCallBack(err) {
-          if (batchSize) {
+          if (batchSize != null) {
             handleResultsInProgress -= documentsBatch.length;
             documentsBatch = [];
-          }
-          else
+          } else {
             --handleResultsInProgress;
+          }
           if (err != null) {
             error = err;
             return finalCallback(err);
